@@ -1,0 +1,29 @@
+[package]
+name = "chronomap-core"
+version = "0.1.0"
+edition = "2021"
+description = "Rust port of the ChronoMap engine: EDTF-subset time, campaign validation/normalisation and frame resolution."
+license = "MIT"
+
+# Standalone crate: the repository root has no Cargo.toml, so declare an empty
+# workspace to stop cargo from walking up and adopting an unrelated manifest.
+[workspace]
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+serde = { version = "1", features = ["derive"] }
+# `preserve_order` is not a nicety: the reference loader walks the campaign in JSON
+# document order and its diagnostics (E008/E009/W101) come out in key order, so the
+# object representation has to preserve insertion order like a JS object does.
+serde_json = { version = "1", features = ["preserve_order"] }
+
+rstar = { version = "0.13", optional = true }
+wasm-bindgen = { version = "0.2", optional = true }
+serde-wasm-bindgen = { version = "0.6", optional = true }
+
+[features]
+default = []
+spatial = ["dep:rstar"]
+wasm = ["dep:wasm-bindgen", "dep:serde-wasm-bindgen"]

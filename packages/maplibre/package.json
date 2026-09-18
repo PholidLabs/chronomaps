@@ -1,0 +1,34 @@
+{
+  "name": "@chronomap/maplibre",
+  "version": "0.1.0",
+  "description": "MapLibre GL renderer for ChronoMap campaigns: parchment basemap, campaign layers, chapter cameras",
+  "license": "MIT",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./style.css": "./dist/chronomap.css"
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json && node -e \"require('fs').copyFileSync('src/chronomap.css','dist/chronomap.css')\""
+  },
+  "peerDependencies": {
+    "maplibre-gl": "^6.0.0"
+  },
+  "dependencies": {
+    "@chronomap/engine": "0.1.0"
+  },
+  "devDependencies": {
+    "@types/geojson": "^7946.0.16",
+    "maplibre-gl": "^6.10.0",
+    "typescript": "^5.9.2"
+  }
+}

@@ -1,0 +1,37 @@
+/* Markers and labels for @chronomap/maplibre. Colours come from the host page's tokens. */
+.cm-unit { display: flex; align-items: center; gap: 6px; pointer-events: none; }
+.cm-unit-icon { width: 13px; height: 13px; border-radius: 50%; background: var(--cm-colour, #8B1E1E); box-shadow: 0 0 0 1.6px var(--cm-land, #ECE3CD); }
+.cm-unit-icon.is-hollow { background: var(--cm-land, #ECE3CD); box-shadow: 0 0 0 2.4px var(--cm-colour, #8B1E1E); }
+.cm-unit-icon.is-moving {
+  width: 0; height: 0; border-radius: 0; box-shadow: none;
+  border-left: 6px solid transparent; border-right: 6px solid transparent; border-bottom: 13px solid var(--cm-colour, #8B1E1E);
+  transform: rotate(var(--cm-rotate, 0deg)); filter: drop-shadow(0 0 1.4px var(--cm-land, #ECE3CD));
+}
+.cm-unit-text { display: flex; flex-direction: column; line-height: 1.15; }
+.cm-unit-name { font: 600 12px/1.15 var(--cm-font-body, Literata, Georgia, serif); color: var(--cm-ink, #28211A); text-shadow: 0 0 4px var(--cm-land, #ECE3CD), 0 0 8px var(--cm-land, #ECE3CD); }
+.cm-unit-strength { font: 500 11px/1.2 var(--cm-font-mono, "IBM Plex Mono", monospace); color: var(--cm-ink-soft, #5E5140); text-shadow: 0 0 4px var(--cm-land, #ECE3CD); }
+.cm-unit.is-focus .cm-unit-name { text-decoration: underline; text-underline-offset: 3px; }
+
+.cm-fort { display: flex; align-items: center; gap: 5px; pointer-events: none; }
+.cm-fort svg { overflow: visible; }
+.cm-fort polygon { fill: var(--cm-colour, #1F3A5F); stroke: var(--cm-land, #ECE3CD); stroke-width: 1.4; }
+.cm-fort.is-lost polygon { fill: var(--cm-land, #ECE3CD); stroke: var(--cm-colour, #1F3A5F); }
+.cm-fort.is-besieged svg { animation: cm-pulse 1.6s ease-in-out infinite; }
+.cm-fort-label { display: none; font: 600 11.5px/1.2 var(--cm-font-body, Literata, Georgia, serif); color: var(--cm-ink-soft, #5E5140); text-shadow: 0 0 4px var(--cm-land, #ECE3CD), 0 0 8px var(--cm-land, #ECE3CD); }
+.cm-fort.show-label .cm-fort-label { display: inline; }
+
+.cm-place-label { font: italic 12.5px/1.2 var(--cm-font-display, "IM Fell English", Georgia, serif); color: var(--cm-ink-soft, #5E5140); pointer-events: none; text-shadow: 0 0 4px var(--cm-land, #ECE3CD), 0 0 9px var(--cm-land, #ECE3CD); white-space: nowrap; }
+.cm-place-label.is-focus { color: var(--cm-ink, #28211A); font-size: 14px; }
+.cm-place-label.is-hidden { display: none; }
+.cm-event-label { font: 14px/1.2 var(--cm-font-sc, "IM Fell English SC", Georgia, serif); color: var(--cm-ink, #28211A); pointer-events: none; text-shadow: 0 0 4px var(--cm-land, #ECE3CD), 0 0 9px var(--cm-land, #ECE3CD); white-space: nowrap; }
+
+@keyframes cm-pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.18); } }
+@media (prefers-reduced-motion: reduce) { .cm-fort.is-besieged svg { animation: none; } }
+
+/* Declutter: a label the renderer could not fit is removed, symbols stay.
+   Written to out-specify .cm-fort.show-label .cm-fort-label. */
+.cm-unit .cm-unit-text.is-crowded,
+.cm-fort.show-label .cm-fort-label.is-crowded,
+.cm-fort-label.is-crowded,
+.cm-place-label.is-crowded,
+.cm-event-label.is-crowded { display: none; }

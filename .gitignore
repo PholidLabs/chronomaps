@@ -1,0 +1,53 @@
+# --- Node / npm workspaces -------------------------------------------------
+node_modules/
+npm-debug.log*
+yarn-error.log*
+.npm/
+*.log
+
+# package-lock.json IS tracked: the demo pins maplibre-gl, whose worker assets
+# apps/demo/vite.config.ts copies out of node_modules by exact path.
+
+# --- TypeScript build output -----------------------------------------------
+# packages/*/dist is what `npm run check` runs against; it is rebuilt by
+# `npm run build` and never committed.
+packages/*/dist/
+apps/*/dist/
+*.tsbuildinfo
+
+# --- Vite ------------------------------------------------------------------
+.vite/
+node_modules/.vite/
+apps/*/.vite/
+
+# --- Rust / wasm -----------------------------------------------------------
+crates/*/target/
+crates/*/pkg/
+**/*.rs.bk
+# Cargo.lock IS tracked: chronomap-core declares its own empty workspace and the
+# golden-vector tests are expected to run against pinned dependencies.
+
+# --- Local tooling state ---------------------------------------------------
+# oh-my-claudecode scratch state; project-memory.json embeds absolute paths.
+.omc/
+.claude/settings.local.json
+
+# --- Environment -----------------------------------------------------------
+.env
+.env.local
+.env.*.local
+
+# --- Editors ---------------------------------------------------------------
+.idea/
+.vscode/*
+!.vscode/extensions.json
+*.swp
+*~
+
+# --- OS --------------------------------------------------------------------
+.DS_Store
+._*
+Thumbs.db
+
+# test-vectors/ is deliberately NOT ignored: `npm run vectors` generates it, but
+# crates/chronomap-core/tests reads it as the golden fixture set.

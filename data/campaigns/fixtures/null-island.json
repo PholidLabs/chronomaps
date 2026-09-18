@@ -1,0 +1,390 @@
+{
+  "$schema": "../../schema/campaign.schema.json",
+  "chronomap": "1.0",
+  "meta": {
+    "id": "null-island-fixture",
+    "version": "1.0.0",
+    "title": {
+      "en": "Null Island Test Campaign",
+      "id": "Kampanye Uji Pulau Null"
+    },
+    "description": {
+      "en": "Synthetic, fictional fixture that exercises every feature of the contract (BCE dates across year zero, all entity kinds, interval states, open intervals, custom x- kinds). Chapter 2 intentionally overlaps chapter 1 to exercise warning W115. Not history.",
+      "id": "Data uji sintetis dan fiktif yang mencakup semua fitur kontrak. Bukan sejarah."
+    },
+    "languages": ["en", "id"],
+    "defaultLanguage": "en",
+    "license": "CC0-1.0",
+    "timeline": {
+      "extent": "-0050/0050",
+      "focus": "-0011/0001"
+    },
+    "map": {
+      "center": [0.2, 0],
+      "zoom": 10,
+      "pitch": 30,
+      "bounds": [-1, -1, 1, 1],
+      "theme": "parchment-sepia"
+    }
+  },
+  "factions": [
+    {
+      "id": "blue",
+      "name": {
+        "en": "Blue League",
+        "id": "Liga Biru"
+      },
+      "color": "#2B4C7E"
+    },
+    {
+      "id": "red",
+      "name": {
+        "en": "Red Kingdom",
+        "id": "Kerajaan Merah"
+      },
+      "color": "#8B1E1E"
+    }
+  ],
+  "parts": [
+    {
+      "id": "part-war",
+      "title": {
+        "en": "The war",
+        "id": "Perang"
+      }
+    },
+    {
+      "id": "part-peace",
+      "title": {
+        "en": "The peace",
+        "id": "Perdamaian"
+      }
+    }
+  ],
+  "places": [
+    {
+      "id": "harbor",
+      "name": {
+        "en": "Harbor",
+        "id": "Pelabuhan"
+      },
+      "kind": "port",
+      "coordinates": [0, 0],
+      "certainty": "exact",
+      "rank": 1
+    },
+    {
+      "id": "hill",
+      "name": {
+        "en": "Hill",
+        "id": "Bukit"
+      },
+      "kind": "mountain",
+      "coordinates": [0.2, 0.1],
+      "certainty": "approximate"
+    },
+    {
+      "id": "ruins",
+      "name": {
+        "en": "Ruins",
+        "id": "Reruntuhan"
+      },
+      "kind": "fort",
+      "coordinates": [0.4, -0.1],
+      "certainty": "conjectural",
+      "radiusMeters": 5000
+    }
+  ],
+  "entities": [
+    {
+      "id": "blue-legion",
+      "kind": "unit",
+      "name": {
+        "en": "Blue Legion",
+        "id": "Legiun Biru"
+      },
+      "faction": "blue",
+      "when": "-0010-03/-0008",
+      "track": [
+        {
+          "when": "-0010-03/-0010-05-24",
+          "at": "harbor",
+          "strength": 5000
+        },
+        {
+          "when": "-0010-06-01",
+          "at": "hill",
+          "via": [[0.1, 0.05]],
+          "strength": 4000
+        },
+        {
+          "when": "-0010-07-01/-0009",
+          "at": "ruins",
+          "strength": {
+            "min": 2000,
+            "max": 3000,
+            "note": {
+              "en": "Sources disagree",
+              "id": "Sumber berbeda"
+            }
+          }
+        }
+      ],
+      "states": [
+        {
+          "when": "-0009-06-01",
+          "status": "disbanded"
+        }
+      ],
+      "style": {
+        "trail": "full",
+        "widthBy": "strength"
+      }
+    },
+    {
+      "id": "red-fort",
+      "kind": "fortification",
+      "name": {
+        "en": "Red Fort",
+        "id": "Benteng Merah"
+      },
+      "faction": "red",
+      "at": "ruins",
+      "when": "-0020/..",
+      "states": [
+        {
+          "when": "-0020",
+          "status": "active"
+        },
+        {
+          "when": "-0010-06-15/-0010-06-30",
+          "status": "besieged"
+        },
+        {
+          "when": "-0010-07-01",
+          "status": "captured",
+          "faction": "blue"
+        }
+      ]
+    },
+    {
+      "id": "red-land",
+      "kind": "territory",
+      "name": {
+        "en": "Red Land",
+        "id": "Tanah Merah"
+      },
+      "faction": "red",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [[0.3, -0.3], [0.6, -0.3], [0.6, 0.1], [0.3, 0.1], [0.3, -0.3]]
+        ]
+      },
+      "states": [
+        {
+          "when": "-0010-07-01",
+          "faction": "blue"
+        }
+      ]
+    },
+    {
+      "id": "coast-road",
+      "kind": "route",
+      "name": {
+        "en": "Coast road",
+        "id": "Jalan pesisir"
+      },
+      "faction": "red",
+      "path": [
+        "harbor",
+        "hill",
+        [0.4, 0]
+      ],
+      "style": {
+        "dash": [2, 1]
+      }
+    },
+    {
+      "id": "lighthouse",
+      "kind": "x-lighthouse",
+      "name": {
+        "en": "Lighthouse",
+        "id": "Mercusuar"
+      },
+      "faction": "blue",
+      "at": "harbor",
+      "x-beamRangeKm": 20
+    }
+  ],
+  "events": [
+    {
+      "id": "battle-of-hill",
+      "kind": "battle",
+      "name": {
+        "en": "Battle of the Hill",
+        "id": "Pertempuran Bukit"
+      },
+      "when": "-0010-06-01",
+      "at": "hill",
+      "importance": 1,
+      "participants": [
+        {
+          "faction": "blue",
+          "role": "attacker",
+          "commanders": ["General A"],
+          "strength": 4500,
+          "losses": {
+            "min": 300,
+            "max": 500
+          }
+        },
+        {
+          "faction": "red",
+          "role": "defender",
+          "strength": 2000
+        }
+      ],
+      "outcome": {
+        "victor": "blue",
+        "summary": {
+          "en": "Blue wins.",
+          "id": "Biru menang."
+        }
+      },
+      "sources": ["fixture-source"]
+    },
+    {
+      "id": "siege-of-ruins",
+      "kind": "siege",
+      "name": {
+        "en": "Siege of the Ruins",
+        "id": "Pengepungan Reruntuhan"
+      },
+      "when": "-0010-06-15/-0010-06-30",
+      "at": "ruins",
+      "sources": ["fixture-source"]
+    },
+    {
+      "id": "peace-decree",
+      "kind": "decree",
+      "name": {
+        "en": "Peace decree",
+        "id": "Dekret perdamaian"
+      },
+      "when": "-0009~",
+      "sources": ["fixture-source"]
+    },
+    {
+      "id": "new-era",
+      "kind": "political",
+      "name": {
+        "en": "Year one",
+        "id": "Tahun satu"
+      },
+      "when": "0001-01-01",
+      "at": [0.05, 0.02],
+      "certainty": "exact",
+      "sources": ["fixture-source"]
+    }
+  ],
+  "chapters": [
+    {
+      "id": "ch-muster",
+      "part": "part-war",
+      "title": {
+        "en": "Muster",
+        "id": "Berkumpul"
+      },
+      "when": "-0010-03/-0010-05",
+      "body": {
+        "en": "The legion gathers at the **harbor**.",
+        "id": "Legiun berkumpul di **pelabuhan**."
+      },
+      "camera": {
+        "center": [0, 0],
+        "zoom": 11,
+        "pitch": 40,
+        "bearing": 10,
+        "durationMs": 2000,
+        "transition": "fly"
+      },
+      "focus": ["harbor", "blue-legion"],
+      "media": ["fixture-image"]
+    },
+    {
+      "id": "ch-march",
+      "part": "part-war",
+      "title": {
+        "en": "March and battle",
+        "id": "Bergerak dan bertempur"
+      },
+      "when": "-0010-05-25/-0010-06-01",
+      "body": {
+        "en": "They march to the hill. See [notes](https://example.org/notes).",
+        "id": "Mereka bergerak ke bukit."
+      },
+      "focus": ["battle-of-hill", "blue-legion"]
+    },
+    {
+      "id": "ch-siege",
+      "part": "part-war",
+      "title": {
+        "en": "Siege",
+        "id": "Pengepungan"
+      },
+      "when": "-0010-06-15/-0010-07-01",
+      "body": {
+        "en": "The fort is besieged and falls.",
+        "id": "Benteng dikepung lalu jatuh."
+      },
+      "camera": {
+        "center": [0.4, -0.1],
+        "zoom": 12
+      },
+      "focus": ["siege-of-ruins", "red-fort"],
+      "sources": ["fixture-source"]
+    },
+    {
+      "id": "ch-year-one",
+      "part": "part-peace",
+      "title": {
+        "en": "Across year zero",
+        "id": "Melewati tahun nol"
+      },
+      "when": "-0001-12-31/0001-01-01",
+      "dateLabel": {
+        "en": "31 Dec 2 BCE – 1 Jan 1 CE",
+        "id": "31 Des 2 SM – 1 Jan 1 M"
+      },
+      "body": {
+        "en": "Tick math must handle negative years.",
+        "id": "Perhitungan waktu harus menangani tahun negatif."
+      },
+      "camera": {
+        "center": [0.05, 0.02],
+        "zoom": 13
+      },
+      "focus": ["new-era"]
+    }
+  ],
+  "sources": [
+    {
+      "id": "fixture-source",
+      "type": "dataset",
+      "citation": "Synthetic fixture, ChronoMap contract test suite."
+    }
+  ],
+  "media": [
+    {
+      "id": "fixture-image",
+      "type": "image",
+      "url": "media/fixture.png",
+      "alt": {
+        "en": "Placeholder image",
+        "id": "Gambar placeholder"
+      },
+      "license": "CC0-1.0"
+    }
+  ]
+}

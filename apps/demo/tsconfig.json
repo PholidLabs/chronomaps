@@ -1,0 +1,12 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "noEmit": true,
+    "types": ["vite/client"],
+    "paths": {
+      "@chronomap/engine": ["../../packages/engine/src/index.ts"],
+      "@chronomap/maplibre": ["../../packages/maplibre/src/index.ts"]
+    }
+  },
+  "include": ["src", "vite.config.ts"]
+}

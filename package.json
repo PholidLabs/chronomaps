@@ -1,0 +1,19 @@
+{
+  "name": "chronomap",
+  "private": true,
+  "version": "0.1.0",
+  "description": "ChronoMap Engine — plug-and-play spatio-temporal storytelling maps",
+  "license": "MIT",
+  "type": "module",
+  "workspaces": ["packages/*", "apps/*"],
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "build": "npm run build -w @chronomap/engine && npm run build -w @chronomap/maplibre",
+    "build:demo": "npm run build && npm run build -w @chronomap/demo",
+    "dev": "npm run dev -w @chronomap/demo",
+    "test": "npm run build -w @chronomap/engine && npm run test -w @chronomap/engine",
+    "check": "node packages/engine/dist/cli.js data/campaigns/*.json data/campaigns/fixtures/*.json",
+    "vectors": "node packages/engine/dist/cli.js --vectors test-vectors data/campaigns/java-war-1825.json"
+  },
+  "devDependencies": { "typescript": "^5.9.2" }
+}

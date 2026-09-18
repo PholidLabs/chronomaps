@@ -1,0 +1,1370 @@
+{
+  "$schema": "../schema/campaign.schema.json",
+  "chronomap": "1.0",
+  "meta": {
+    "id": "napoleon-russia-1812",
+    "version": "0.1.0",
+    "title": {
+      "en": "Napoleon's Russian Campaign, 1812",
+      "id": "Kampanye Rusia Napoleon, 1812"
+    },
+    "subtitle": {
+      "en": "After Minard's flow map of 1869",
+      "id": "Berdasarkan peta aliran Minard tahun 1869"
+    },
+    "description": {
+      "en": "The Grande Armée's advance on Moscow and its destruction during the retreat, drawn from Charles Minard's 1869 figures. A compact second campaign that uses the same contract as the Java War dataset: a different continent, calendar and scale, and strength-scaled troop lines.",
+      "id": "Gerak maju Grande Armée ke Moskwa dan kehancurannya saat mundur, berdasarkan angka Charles Minard tahun 1869. Kampanye kedua yang ringkas dengan kontrak yang sama seperti dataset Perang Jawa: benua, kalender, dan skala berbeda, serta garis pasukan yang tebalnya mengikuti jumlah prajurit."
+    },
+    "contentWarning": {
+      "en": "Describes mass death in war and extreme cold.",
+      "id": "Memuat kisah kematian massal dalam perang dan cuaca sangat dingin."
+    },
+    "languages": ["en", "id"],
+    "defaultLanguage": "en",
+    "license": "CC-BY-4.0",
+    "authors": [
+      {
+        "name": "PholidLabs"
+      }
+    ],
+    "updated": "2026-09-17",
+    "timeline": {
+      "extent": "1812-06-24/1812-12-14"
+    },
+    "map": {
+      "center": [30.8, 55],
+      "zoom": 5.4,
+      "pitch": 25,
+      "bearing": 0,
+      "bounds": [20, 50, 42, 59.5],
+      "terrain": {
+        "exaggeration": 1
+      },
+      "theme": "parchment-sepia"
+    }
+  },
+  "factions": [
+    {
+      "id": "grande-armee",
+      "name": {
+        "en": "Grande Armée (French Empire and allies)",
+        "id": "Grande Armée (Kekaisaran Prancis dan sekutunya)"
+      },
+      "shortName": {
+        "en": "Grande Armée",
+        "id": "Grande Armée"
+      },
+      "color": "#2B4C7E"
+    },
+    {
+      "id": "russian-empire",
+      "name": {
+        "en": "Imperial Russian Army",
+        "id": "Tentara Kekaisaran Rusia"
+      },
+      "shortName": {
+        "en": "Russia",
+        "id": "Rusia"
+      },
+      "color": "#2E6B3F"
+    }
+  ],
+  "places": [
+    {
+      "id": "kovno",
+      "name": {
+        "en": "Kovno",
+        "id": "Kovno"
+      },
+      "modernName": {
+        "en": "Kaunas, Lithuania",
+        "id": "Kaunas, Lituania"
+      },
+      "kind": "settlement",
+      "coordinates": [23.8861, 54.8972],
+      "certainty": "approximate",
+      "rank": 1
+    },
+    {
+      "id": "vilnius",
+      "name": {
+        "en": "Wilna",
+        "id": "Wilna"
+      },
+      "modernName": {
+        "en": "Vilnius, Lithuania",
+        "id": "Vilnius, Lituania"
+      },
+      "kind": "settlement",
+      "coordinates": [25.28, 54.6872],
+      "certainty": "approximate",
+      "rank": 1
+    },
+    {
+      "id": "vitebsk",
+      "name": {
+        "en": "Vitebsk",
+        "id": "Vitebsk"
+      },
+      "modernName": {
+        "en": "Vitebsk, Belarus",
+        "id": "Vitebsk, Belarus"
+      },
+      "kind": "settlement",
+      "coordinates": [30.2056, 55.1917],
+      "certainty": "approximate",
+      "rank": 2
+    },
+    {
+      "id": "polotsk",
+      "name": {
+        "en": "Polotsk",
+        "id": "Polotsk"
+      },
+      "modernName": {
+        "en": "Polotsk, Belarus",
+        "id": "Polotsk, Belarus"
+      },
+      "kind": "settlement",
+      "coordinates": [28.7, 55.5],
+      "certainty": "approximate",
+      "rank": 3,
+      "notes": "Minard's position."
+    },
+    {
+      "id": "smolensk",
+      "name": {
+        "en": "Smolensk",
+        "id": "Smolensk"
+      },
+      "kind": "settlement",
+      "coordinates": [32.0453, 54.7828],
+      "certainty": "approximate",
+      "rank": 1
+    },
+    {
+      "id": "borodino",
+      "name": {
+        "en": "Borodino",
+        "id": "Borodino"
+      },
+      "kind": "battlefield",
+      "coordinates": [35.817, 55.533],
+      "certainty": "approximate",
+      "rank": 1
+    },
+    {
+      "id": "moscow",
+      "name": {
+        "en": "Moscow",
+        "id": "Moskwa"
+      },
+      "kind": "settlement",
+      "coordinates": [37.6178, 55.7558],
+      "certainty": "approximate",
+      "rank": 1
+    },
+    {
+      "id": "maloyaroslavets",
+      "name": {
+        "en": "Maloyaroslavets",
+        "id": "Maloyaroslavets"
+      },
+      "kind": "settlement",
+      "coordinates": [36.4583, 55.0217],
+      "certainty": "approximate",
+      "rank": 2
+    },
+    {
+      "id": "vyazma",
+      "name": {
+        "en": "Vyazma",
+        "id": "Vyazma"
+      },
+      "kind": "settlement",
+      "coordinates": [34.2912, 55.2107],
+      "certainty": "approximate",
+      "rank": 2
+    },
+    {
+      "id": "krasnoi",
+      "name": {
+        "en": "Krasnoi",
+        "id": "Krasnoi"
+      },
+      "modernName": {
+        "en": "Krasny, Smolensk Oblast",
+        "id": "Krasny, Oblast Smolensk"
+      },
+      "kind": "settlement",
+      "coordinates": [31.43, 54.56],
+      "certainty": "approximate",
+      "rank": 3
+    },
+    {
+      "id": "studienka",
+      "name": {
+        "en": "Studienka (Berezina crossing)",
+        "id": "Studienka (penyeberangan Berezina)"
+      },
+      "kind": "river",
+      "coordinates": [28.3544, 54.3247],
+      "certainty": "approximate",
+      "rank": 2
+    },
+    {
+      "id": "smorgon",
+      "name": {
+        "en": "Smorgoni",
+        "id": "Smorgoni"
+      },
+      "modernName": {
+        "en": "Smarhon, Belarus",
+        "id": "Smarhon, Belarus"
+      },
+      "kind": "settlement",
+      "coordinates": [26.4, 54.4836],
+      "certainty": "approximate",
+      "rank": 3
+    }
+  ],
+  "entities": [
+    {
+      "id": "grande-armee-main",
+      "kind": "unit",
+      "faction": "grande-armee",
+      "name": {
+        "en": "Grande Armée, main body",
+        "id": "Grande Armée, pasukan utama"
+      },
+      "commanders": ["Napoleon I"],
+      "description": {
+        "en": "Minard's main group. Positions and strengths are Minard's; the dates are estimated from known events and Minard's dated temperature readings.",
+        "id": "Kelompok utama menurut Minard. Posisi dan jumlah prajurit dari Minard; tanggal diperkirakan dari peristiwa yang diketahui dan catatan suhu bertanggal dari Minard."
+      },
+      "track": [
+        {
+          "when": "1812-06-24",
+          "at": [24, 54.9],
+          "strength": 340000,
+          "certainty": "approximate",
+          "label": "Kowno",
+          "x-minardDirection": "A"
+        },
+        {
+          "when": "1812-06-25~",
+          "at": [24.5, 55],
+          "strength": 340000,
+          "certainty": "approximate",
+          "x-minardDirection": "A"
+        },
+        {
+          "when": "1812-06-28",
+          "at": [25.5, 54.5],
+          "strength": 340000,
+          "certainty": "approximate",
+          "label": "Wilna",
+          "x-minardDirection": "A"
+        },
+        {
+          "when": "1812-07-03~",
+          "at": [26, 54.7],
+          "strength": 320000,
+          "certainty": "approximate",
+          "x-minardDirection": "A"
+        },
+        {
+          "when": "1812-07-08~",
+          "at": [27, 54.8],
+          "strength": 300000,
+          "certainty": "approximate",
+          "x-minardDirection": "A"
+        },
+        {
+          "when": "1812-07-13~",
+          "at": [28, 54.9],
+          "strength": 280000,
+          "certainty": "approximate",
+          "x-minardDirection": "A"
+        },
+        {
+          "when": "1812-07-17~",
+          "at": [28.5, 55],
+          "strength": 240000,
+          "certainty": "approximate",
+          "x-minardDirection": "A"
+        },
+        {
+          "when": "1812-07-21~",
+          "at": [29, 55.1],
+          "strength": 210000,
+          "certainty": "approximate",
+          "x-minardDirection": "A"
+        },
+        {
+          "when": "1812-07-25~",
+          "at": [30, 55.2],
+          "strength": 180000,
+          "certainty": "approximate",
+          "x-minardDirection": "A"
+        },
+        {
+          "when": "1812-07-28/1812-08-12~",
+          "at": [30.3, 55.3],
+          "strength": 175000,
+          "certainty": "approximate",
+          "label": "Witebsk",
+          "x-minardDirection": "A"
+        },
+        {
+          "when": "1812-08-17/1812-08-24~",
+          "at": [32, 54.8],
+          "strength": 145000,
+          "certainty": "approximate",
+          "label": "Smolensk",
+          "x-minardDirection": "A"
+        },
+        {
+          "when": "1812-08-27~",
+          "at": [33.2, 54.9],
+          "strength": 140000,
+          "certainty": "approximate",
+          "label": "Dorogobouge",
+          "x-minardDirection": "A"
+        },
+        {
+          "when": "1812-09-01~",
+          "at": [34.4, 55.5],
+          "strength": 127100,
+          "certainty": "approximate",
+          "label": "Chjat",
+          "x-minardDirection": "A"
+        },
+        {
+          "when": "1812-09-05/1812-09-07",
+          "at": [35.5, 55.4],
+          "strength": 100000,
+          "certainty": "approximate",
+          "label": "Borodino",
+          "x-minardDirection": "A"
+        },
+        {
+          "when": "1812-09-09~",
+          "at": [36, 55.5],
+          "strength": 100000,
+          "certainty": "approximate",
+          "label": "Mojaisk",
+          "x-minardDirection": "A"
+        },
+        {
+          "when": "1812-09-14/1812-10-18",
+          "at": [37.6, 55.8],
+          "strength": 100000,
+          "certainty": "approximate",
+          "label": "Moscou",
+          "x-minardDirection": "A"
+        },
+        {
+          "when": "1812-10-20~",
+          "at": [37.7, 55.7],
+          "strength": 100000,
+          "certainty": "approximate",
+          "x-minardDirection": "R"
+        },
+        {
+          "when": "1812-10-21~",
+          "at": [37.5, 55.7],
+          "strength": 98000,
+          "certainty": "approximate",
+          "x-minardDirection": "R"
+        },
+        {
+          "when": "1812-10-23~",
+          "at": [37, 55],
+          "strength": 97000,
+          "certainty": "approximate",
+          "x-minardDirection": "R"
+        },
+        {
+          "when": "1812-10-24/1812-10-25~",
+          "at": [36.8, 55],
+          "strength": 96000,
+          "certainty": "approximate",
+          "label": "Malo-Jarosewli",
+          "x-minardDirection": "R"
+        },
+        {
+          "when": "1812-10-30~",
+          "at": [35.4, 55.3],
+          "strength": 87000,
+          "certainty": "approximate",
+          "x-minardDirection": "R"
+        },
+        {
+          "when": "1812-11-03",
+          "at": [34.3, 55.2],
+          "strength": 55000,
+          "certainty": "approximate",
+          "label": "Wixma",
+          "x-minardDirection": "R"
+        },
+        {
+          "when": "1812-11-09~",
+          "at": [33.3, 54.8],
+          "strength": 37000,
+          "certainty": "approximate",
+          "x-minardDirection": "R"
+        },
+        {
+          "when": "1812-11-10/1812-11-14",
+          "at": [32, 54.6],
+          "strength": 24000,
+          "certainty": "approximate",
+          "label": "Smolensk",
+          "x-minardDirection": "R"
+        },
+        {
+          "when": "1812-11-19~",
+          "at": [30.4, 54.4],
+          "strength": 20000,
+          "certainty": "approximate",
+          "label": "Orscha",
+          "x-minardDirection": "R"
+        },
+        {
+          "when": "1812-11-24~",
+          "at": [29.2, 54.3],
+          "strength": 20000,
+          "certainty": "approximate",
+          "label": "Bobr",
+          "x-minardDirection": "R"
+        },
+        {
+          "when": "1812-11-26/1812-11-28",
+          "at": [28.5, 54.2],
+          "strength": 20000,
+          "certainty": "approximate",
+          "label": "Studienska",
+          "x-minardDirection": "R"
+        },
+        {
+          "when": "1812-11-30~",
+          "at": [28.3, 54.3],
+          "strength": 20000,
+          "certainty": "approximate",
+          "x-minardDirection": "R"
+        },
+        {
+          "when": "1812-12-01~",
+          "at": [27.5, 54.5],
+          "strength": 20000,
+          "certainty": "approximate",
+          "x-minardDirection": "R"
+        },
+        {
+          "when": "1812-12-03~",
+          "at": [26.8, 54.3],
+          "strength": 12000,
+          "certainty": "approximate",
+          "label": "Molodexno",
+          "x-minardDirection": "R"
+        },
+        {
+          "when": "1812-12-05",
+          "at": [26.4, 54.4],
+          "strength": 14000,
+          "certainty": "approximate",
+          "label": "Smorgoni",
+          "x-minardDirection": "R"
+        },
+        {
+          "when": "1812-12-07~",
+          "at": [25, 54.4],
+          "strength": 8000,
+          "certainty": "approximate",
+          "x-minardDirection": "R"
+        },
+        {
+          "when": "1812-12-10~",
+          "at": [24.4, 54.4],
+          "strength": 4000,
+          "certainty": "approximate",
+          "x-minardDirection": "R"
+        },
+        {
+          "when": "1812-12-12~",
+          "at": [24.2, 54.4],
+          "strength": 4000,
+          "certainty": "approximate",
+          "x-minardDirection": "R"
+        },
+        {
+          "when": "1812-12-14~",
+          "at": [24.1, 54.4],
+          "strength": 4000,
+          "certainty": "approximate",
+          "x-minardDirection": "R"
+        }
+      ],
+      "style": {
+        "trail": "full",
+        "widthBy": "strength"
+      },
+      "sources": ["minard-1869", "histdata-minard"]
+    },
+    {
+      "id": "grande-armee-north",
+      "kind": "unit",
+      "faction": "grande-armee",
+      "name": {
+        "en": "Northern flank, toward Polotsk",
+        "id": "Sayap utara, menuju Polotsk"
+      },
+      "description": {
+        "en": "Minard's second group, which turned north toward Polotsk and rejoined the main body at the Berezina. Dates are estimated.",
+        "id": "Kelompok kedua menurut Minard, yang berbelok ke utara menuju Polotsk dan bergabung kembali dengan pasukan utama di Berezina. Tanggal diperkirakan."
+      },
+      "track": [
+        {
+          "when": "1812-06-24",
+          "at": [24, 55.1],
+          "strength": 60000,
+          "certainty": "approximate",
+          "x-minardDirection": "A"
+        },
+        {
+          "when": "1812-06-26~",
+          "at": [24.5, 55.2],
+          "strength": 60000,
+          "certainty": "approximate",
+          "x-minardDirection": "A"
+        },
+        {
+          "when": "1812-06-30~",
+          "at": [25.5, 54.7],
+          "strength": 60000,
+          "certainty": "approximate",
+          "x-minardDirection": "A"
+        },
+        {
+          "when": "1812-07-10~",
+          "at": [26.6, 55.7],
+          "strength": 40000,
+          "certainty": "approximate",
+          "x-minardDirection": "A"
+        },
+        {
+          "when": "1812-07-20~",
+          "at": [27.4, 55.6],
+          "strength": 33000,
+          "certainty": "approximate",
+          "x-minardDirection": "A"
+        },
+        {
+          "when": "1812-08-01~/1812-10-20",
+          "at": [28.7, 55.5],
+          "strength": 33000,
+          "certainty": "approximate",
+          "label": "Polotzk",
+          "x-minardDirection": "A"
+        },
+        {
+          "when": "1812-11-23~",
+          "at": [29.2, 54.2],
+          "strength": 30000,
+          "certainty": "approximate",
+          "x-minardDirection": "R"
+        },
+        {
+          "when": "1812-11-26~",
+          "at": [28.5, 54.1],
+          "strength": 30000,
+          "certainty": "approximate",
+          "x-minardDirection": "R"
+        },
+        {
+          "when": "1812-11-30~",
+          "at": [28.3, 54.2],
+          "strength": 28000,
+          "certainty": "approximate",
+          "x-minardDirection": "R"
+        }
+      ],
+      "style": {
+        "trail": "full",
+        "widthBy": "strength"
+      },
+      "sources": ["minard-1869", "histdata-minard"]
+    }
+  ],
+  "events": [
+    {
+      "id": "niemen-crossing",
+      "kind": "other",
+      "when": "1812-06-24",
+      "at": "kovno",
+      "importance": 1,
+      "name": {
+        "en": "Crossing of the Niemen",
+        "id": "Penyeberangan Sungai Neman"
+      },
+      "participants": [
+        {
+          "faction": "grande-armee",
+          "role": "attacker",
+          "commanders": ["Napoleon I"],
+          "strength": {
+            "min": 422000,
+            "max": 449000,
+            "note": {
+              "en": "Minard gives 422,000; modern estimates for the first wave run to about 449,000.",
+              "id": "Minard menyebut 422.000; perkiraan modern untuk gelombang pertama hingga sekitar 449.000."
+            }
+          }
+        }
+      ],
+      "summary": {
+        "en": "The Grande Armée crossed into the Russian Empire on pontoon bridges near Kovno.",
+        "id": "Grande Armée menyeberang ke wilayah Kekaisaran Rusia dengan jembatan ponton di dekat Kovno."
+      },
+      "sources": ["wp-french-invasion", "napoleon-empire-daybyday"]
+    },
+    {
+      "id": "vilnius-entered",
+      "kind": "capture",
+      "when": "1812-06-28",
+      "at": "vilnius",
+      "importance": 3,
+      "name": {
+        "en": "Napoleon enters Wilna",
+        "id": "Napoleon memasuki Wilna"
+      },
+      "participants": [
+        {
+          "faction": "grande-armee",
+          "role": "attacker",
+          "commanders": ["Napoleon I"]
+        },
+        {
+          "faction": "russian-empire",
+          "role": "defender",
+          "commanders": ["Alexander I", "Barclay de Tolly"]
+        }
+      ],
+      "summary": {
+        "en": "The Russian armies had withdrawn; the city authorities handed over the keys.",
+        "id": "Tentara Rusia telah mundur; pejabat kota menyerahkan kunci kota."
+      },
+      "sources": ["napoleon-empire-daybyday"]
+    },
+    {
+      "id": "battle-of-vitebsk",
+      "kind": "battle",
+      "when": "1812-07-26/1812-07-27",
+      "at": "vitebsk",
+      "importance": 3,
+      "name": {
+        "en": "Battle of Vitebsk",
+        "id": "Pertempuran Vitebsk"
+      },
+      "participants": [
+        {
+          "faction": "grande-armee",
+          "role": "attacker",
+          "commanders": ["Napoleon I"]
+        },
+        {
+          "faction": "russian-empire",
+          "role": "defender",
+          "commanders": ["Barclay de Tolly", "Konovnitsyn", "Pahlen"]
+        }
+      ],
+      "summary": {
+        "en": "The Russians slipped away toward Smolensk instead of accepting a decisive battle.",
+        "id": "Pasukan Rusia menghindar ke arah Smolensk alih-alih bertempur habis-habisan."
+      },
+      "sources": ["wp-vitebsk"]
+    },
+    {
+      "id": "battle-of-smolensk",
+      "kind": "battle",
+      "when": "1812-08-16/1812-08-18",
+      "at": "smolensk",
+      "importance": 2,
+      "name": {
+        "en": "Battle of Smolensk",
+        "id": "Pertempuran Smolensk"
+      },
+      "participants": [
+        {
+          "faction": "grande-armee",
+          "role": "attacker",
+          "commanders": ["Napoleon I", "Poniatowski"]
+        },
+        {
+          "faction": "russian-empire",
+          "role": "defender",
+          "commanders": ["Barclay de Tolly", "Bagration", "Raevsky"]
+        }
+      ],
+      "outcome": {
+        "victor": "grande-armee",
+        "summary": {
+          "en": "The city was taken, but the Russian armies withdrew east intact.",
+          "id": "Kota direbut, tetapi tentara Rusia mundur ke timur dalam keadaan utuh."
+        }
+      },
+      "sources": ["wp-smolensk"]
+    },
+    {
+      "id": "kutuzov-command",
+      "kind": "appointment",
+      "when": "1812-08-20?",
+      "importance": 3,
+      "name": {
+        "en": "Kutuzov takes overall command",
+        "id": "Kutuzov mengambil alih komando tertinggi"
+      },
+      "participants": [
+        {
+          "faction": "russian-empire",
+          "role": "party",
+          "commanders": ["Mikhail Kutuzov"]
+        }
+      ],
+      "notes": {
+        "en": "Wikipedia gives 20 August; other sources give a different day in August.",
+        "id": "Wikipedia menyebut 20 Agustus; sumber lain menyebut hari lain di bulan Agustus."
+      },
+      "sources": ["wp-french-invasion"]
+    },
+    {
+      "id": "battle-of-borodino",
+      "kind": "battle",
+      "when": "1812-09-07",
+      "at": "borodino",
+      "importance": 1,
+      "name": {
+        "en": "Battle of Borodino",
+        "id": "Pertempuran Borodino"
+      },
+      "participants": [
+        {
+          "faction": "grande-armee",
+          "role": "attacker",
+          "commanders": ["Napoleon I", "Davout", "Ney", "Murat", "Eugène de Beauharnais", "Poniatowski"],
+          "strength": {
+            "min": 103000,
+            "max": 135000
+          },
+          "losses": {
+            "min": 30000,
+            "max": 42000
+          }
+        },
+        {
+          "faction": "russian-empire",
+          "role": "defender",
+          "commanders": ["Mikhail Kutuzov", "Barclay de Tolly", "Bagration"],
+          "strength": {
+            "min": 125000,
+            "max": 160000
+          },
+          "losses": {
+            "min": 40000,
+            "max": 53000
+          }
+        }
+      ],
+      "outcome": {
+        "summary": {
+          "en": "The bloodiest day of the campaign. Bagration was mortally wounded; Kutuzov withdrew and left the road to Moscow open.",
+          "id": "Hari paling berdarah dalam kampanye ini. Bagration terluka parah dan kemudian wafat; Kutuzov mundur dan membiarkan jalan ke Moskwa terbuka."
+        }
+      },
+      "sources": ["wp-borodino"]
+    },
+    {
+      "id": "moscow-entered",
+      "kind": "capture",
+      "when": "1812-09-14",
+      "at": "moscow",
+      "importance": 1,
+      "name": {
+        "en": "The French enter Moscow",
+        "id": "Pasukan Prancis memasuki Moskwa"
+      },
+      "participants": [
+        {
+          "faction": "grande-armee",
+          "role": "attacker",
+          "commanders": ["Napoleon I", "Murat"]
+        }
+      ],
+      "sources": ["wp-fire-of-moscow"]
+    },
+    {
+      "id": "fire-of-moscow",
+      "kind": "x-fire",
+      "when": "1812-09-14/1812-09-18",
+      "at": "moscow",
+      "importance": 2,
+      "name": {
+        "en": "Fire of Moscow",
+        "id": "Kebakaran Moskwa"
+      },
+      "summary": {
+        "en": "Fires destroyed about three quarters of the city, 6,496 of its 9,151 houses. Governor Rostopchin is often blamed.",
+        "id": "Kebakaran menghancurkan sekitar tiga perempat kota, 6.496 dari 9.151 rumah. Gubernur Rostopchin kerap dituding sebagai dalangnya."
+      },
+      "sources": ["wp-fire-of-moscow"]
+    },
+    {
+      "id": "moscow-departure",
+      "kind": "other",
+      "when": "1812-10-19",
+      "at": "moscow",
+      "importance": 2,
+      "name": {
+        "en": "The army leaves Moscow",
+        "id": "Pasukan meninggalkan Moskwa"
+      },
+      "participants": [
+        {
+          "faction": "grande-armee",
+          "role": "party",
+          "commanders": ["Napoleon I"],
+          "strength": 108000
+        }
+      ],
+      "summary": {
+        "en": "About 108,000 men marched out toward Kaluga.",
+        "id": "Sekitar 108.000 prajurit bergerak keluar menuju Kaluga."
+      },
+      "sources": ["wp-fire-of-moscow"]
+    },
+    {
+      "id": "battle-of-maloyaroslavets",
+      "kind": "battle",
+      "when": "1812-10-24",
+      "at": "maloyaroslavets",
+      "importance": 2,
+      "name": {
+        "en": "Battle of Maloyaroslavets",
+        "id": "Pertempuran Maloyaroslavets"
+      },
+      "participants": [
+        {
+          "faction": "grande-armee",
+          "role": "attacker",
+          "commanders": ["Eugène de Beauharnais", "Davout"]
+        },
+        {
+          "faction": "russian-empire",
+          "role": "defender",
+          "commanders": ["Mikhail Kutuzov", "Dokhturov", "Raevsky"]
+        }
+      ],
+      "outcome": {
+        "summary": {
+          "en": "Inconclusive, but it blocked the southern route and forced the retreat back along the devastated Smolensk road.",
+          "id": "Tidak menentukan, tetapi menutup jalur selatan dan memaksa pasukan mundur lewat jalan Smolensk yang sudah porak-poranda."
+        }
+      },
+      "sources": ["wp-maloyaroslavets"]
+    },
+    {
+      "id": "battle-of-vyazma",
+      "kind": "battle",
+      "when": "1812-11-03",
+      "at": "vyazma",
+      "importance": 3,
+      "name": {
+        "en": "Battle of Vyazma",
+        "id": "Pertempuran Vyazma"
+      },
+      "participants": [
+        {
+          "faction": "russian-empire",
+          "role": "attacker",
+          "commanders": ["Miloradovich", "Platov"]
+        },
+        {
+          "faction": "grande-armee",
+          "role": "defender",
+          "commanders": ["Eugène de Beauharnais", "Davout", "Ney"]
+        }
+      ],
+      "outcome": {
+        "victor": "russian-empire",
+        "summary": {
+          "en": "The French rearguard was badly mauled.",
+          "id": "Barisan belakang Prancis dihajar habis."
+        }
+      },
+      "sources": ["wp-vyazma"]
+    },
+    {
+      "id": "battle-of-krasnoi",
+      "kind": "battle",
+      "when": "1812-11-15/1812-11-18",
+      "at": "krasnoi",
+      "importance": 2,
+      "name": {
+        "en": "Battle of Krasnoi",
+        "id": "Pertempuran Krasnoi"
+      },
+      "participants": [
+        {
+          "faction": "russian-empire",
+          "role": "attacker",
+          "commanders": ["Mikhail Kutuzov", "Miloradovich"]
+        },
+        {
+          "faction": "grande-armee",
+          "role": "defender",
+          "commanders": ["Napoleon I", "Davout", "Ney"]
+        }
+      ],
+      "outcome": {
+        "victor": "russian-empire",
+        "summary": {
+          "en": "About 26,500 French soldiers were taken prisoner, though Kutuzov chose not to destroy the army.",
+          "id": "Sekitar 26.500 prajurit Prancis ditawan, meski Kutuzov memilih tidak menghancurkan pasukan itu sepenuhnya."
+        }
+      },
+      "sources": ["wp-krasnoi"]
+    },
+    {
+      "id": "battle-of-berezina",
+      "kind": "battle",
+      "when": "1812-11-26/1812-11-29",
+      "at": "studienka",
+      "importance": 1,
+      "name": {
+        "en": "Crossing of the Berezina",
+        "id": "Penyeberangan Berezina"
+      },
+      "participants": [
+        {
+          "faction": "grande-armee",
+          "role": "defender",
+          "commanders": ["Napoleon I", "Oudinot", "Victor", "Ney"]
+        },
+        {
+          "faction": "russian-empire",
+          "role": "attacker",
+          "commanders": ["Wittgenstein", "Chichagov"]
+        }
+      ],
+      "outcome": {
+        "summary": {
+          "en": "Two trestle bridges let the remnant escape westward, at a cost of 50,000 to 60,000 lost.",
+          "id": "Dua jembatan darurat memungkinkan sisa pasukan lolos ke barat, dengan kehilangan 50.000 hingga 60.000 orang."
+        }
+      },
+      "sources": ["wp-berezina"]
+    },
+    {
+      "id": "napoleon-leaves",
+      "kind": "other",
+      "when": "1812-12-05",
+      "at": "smorgon",
+      "importance": 2,
+      "name": {
+        "en": "Napoleon leaves the army",
+        "id": "Napoleon meninggalkan pasukannya"
+      },
+      "participants": [
+        {
+          "faction": "grande-armee",
+          "role": "party",
+          "commanders": ["Napoleon I", "Murat"]
+        }
+      ],
+      "summary": {
+        "en": "Napoleon handed command to Murat and left for Paris.",
+        "id": "Napoleon menyerahkan komando kepada Murat dan berangkat ke Paris."
+      },
+      "sources": ["napoleon-empire-daybyday"]
+    },
+    {
+      "id": "niemen-recrossed",
+      "kind": "other",
+      "when": "1812-12-14~",
+      "at": "kovno",
+      "importance": 1,
+      "name": {
+        "en": "The survivors recross the Niemen",
+        "id": "Para penyintas menyeberangi Neman kembali"
+      },
+      "summary": {
+        "en": "Minard counts about 10,000 men returning of the 422,000 who had crossed in June.",
+        "id": "Minard mencatat sekitar 10.000 prajurit kembali dari 422.000 yang menyeberang pada Juni."
+      },
+      "sources": ["wp-french-invasion", "masswerk-minard"]
+    }
+  ],
+  "chapters": [
+    {
+      "id": "ch-1-niemen",
+      "when": "1812-06-24",
+      "dateLabel": {
+        "en": "24 June 1812 (12 June Old Style)",
+        "id": "24 Juni 1812 (12 Juni kalender Julian)"
+      },
+      "title": {
+        "en": "Across the Niemen",
+        "id": "Menyeberangi Neman"
+      },
+      "body": {
+        "en": "On 24 June 1812 Napoleon's Grande Armée began crossing the Niemen into the Russian Empire. Charles Minard's famous map of 1869 counts 422,000 men; modern estimates for the first wave are a little higher.\n\nRussia still used the Julian calendar, twelve days behind. This dataset stores every date in the Gregorian calendar and shows the Old Style date as a label.",
+        "id": "Pada 24 Juni 1812 Grande Armée pimpinan Napoleon mulai menyeberangi Sungai Neman memasuki wilayah Kekaisaran Rusia. Peta terkenal Charles Minard tahun 1869 mencatat 422.000 prajurit; perkiraan modern untuk gelombang pertama sedikit lebih tinggi.\n\nRusia masih memakai kalender Julian, dua belas hari lebih lambat. Dataset ini menyimpan semua tanggal dalam kalender Gregorian dan menampilkan tanggal kalender lama sebagai label."
+      },
+      "camera": {
+        "center": [24.2, 54.9],
+        "zoom": 8,
+        "pitch": 40,
+        "bearing": 60,
+        "durationMs": 3000
+      },
+      "focus": ["niemen-crossing", "grande-armee-main", "grande-armee-north"],
+      "media": ["minard-chart"],
+      "sources": ["minard-1869", "wp-french-invasion"]
+    },
+    {
+      "id": "ch-2-advance",
+      "when": "1812-06-25/1812-08-15",
+      "title": {
+        "en": "The long advance",
+        "id": "Gerak maju yang panjang"
+      },
+      "body": {
+        "en": "The Russian armies fell back instead of giving battle. Napoleon entered Wilna on 28 June and Vitebsk at the end of July.\n\nWatch the line thin out. A northern flank turned off toward Polotsk, and by the time it reached Vitebsk the main body had lost half its strength to disease, desertion and detachments, before any major battle.",
+        "id": "Tentara Rusia terus mundur alih-alih bertempur. Napoleon memasuki Wilna pada 28 Juni dan Vitebsk pada akhir Juli.\n\nPerhatikan garis pasukan yang makin menipis. Sayap utara berbelok ke arah Polotsk, dan saat tiba di Vitebsk, pasukan utama telah kehilangan separuh kekuatannya akibat penyakit, desersi, dan pemecahan pasukan, sebelum ada satu pun pertempuran besar."
+      },
+      "camera": {
+        "center": [27.3, 55],
+        "zoom": 6.3,
+        "pitch": 30,
+        "bearing": 0,
+        "durationMs": 3000
+      },
+      "focus": ["grande-armee-main", "grande-armee-north", "vilnius-entered", "battle-of-vitebsk", "polotsk"],
+      "sources": ["minard-1869", "napoleon-empire-daybyday"]
+    },
+    {
+      "id": "ch-3-smolensk",
+      "when": "1812-08-16/1812-09-06",
+      "title": {
+        "en": "Smolensk",
+        "id": "Smolensk"
+      },
+      "body": {
+        "en": "Napoleon stormed Smolensk on 16–18 August, but the Russian armies escaped east. Soon afterwards Mikhail Kutuzov took overall command of the Russian forces.",
+        "id": "Napoleon menyerbu Smolensk pada 16–18 Agustus, tetapi tentara Rusia lolos ke timur. Tak lama kemudian Mikhail Kutuzov mengambil alih komando tertinggi pasukan Rusia."
+      },
+      "camera": {
+        "center": [33, 55],
+        "zoom": 7,
+        "pitch": 35,
+        "bearing": 20,
+        "durationMs": 3000
+      },
+      "focus": ["battle-of-smolensk", "kutuzov-command", "grande-armee-main"],
+      "sources": ["wp-smolensk", "wp-french-invasion"]
+    },
+    {
+      "id": "ch-4-borodino",
+      "when": "1812-09-07",
+      "dateLabel": {
+        "en": "7 September 1812 (26 August Old Style)",
+        "id": "7 September 1812 (26 Agustus kalender Julian)"
+      },
+      "title": {
+        "en": "Borodino",
+        "id": "Borodino"
+      },
+      "body": {
+        "en": "At Borodino, about 115 km west of Moscow, Kutuzov finally stood and fought. It was the bloodiest single day of the campaign, with some 30,000 to 42,000 French and 40,000 to 53,000 Russian casualties.\n\nKutuzov withdrew the next day, leaving the road to Moscow open.",
+        "id": "Di Borodino, sekitar 115 km di barat Moskwa, Kutuzov akhirnya bertahan dan bertempur. Inilah hari paling berdarah dalam kampanye ini, dengan korban sekitar 30.000 hingga 42.000 di pihak Prancis dan 40.000 hingga 53.000 di pihak Rusia.\n\nKutuzov mundur keesokan harinya, membiarkan jalan ke Moskwa terbuka."
+      },
+      "camera": {
+        "center": [35.817, 55.533],
+        "zoom": 11,
+        "pitch": 55,
+        "bearing": 80,
+        "durationMs": 3500
+      },
+      "focus": ["battle-of-borodino", "borodino"],
+      "sources": ["wp-borodino"]
+    },
+    {
+      "id": "ch-5-moscow",
+      "when": "1812-09-08/1812-10-18",
+      "title": {
+        "en": "Moscow burns",
+        "id": "Moskwa terbakar"
+      },
+      "body": {
+        "en": "The French entered an almost empty Moscow on 14 September. That night fires broke out, and by 18 September about three quarters of the city had burned.\n\nNapoleon waited five weeks for a peace offer that never came.",
+        "id": "Pasukan Prancis memasuki Moskwa yang nyaris kosong pada 14 September. Malam itu kebakaran terjadi, dan hingga 18 September sekitar tiga perempat kota telah hangus.\n\nNapoleon menunggu lima minggu untuk tawaran damai yang tak pernah datang."
+      },
+      "camera": {
+        "center": [37.62, 55.75],
+        "zoom": 10.5,
+        "pitch": 45,
+        "bearing": -20,
+        "durationMs": 3500
+      },
+      "focus": ["moscow-entered", "fire-of-moscow", "moscow"],
+      "sources": ["wp-fire-of-moscow"]
+    },
+    {
+      "id": "ch-6-retreat",
+      "when": "1812-10-19/1812-11-09",
+      "title": {
+        "en": "The retreat begins",
+        "id": "Mundur dimulai"
+      },
+      "body": {
+        "en": "About 108,000 men left Moscow on 19 October, heading south-west. At Maloyaroslavets on 24 October the Russians blocked the way, forcing the army back onto the road it had already stripped bare on the way in.\n\nAfter another defeat at Vyazma on 3 November, the first hard frosts arrived.",
+        "id": "Sekitar 108.000 prajurit meninggalkan Moskwa pada 19 Oktober menuju barat daya. Di Maloyaroslavets pada 24 Oktober pasukan Rusia menutup jalan, memaksa mereka kembali ke jalan yang sudah mereka jarah habis saat berangkat.\n\nSetelah kalah lagi di Vyazma pada 3 November, embun beku pertama yang keras pun datang."
+      },
+      "camera": {
+        "center": [35.9, 55.3],
+        "zoom": 7.3,
+        "pitch": 35,
+        "bearing": 0,
+        "durationMs": 3500
+      },
+      "focus": ["moscow-departure", "battle-of-maloyaroslavets", "battle-of-vyazma", "grande-armee-main"],
+      "sources": ["wp-fire-of-moscow", "wp-maloyaroslavets", "wp-vyazma"]
+    },
+    {
+      "id": "ch-7-krasnoi",
+      "when": "1812-11-10/1812-11-25",
+      "title": {
+        "en": "Smolensk and Krasnoi",
+        "id": "Smolensk dan Krasnoi"
+      },
+      "body": {
+        "en": "Minard recorded −21° Réaumur (about −26 °C) on 14 November.\n\nAt Krasnoi, on 15–18 November, the Russians took about 26,500 prisoners.",
+        "id": "Minard mencatat suhu −21° Réaumur (sekitar −26 °C) pada 14 November.\n\nDi Krasnoi, pada 15–18 November, pasukan Rusia menawan sekitar 26.500 prajurit."
+      },
+      "camera": {
+        "center": [31.4, 54.6],
+        "zoom": 7.8,
+        "pitch": 35,
+        "bearing": 0,
+        "durationMs": 3000
+      },
+      "focus": ["battle-of-krasnoi", "grande-armee-main"],
+      "sources": ["wp-krasnoi", "minard-1869"]
+    },
+    {
+      "id": "ch-8-berezina",
+      "when": "1812-11-26/1812-12-04",
+      "title": {
+        "en": "The Berezina",
+        "id": "Berezina"
+      },
+      "body": {
+        "en": "Trapped between two Russian armies at the Berezina, Napoleon's engineers built two trestle bridges at Studienka. The remnant crossed between 26 and 29 November, and the northern flank rejoined it there. Between 50,000 and 60,000 were lost.",
+        "id": "Terjepit di antara dua tentara Rusia di Sungai Berezina, para zeni Napoleon membangun dua jembatan darurat di Studienka. Sisa pasukan menyeberang antara 26 dan 29 November, dan sayap utara bergabung kembali di sana. Antara 50.000 dan 60.000 orang hilang."
+      },
+      "camera": {
+        "center": [28.4, 54.28],
+        "zoom": 9.5,
+        "pitch": 50,
+        "bearing": -30,
+        "durationMs": 3500
+      },
+      "focus": ["battle-of-berezina", "grande-armee-main", "grande-armee-north"],
+      "sources": ["wp-berezina", "minard-1869"]
+    },
+    {
+      "id": "ch-9-niemen-again",
+      "when": "1812-12-05/1812-12-14",
+      "title": {
+        "en": "Back across the Niemen",
+        "id": "Kembali menyeberangi Neman"
+      },
+      "body": {
+        "en": "On 5 December at Smorgoni Napoleon left the army for Paris. Minard's temperatures fell to −30° Réaumur.\n\nIn mid-December the survivors recrossed the Niemen. Of the 422,000 men in Minard's count, about 10,000 came back.",
+        "id": "Pada 5 Desember di Smorgoni, Napoleon meninggalkan pasukannya menuju Paris. Suhu dalam catatan Minard turun hingga −30° Réaumur.\n\nPada pertengahan Desember para penyintas menyeberangi Neman kembali. Dari 422.000 prajurit dalam hitungan Minard, sekitar 10.000 yang kembali."
+      },
+      "camera": {
+        "center": [25.2, 54.5],
+        "zoom": 7.2,
+        "pitch": 30,
+        "bearing": 0,
+        "durationMs": 3500
+      },
+      "focus": ["napoleon-leaves", "niemen-recrossed", "grande-armee-main"],
+      "media": ["minard-chart"],
+      "sources": ["minard-1869", "masswerk-minard", "napoleon-empire-daybyday"]
+    }
+  ],
+  "sources": [
+    {
+      "id": "minard-1869",
+      "type": "map",
+      "citation": "Minard, Charles Joseph. Carte figurative des pertes successives en hommes de l'Armée Française dans la campagne de Russie 1812–1813. Paris, 1869."
+    },
+    {
+      "id": "histdata-minard",
+      "type": "dataset",
+      "citation": "Friendly, Michael et al. HistData: Minard.troops, Minard.cities, Minard.temp (from Leland Wilkinson's data for The Grammar of Graphics). R package version 1.1.1.",
+      "url": "https://github.com/friendly/HistData"
+    },
+    {
+      "id": "masswerk-minard",
+      "type": "web",
+      "citation": "Minard's map with English translation of its legend. mass:werk.",
+      "url": "https://www.masswerk.at/minard/",
+      "accessed": "2026-09"
+    },
+    {
+      "id": "napoleon-empire-daybyday",
+      "type": "web",
+      "citation": "The Russian campaign of 1812, day by day. napoleon-empire.org.",
+      "url": "https://www.napoleon-empire.org/en/battles/campaign-russia-1812-day-by-day.php",
+      "accessed": "2026-09"
+    },
+    {
+      "id": "wp-french-invasion",
+      "type": "encyclopedia",
+      "citation": "\"French invasion of Russia.\" Wikipedia.",
+      "url": "https://en.wikipedia.org/wiki/French_invasion_of_Russia",
+      "accessed": "2026-09"
+    },
+    {
+      "id": "wp-vitebsk",
+      "type": "encyclopedia",
+      "citation": "\"Battle of Vitebsk (1812).\" Wikipedia.",
+      "url": "https://en.wikipedia.org/wiki/Battle_of_Vitebsk_(1812)",
+      "accessed": "2026-09"
+    },
+    {
+      "id": "wp-smolensk",
+      "type": "encyclopedia",
+      "citation": "\"Battle of Smolensk (1812).\" Wikipedia.",
+      "url": "https://en.wikipedia.org/wiki/Battle_of_Smolensk_(1812)",
+      "accessed": "2026-09"
+    },
+    {
+      "id": "wp-borodino",
+      "type": "encyclopedia",
+      "citation": "\"Battle of Borodino.\" Wikipedia.",
+      "url": "https://en.wikipedia.org/wiki/Battle_of_Borodino",
+      "accessed": "2026-09"
+    },
+    {
+      "id": "wp-fire-of-moscow",
+      "type": "encyclopedia",
+      "citation": "\"Fire of Moscow (1812).\" Wikipedia.",
+      "url": "https://en.wikipedia.org/wiki/Fire_of_Moscow_(1812)",
+      "accessed": "2026-09"
+    },
+    {
+      "id": "wp-maloyaroslavets",
+      "type": "encyclopedia",
+      "citation": "\"Battle of Maloyaroslavets.\" Wikipedia.",
+      "url": "https://en.wikipedia.org/wiki/Battle_of_Maloyaroslavets",
+      "accessed": "2026-09"
+    },
+    {
+      "id": "wp-vyazma",
+      "type": "encyclopedia",
+      "citation": "\"Battle of Vyazma.\" Wikipedia.",
+      "url": "https://en.wikipedia.org/wiki/Battle_of_Vyazma",
+      "accessed": "2026-09"
+    },
+    {
+      "id": "wp-krasnoi",
+      "type": "encyclopedia",
+      "citation": "\"Battle of Krasnoi.\" Wikipedia.",
+      "url": "https://en.wikipedia.org/wiki/Battle_of_Krasnoi",
+      "accessed": "2026-09"
+    },
+    {
+      "id": "wp-berezina",
+      "type": "encyclopedia",
+      "citation": "\"Battle of Berezina.\" Wikipedia.",
+      "url": "https://en.wikipedia.org/wiki/Battle_of_Berezina",
+      "accessed": "2026-09"
+    }
+  ],
+  "media": [
+    {
+      "id": "minard-chart",
+      "type": "image",
+      "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Minard.png",
+      "alt": {
+        "en": "Minard's 1869 flow map: a thick tan band narrows as it advances to Moscow and a thin black band returns, above a temperature chart.",
+        "id": "Peta aliran Minard tahun 1869: pita cokelat tebal menyempit saat maju ke Moskwa dan pita hitam tipis kembali, di atas grafik suhu."
+      },
+      "caption": {
+        "en": "Charles Minard's figurative map of the French army's losses in Russia (1869).",
+        "id": "Peta figuratif Charles Minard tentang kehilangan pasukan Prancis di Rusia (1869)."
+      },
+      "creator": "Charles Joseph Minard",
+      "date": "1869",
+      "license": "public-domain",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Minard.png",
+      "notes": "Commons URL not yet link-checked."
+    }
+  ],
+  "x-minard": {
+    "note": "Minard.temp from HistData, verbatim. Temperatures in degrees Réaumur (°C = °Ré × 1.25), recorded along the retreat. Engines ignore x- fields; a custom layer could draw Minard's temperature chart from them.",
+    "temperatures": [
+      {
+        "long": 37.6,
+        "reaumur": 0,
+        "date": "1812-10-18"
+      },
+      {
+        "long": 36,
+        "reaumur": 0,
+        "date": "1812-10-24"
+      },
+      {
+        "long": 33.2,
+        "reaumur": -9,
+        "date": "1812-11-09"
+      },
+      {
+        "long": 32,
+        "reaumur": -21,
+        "date": "1812-11-14"
+      },
+      {
+        "long": 29.2,
+        "reaumur": -11,
+        "date": null
+      },
+      {
+        "long": 28.5,
+        "reaumur": -20,
+        "date": "1812-11-28"
+      },
+      {
+        "long": 27.2,
+        "reaumur": -24,
+        "date": "1812-12-01"
+      },
+      {
+        "long": 26.7,
+        "reaumur": -30,
+        "date": "1812-12-06"
+      },
+      {
+        "long": 25.3,
+        "reaumur": -26,
+        "date": "1812-12-07"
+      }
+    ]
+  }
+}

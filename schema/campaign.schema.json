@@ -1,0 +1,473 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/pholidlabs/chronomap/schema/v1/campaign.schema.json",
+  "title": "ChronoMap Campaign v1",
+  "description": "A plug-and-play spatio-temporal dataset (a 'campaign') that the ChronoMap engine can play as a scrollytelling map. Structural rules only; referential and temporal rules are enforced by the semantic validator (see docs/DATA-CONTRACT.md §8).",
+  "type": "object",
+  "required": ["chronomap", "meta", "factions", "chapters"],
+  "properties": {
+    "$schema": { "type": "string" },
+    "chronomap": {
+      "description": "Contract version this file targets. Engines accept any 1.x and ignore unknown x- fields.",
+      "type": "string",
+      "pattern": "^1\\.[0-9]+$"
+    },
+    "meta": { "$ref": "#/$defs/meta" },
+    "factions": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/faction" } },
+    "parts": { "type": "array", "items": { "$ref": "#/$defs/part" } },
+    "places": { "type": "array", "items": { "$ref": "#/$defs/place" } },
+    "entities": { "type": "array", "items": { "$ref": "#/$defs/entity" } },
+    "events": { "type": "array", "items": { "$ref": "#/$defs/event" } },
+    "chapters": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/chapter" } },
+    "sources": { "type": "array", "items": { "$ref": "#/$defs/source" } },
+    "media": { "type": "array", "items": { "$ref": "#/$defs/media" } }
+  },
+  "patternProperties": { "^x-": true },
+  "additionalProperties": false,
+
+  "$defs": {
+    "id": {
+      "description": "Kebab-case identifier, unique across the whole file (one namespace for all object types).",
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+      "maxLength": 80
+    },
+    "idList": { "type": "array", "items": { "$ref": "#/$defs/id" }, "uniqueItems": true },
+
+    "text": {
+      "description": "Plain string (in meta.defaultLanguage) or a map of BCP-47 language tag to string. A map must contain the default language.",
+      "oneOf": [
+        { "type": "string", "minLength": 1 },
+        {
+          "type": "object",
+          "minProperties": 1,
+          "propertyNames": { "pattern": "^[a-z]{2,3}(?:-[A-Za-z0-9]{2,8})*$" },
+          "additionalProperties": { "type": "string", "minLength": 1 }
+        }
+      ]
+    },
+
+    "when": {
+      "description": "EDTF subset. Point: YYYY | YYYY-MM | YYYY-MM-DD | YYYY-MM-DDTHH:MM[:SS], optional ? ~ % qualifier. Interval: A/B with '..' for an open end. Proleptic Gregorian, astronomical year numbering, no time zone.",
+      "type": "string",
+      "pattern": "^(?:-?[0-9]{4}(?:-[0-9]{2}(?:-[0-9]{2}(?:T[0-9]{2}:[0-9]{2}(?::[0-9]{2})?)?)?)?[?~%]?|(?:-?[0-9]{4}(?:-[0-9]{2}(?:-[0-9]{2}(?:T[0-9]{2}:[0-9]{2}(?::[0-9]{2})?)?)?)?[?~%]?|\\.\\.)/(?:-?[0-9]{4}(?:-[0-9]{2}(?:-[0-9]{2}(?:T[0-9]{2}:[0-9]{2}(?::[0-9]{2})?)?)?)?[?~%]?|\\.\\.))$",
+      "examples": ["1825-07-20", "1827~", "1825-07-28/1825-09-25", "1830-03-28/..", "-0043-03-15"]
+    },
+
+    "coord": {
+      "description": "[longitude, latitude] or [longitude, latitude, altitudeMeters], WGS84. Altitude is optional; the renderer drapes on terrain when omitted.",
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 3,
+      "prefixItems": [
+        { "type": "number", "minimum": -180, "maximum": 180 },
+        { "type": "number", "minimum": -90, "maximum": 90 },
+        { "type": "number" }
+      ],
+      "items": false
+    },
+
+    "location": {
+      "description": "Either a place id (resolved through the gazetteer) or an inline coordinate.",
+      "oneOf": [{ "$ref": "#/$defs/id" }, { "$ref": "#/$defs/coord" }]
+    },
+
+    "certainty": {
+      "description": "How well the LOCATION is known. exact = the actual site; approximate = town/village-level; conjectural = historic location not known, placed by inference. Date certainty is expressed with EDTF qualifiers instead.",
+      "type": "string",
+      "enum": ["exact", "approximate", "conjectural"]
+    },
+
+    "quantity": {
+      "description": "A head count or similar. Integer, or a range when sources disagree.",
+      "oneOf": [
+        { "type": "integer", "minimum": 0 },
+        {
+          "type": "object",
+          "required": ["min", "max"],
+          "properties": {
+            "min": { "type": "integer", "minimum": 0 },
+            "max": { "type": "integer", "minimum": 0 },
+            "note": { "$ref": "#/$defs/text" }
+          },
+          "additionalProperties": false
+        }
+      ]
+    },
+
+    "color": { "type": "string", "pattern": "^#(?:[0-9A-Fa-f]{6}|[0-9A-Fa-f]{8})$" },
+
+    "meta": {
+      "type": "object",
+      "required": ["id", "title", "description", "languages", "defaultLanguage", "timeline", "map"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "version": { "type": "string", "description": "Dataset version (semver recommended)." },
+        "title": { "$ref": "#/$defs/text" },
+        "subtitle": { "$ref": "#/$defs/text" },
+        "description": { "$ref": "#/$defs/text" },
+        "contentWarning": { "$ref": "#/$defs/text" },
+        "languages": {
+          "type": "array", "minItems": 1, "uniqueItems": true,
+          "items": { "type": "string", "pattern": "^[a-z]{2,3}(?:-[A-Za-z0-9]{2,8})*$" }
+        },
+        "defaultLanguage": { "type": "string", "pattern": "^[a-z]{2,3}(?:-[A-Za-z0-9]{2,8})*$" },
+        "license": { "type": "string", "description": "SPDX identifier for the dataset text/data, e.g. CC-BY-4.0." },
+        "authors": {
+          "type": "array",
+          "items": {
+            "type": "object", "required": ["name"],
+            "properties": { "name": { "type": "string" }, "url": { "type": "string", "format": "uri" } },
+            "additionalProperties": false
+          }
+        },
+        "updated": { "$ref": "#/$defs/when" },
+        "timeline": {
+          "type": "object",
+          "required": ["extent"],
+          "properties": {
+            "extent": { "$ref": "#/$defs/when", "description": "Closed interval containing every time in the file. Open ends ('..') elsewhere resolve to this." },
+            "focus": { "$ref": "#/$defs/when", "description": "Default window for the free-explore scrubber. Must lie inside extent." }
+          },
+          "additionalProperties": false
+        },
+        "map": {
+          "type": "object",
+          "required": ["center", "zoom"],
+          "properties": {
+            "center": { "$ref": "#/$defs/coord" },
+            "zoom": { "type": "number", "minimum": 0, "maximum": 22 },
+            "pitch": { "type": "number", "minimum": 0, "maximum": 85 },
+            "bearing": { "type": "number", "minimum": -360, "maximum": 360 },
+            "bounds": {
+              "description": "[west, south, east, north]. Used for maxBounds and for the 'outside bounds' warning.",
+              "type": "array",
+              "prefixItems": [
+                { "type": "number", "minimum": -180, "maximum": 180 },
+                { "type": "number", "minimum": -90, "maximum": 90 },
+                { "type": "number", "minimum": -180, "maximum": 180 },
+                { "type": "number", "minimum": -90, "maximum": 90 }
+              ],
+              "minItems": 4, "maxItems": 4, "items": false
+            },
+            "terrain": {
+              "type": "object",
+              "properties": { "exaggeration": { "type": "number", "minimum": 0, "maximum": 10 } },
+              "additionalProperties": false
+            },
+            "theme": { "type": "string", "description": "Theme hint, e.g. parchment-sepia. Unknown themes fall back to the engine default." }
+          },
+          "patternProperties": { "^x-": true },
+          "additionalProperties": false
+        }
+      },
+      "patternProperties": { "^x-": true },
+      "additionalProperties": false
+    },
+
+    "faction": {
+      "type": "object",
+      "required": ["id", "name", "color"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "name": { "$ref": "#/$defs/text" },
+        "shortName": { "$ref": "#/$defs/text" },
+        "color": { "$ref": "#/$defs/color" },
+        "description": { "$ref": "#/$defs/text" },
+        "sources": { "$ref": "#/$defs/idList" },
+        "notes": { "$ref": "#/$defs/text" }
+      },
+      "patternProperties": { "^x-": true },
+      "additionalProperties": false
+    },
+
+    "part": {
+      "type": "object",
+      "required": ["id", "title"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "title": { "$ref": "#/$defs/text" },
+        "description": { "$ref": "#/$defs/text" }
+      },
+      "patternProperties": { "^x-": true },
+      "additionalProperties": false
+    },
+
+    "place": {
+      "description": "Static gazetteer entry. Places have no time; things that change over time are entities.",
+      "type": "object",
+      "required": ["id", "name", "coordinates", "certainty"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "name": { "$ref": "#/$defs/text", "description": "Name as used in the period." },
+        "modernName": { "$ref": "#/$defs/text", "description": "Present-day name / administrative location." },
+        "kind": {
+          "type": "string",
+          "anyOf": [
+            { "enum": ["settlement", "palace", "fort", "battlefield", "cave", "mountain", "river", "port", "residence", "grave", "landmark", "region"] },
+            { "pattern": "^x-[a-z0-9-]+$" }
+          ]
+        },
+        "coordinates": { "$ref": "#/$defs/coord" },
+        "certainty": { "$ref": "#/$defs/certainty" },
+        "radiusMeters": { "type": "number", "minimum": 0, "description": "Uncertainty radius. Defaults by certainty: exact 100, approximate 3000, conjectural 15000." },
+        "rank": { "type": "integer", "minimum": 1, "maximum": 5, "description": "Label priority, 1 = always label." },
+        "description": { "$ref": "#/$defs/text" },
+        "sources": { "$ref": "#/$defs/idList" },
+        "media": { "$ref": "#/$defs/idList" },
+        "notes": { "$ref": "#/$defs/text" }
+      },
+      "patternProperties": { "^x-": true },
+      "additionalProperties": false
+    },
+
+    "state": {
+      "description": "A status (and optionally owner) that applies from start(when). A point state lasts until the next state; an interval state lasts until its end, after which the previous state applies again.",
+      "type": "object",
+      "required": ["when"],
+      "properties": {
+        "when": { "$ref": "#/$defs/when" },
+        "status": {
+          "type": "string",
+          "anyOf": [
+            { "enum": ["planned", "active", "besieged", "captured", "destroyed", "abandoned", "encamped", "captive", "surrendered", "disbanded", "exiled", "dead"] },
+            { "pattern": "^x-[a-z0-9-]+$" }
+          ]
+        },
+        "faction": { "$ref": "#/$defs/id", "description": "New controlling faction from this point (e.g. a captured fort)." },
+        "strength": { "$ref": "#/$defs/quantity" },
+        "label": { "$ref": "#/$defs/text" },
+        "sources": { "$ref": "#/$defs/idList" },
+        "notes": { "$ref": "#/$defs/text" }
+      },
+      "patternProperties": { "^x-": true },
+      "additionalProperties": false
+    },
+
+    "waypoint": {
+      "description": "A point on a unit's track. Point when = passes through at start(when). Interval when = stays there for the interval. The unit moves between departure of one waypoint and arrival at the next.",
+      "type": "object",
+      "required": ["when", "at"],
+      "properties": {
+        "when": { "$ref": "#/$defs/when" },
+        "at": { "$ref": "#/$defs/location" },
+        "via": {
+          "description": "Intermediate coordinates of the leg ARRIVING at this waypoint (roads, sea lanes). Straight segments otherwise.",
+          "type": "array", "items": { "$ref": "#/$defs/coord" }
+        },
+        "mode": { "type": "string", "enum": ["land", "river", "sea"], "description": "Mode of the arriving leg. Default land." },
+        "strength": { "$ref": "#/$defs/quantity" },
+        "certainty": { "$ref": "#/$defs/certainty" },
+        "label": { "$ref": "#/$defs/text" },
+        "sources": { "$ref": "#/$defs/idList" },
+        "notes": { "$ref": "#/$defs/text" }
+      },
+      "patternProperties": { "^x-": true },
+      "additionalProperties": false
+    },
+
+    "style": {
+      "description": "Renderer-neutral hints. Not Mapbox/MapLibre paint properties; themes map these.",
+      "type": "object",
+      "properties": {
+        "color": { "$ref": "#/$defs/color" },
+        "width": { "type": "number", "minimum": 0 },
+        "dash": { "type": "array", "items": { "type": "number", "minimum": 0 }, "maxItems": 8 },
+        "icon": { "type": "string" },
+        "opacity": { "type": "number", "minimum": 0, "maximum": 1 },
+        "trail": { "type": "string", "enum": ["full", "leg", "none"], "description": "How much of a unit's travelled path to draw. Default full." },
+        "widthBy": { "type": "string", "enum": ["strength"], "description": "Scale line width by interpolated strength (Minard-style)." }
+      },
+      "patternProperties": { "^x-": true },
+      "additionalProperties": false
+    },
+
+    "polygonGeometry": {
+      "oneOf": [
+        {
+          "type": "object", "required": ["type", "coordinates"],
+          "properties": {
+            "type": { "const": "Polygon" },
+            "coordinates": { "type": "array", "minItems": 1, "items": { "type": "array", "minItems": 4, "items": { "$ref": "#/$defs/coord" } } }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object", "required": ["type", "coordinates"],
+          "properties": {
+            "type": { "const": "MultiPolygon" },
+            "coordinates": { "type": "array", "minItems": 1, "items": { "type": "array", "minItems": 1, "items": { "type": "array", "minItems": 4, "items": { "$ref": "#/$defs/coord" } } } }
+          },
+          "additionalProperties": false
+        }
+      ]
+    },
+
+    "entity": {
+      "description": "Something that exists over time. kind decides which geometry field is required: unit→track, fortification→at, territory→geometry, route→path.",
+      "type": "object",
+      "required": ["id", "kind", "name", "faction"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "kind": {
+          "type": "string",
+          "anyOf": [
+            { "enum": ["unit", "fortification", "territory", "route"] },
+            { "pattern": "^x-[a-z0-9-]+$" }
+          ]
+        },
+        "name": { "$ref": "#/$defs/text" },
+        "faction": { "$ref": "#/$defs/id" },
+        "when": { "$ref": "#/$defs/when", "description": "Existence interval. Defaults: unit = first waypoint start → last waypoint end; others = timeline extent." },
+        "description": { "$ref": "#/$defs/text" },
+        "commanders": { "type": "array", "items": { "$ref": "#/$defs/text" } },
+        "at": { "$ref": "#/$defs/location" },
+        "track": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/waypoint" } },
+        "geometry": { "$ref": "#/$defs/polygonGeometry" },
+        "path": { "type": "array", "minItems": 2, "items": { "$ref": "#/$defs/location" } },
+        "states": { "type": "array", "items": { "$ref": "#/$defs/state" } },
+        "certainty": { "$ref": "#/$defs/certainty" },
+        "style": { "$ref": "#/$defs/style" },
+        "sources": { "$ref": "#/$defs/idList" },
+        "media": { "$ref": "#/$defs/idList" },
+        "notes": { "$ref": "#/$defs/text" },
+        "tags": { "type": "array", "items": { "type": "string" }, "uniqueItems": true }
+      },
+      "allOf": [
+        { "if": { "properties": { "kind": { "const": "unit" } } },
+          "then": { "required": ["track"], "not": { "anyOf": [{ "required": ["at"] }, { "required": ["geometry"] }, { "required": ["path"] }] } } },
+        { "if": { "properties": { "kind": { "const": "fortification" } } },
+          "then": { "required": ["at"], "not": { "anyOf": [{ "required": ["track"] }, { "required": ["geometry"] }, { "required": ["path"] }] } } },
+        { "if": { "properties": { "kind": { "const": "territory" } } },
+          "then": { "required": ["geometry"], "not": { "anyOf": [{ "required": ["track"] }, { "required": ["at"] }, { "required": ["path"] }] } } },
+        { "if": { "properties": { "kind": { "const": "route" } } },
+          "then": { "required": ["path"], "not": { "anyOf": [{ "required": ["track"] }, { "required": ["at"] }, { "required": ["geometry"] }] } } }
+      ],
+      "patternProperties": { "^x-": true },
+      "additionalProperties": false
+    },
+
+    "participant": {
+      "type": "object",
+      "required": ["faction"],
+      "properties": {
+        "faction": { "$ref": "#/$defs/id" },
+        "role": { "type": "string", "enum": ["attacker", "defender", "belligerent", "negotiator", "mediator", "perpetrator", "victim", "party"] },
+        "commanders": { "type": "array", "items": { "$ref": "#/$defs/text" } },
+        "strength": { "$ref": "#/$defs/quantity" },
+        "losses": { "$ref": "#/$defs/quantity" }
+      },
+      "patternProperties": { "^x-": true },
+      "additionalProperties": false
+    },
+
+    "event": {
+      "description": "Something that happens at a time (and usually a place). Active during when, 'past' afterwards.",
+      "type": "object",
+      "required": ["id", "kind", "name", "when"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "kind": {
+          "type": "string",
+          "anyOf": [
+            { "enum": ["battle", "siege", "skirmish", "raid", "massacre", "capture", "surrender", "negotiation", "treaty", "proclamation", "decree", "uprising", "appointment", "arrest", "exile", "birth", "death", "political", "other"] },
+            { "pattern": "^x-[a-z0-9-]+$" }
+          ]
+        },
+        "name": { "$ref": "#/$defs/text" },
+        "when": { "$ref": "#/$defs/when" },
+        "at": { "$ref": "#/$defs/location", "description": "Omit for events with no single location (decrees); they appear on the timeline but not the map." },
+        "certainty": { "$ref": "#/$defs/certainty" },
+        "participants": { "type": "array", "items": { "$ref": "#/$defs/participant" } },
+        "outcome": {
+          "type": "object",
+          "properties": {
+            "victor": { "$ref": "#/$defs/id" },
+            "summary": { "$ref": "#/$defs/text" }
+          },
+          "additionalProperties": false
+        },
+        "summary": { "$ref": "#/$defs/text" },
+        "importance": { "type": "integer", "minimum": 1, "maximum": 5, "description": "1 = major. Renderers may hide low-importance events when zoomed out." },
+        "sources": { "$ref": "#/$defs/idList" },
+        "media": { "$ref": "#/$defs/idList" },
+        "notes": { "$ref": "#/$defs/text" },
+        "tags": { "type": "array", "items": { "type": "string" }, "uniqueItems": true }
+      },
+      "patternProperties": { "^x-": true },
+      "additionalProperties": false
+    },
+
+    "camera": {
+      "type": "object",
+      "required": ["center", "zoom"],
+      "properties": {
+        "center": { "$ref": "#/$defs/coord" },
+        "zoom": { "type": "number", "minimum": 0, "maximum": 22 },
+        "pitch": { "type": "number", "minimum": 0, "maximum": 85 },
+        "bearing": { "type": "number", "minimum": -360, "maximum": 360 },
+        "durationMs": { "type": "integer", "minimum": 0, "maximum": 60000 },
+        "transition": { "type": "string", "enum": ["fly", "ease", "jump"] }
+      },
+      "patternProperties": { "^x-": true },
+      "additionalProperties": false
+    },
+
+    "chapter": {
+      "description": "A narrative step. The map time scrubs across the resolved range of when as the reader scrolls through the step.",
+      "type": "object",
+      "required": ["id", "title", "when", "body"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "part": { "$ref": "#/$defs/id" },
+        "title": { "$ref": "#/$defs/text" },
+        "when": { "$ref": "#/$defs/when" },
+        "dateLabel": { "$ref": "#/$defs/text", "description": "Overrides the auto-formatted date, e.g. to add an Old Style or Javanese calendar date." },
+        "body": { "$ref": "#/$defs/text", "description": "Restricted Markdown: paragraphs, *em*, **strong**, [links](https://…). No raw HTML." },
+        "camera": { "$ref": "#/$defs/camera" },
+        "focus": { "$ref": "#/$defs/idList", "description": "Places, entities or events to highlight. With no camera, the engine fits the view to these." },
+        "media": { "$ref": "#/$defs/idList" },
+        "sources": { "$ref": "#/$defs/idList" },
+        "notes": { "$ref": "#/$defs/text" }
+      },
+      "patternProperties": { "^x-": true },
+      "additionalProperties": false
+    },
+
+    "source": {
+      "type": "object",
+      "required": ["id", "type", "citation"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "type": { "type": "string", "enum": ["book", "article", "primary", "archive", "web", "dataset", "map", "encyclopedia"] },
+        "citation": { "type": "string", "minLength": 1 },
+        "url": { "type": "string", "format": "uri" },
+        "accessed": { "$ref": "#/$defs/when" },
+        "notes": { "$ref": "#/$defs/text" }
+      },
+      "patternProperties": { "^x-": true },
+      "additionalProperties": false
+    },
+
+    "media": {
+      "type": "object",
+      "required": ["id", "type", "url", "alt", "license"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "type": { "type": "string", "enum": ["image"] },
+        "url": { "type": "string", "format": "uri-reference" },
+        "thumbnailUrl": { "type": "string", "format": "uri-reference" },
+        "alt": { "$ref": "#/$defs/text" },
+        "caption": { "$ref": "#/$defs/text" },
+        "creator": { "type": "string" },
+        "date": { "$ref": "#/$defs/when" },
+        "license": { "type": "string", "description": "SPDX id or 'public-domain'." },
+        "holder": { "type": "string" },
+        "sourceUrl": { "type": "string", "format": "uri" },
+        "notes": { "$ref": "#/$defs/text" }
+      },
+      "patternProperties": { "^x-": true },
+      "additionalProperties": false
+    }
+  }
+}

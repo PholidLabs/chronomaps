@@ -1,0 +1,420 @@
+{
+  "description": "EDTF-subset parsing. start/end are ticks (seconds since 1970-01-01, proleptic Gregorian); end is exclusive; null = open end before resolution against the timeline extent.",
+  "cases": [
+    {
+      "input": "1825",
+      "ok": true,
+      "isInterval": false,
+      "start": -4575744000,
+      "end": -4544208000,
+      "startIso": "1825-01-01T00:00:00",
+      "endIso": "1826-01-01T00:00:00",
+      "fromPrecision": "year",
+      "toPrecision": "year",
+      "fromQualifier": null,
+      "toQualifier": null
+    },
+    {
+      "input": "1825-07",
+      "ok": true,
+      "isInterval": false,
+      "start": -4560105600,
+      "end": -4557427200,
+      "startIso": "1825-07-01T00:00:00",
+      "endIso": "1825-08-01T00:00:00",
+      "fromPrecision": "month",
+      "toPrecision": "month",
+      "fromQualifier": null,
+      "toQualifier": null
+    },
+    {
+      "input": "1825-07-20",
+      "ok": true,
+      "isInterval": false,
+      "start": -4558464000,
+      "end": -4558377600,
+      "startIso": "1825-07-20T00:00:00",
+      "endIso": "1825-07-21T00:00:00",
+      "fromPrecision": "day",
+      "toPrecision": "day",
+      "fromQualifier": null,
+      "toQualifier": null
+    },
+    {
+      "input": "1825-07-20T14:30",
+      "ok": true,
+      "isInterval": false,
+      "start": -4558411800,
+      "end": -4558411740,
+      "startIso": "1825-07-20T14:30:00",
+      "endIso": "1825-07-20T14:31:00",
+      "fromPrecision": "minute",
+      "toPrecision": "minute",
+      "fromQualifier": null,
+      "toQualifier": null
+    },
+    {
+      "input": "1825-07-20T14:30:05",
+      "ok": true,
+      "isInterval": false,
+      "start": -4558411795,
+      "end": -4558411794,
+      "startIso": "1825-07-20T14:30:05",
+      "endIso": "1825-07-20T14:30:06",
+      "fromPrecision": "second",
+      "toPrecision": "second",
+      "fromQualifier": null,
+      "toQualifier": null
+    },
+    {
+      "input": "1827~",
+      "ok": true,
+      "isInterval": false,
+      "start": -4512672000,
+      "end": -4481136000,
+      "startIso": "1827-01-01T00:00:00",
+      "endIso": "1828-01-01T00:00:00",
+      "fromPrecision": "year",
+      "toPrecision": "year",
+      "fromQualifier": "approximate",
+      "toQualifier": "approximate"
+    },
+    {
+      "input": "1828-11-12?",
+      "ok": true,
+      "isInterval": false,
+      "start": -4453833600,
+      "end": -4453747200,
+      "startIso": "1828-11-12T00:00:00",
+      "endIso": "1828-11-13T00:00:00",
+      "fromPrecision": "day",
+      "toPrecision": "day",
+      "fromQualifier": "uncertain",
+      "toQualifier": "uncertain"
+    },
+    {
+      "input": "1830-03%",
+      "ok": true,
+      "isInterval": false,
+      "start": -4412880000,
+      "end": -4410201600,
+      "startIso": "1830-03-01T00:00:00",
+      "endIso": "1830-04-01T00:00:00",
+      "fromPrecision": "month",
+      "toPrecision": "month",
+      "fromQualifier": "uncertain-approximate",
+      "toQualifier": "uncertain-approximate"
+    },
+    {
+      "input": "1600-02-29",
+      "ok": true,
+      "isInterval": false,
+      "start": -11670998400,
+      "end": -11670912000,
+      "startIso": "1600-02-29T00:00:00",
+      "endIso": "1600-03-01T00:00:00",
+      "fromPrecision": "day",
+      "toPrecision": "day",
+      "fromQualifier": null,
+      "toQualifier": null
+    },
+    {
+      "input": "2000-02-29",
+      "ok": true,
+      "isInterval": false,
+      "start": 951782400,
+      "end": 951868800,
+      "startIso": "2000-02-29T00:00:00",
+      "endIso": "2000-03-01T00:00:00",
+      "fromPrecision": "day",
+      "toPrecision": "day",
+      "fromQualifier": null,
+      "toQualifier": null
+    },
+    {
+      "input": "1970-01-01",
+      "ok": true,
+      "isInterval": false,
+      "start": 0,
+      "end": 86400,
+      "startIso": "1970-01-01T00:00:00",
+      "endIso": "1970-01-02T00:00:00",
+      "fromPrecision": "day",
+      "toPrecision": "day",
+      "fromQualifier": null,
+      "toQualifier": null
+    },
+    {
+      "input": "1969-12-31",
+      "ok": true,
+      "isInterval": false,
+      "start": -86400,
+      "end": 0,
+      "startIso": "1969-12-31T00:00:00",
+      "endIso": "1970-01-01T00:00:00",
+      "fromPrecision": "day",
+      "toPrecision": "day",
+      "fromQualifier": null,
+      "toQualifier": null
+    },
+    {
+      "input": "0000",
+      "ok": true,
+      "isInterval": false,
+      "start": -62167219200,
+      "end": -62135596800,
+      "startIso": "0000-01-01T00:00:00",
+      "endIso": "0001-01-01T00:00:00",
+      "fromPrecision": "year",
+      "toPrecision": "year",
+      "fromQualifier": null,
+      "toQualifier": null
+    },
+    {
+      "input": "0000-03-01",
+      "ok": true,
+      "isInterval": false,
+      "start": -62162035200,
+      "end": -62161948800,
+      "startIso": "0000-03-01T00:00:00",
+      "endIso": "0000-03-02T00:00:00",
+      "fromPrecision": "day",
+      "toPrecision": "day",
+      "fromQualifier": null,
+      "toQualifier": null
+    },
+    {
+      "input": "-0001-12-31",
+      "ok": true,
+      "isInterval": false,
+      "start": -62167305600,
+      "end": -62167219200,
+      "startIso": "-000001-12-31T00:00:00",
+      "endIso": "0000-01-01T00:00:00",
+      "fromPrecision": "day",
+      "toPrecision": "day",
+      "fromQualifier": null,
+      "toQualifier": null
+    },
+    {
+      "input": "-0043-03-15",
+      "ok": true,
+      "isInterval": false,
+      "start": -63517824000,
+      "end": -63517737600,
+      "startIso": "-000043-03-15T00:00:00",
+      "endIso": "-000043-03-16T00:00:00",
+      "fromPrecision": "day",
+      "toPrecision": "day",
+      "fromQualifier": null,
+      "toQualifier": null
+    },
+    {
+      "input": "-9999-01-01",
+      "ok": true,
+      "isInterval": false,
+      "start": -377705116800,
+      "end": -377705030400,
+      "startIso": "-009999-01-01T00:00:00",
+      "endIso": "-009999-01-02T00:00:00",
+      "fromPrecision": "day",
+      "toPrecision": "day",
+      "fromQualifier": null,
+      "toQualifier": null
+    },
+    {
+      "input": "9999-12-31",
+      "ok": true,
+      "isInterval": false,
+      "start": 253402214400,
+      "end": 253402300800,
+      "startIso": "9999-12-31T00:00:00",
+      "endIso": "+010000-01-01T00:00:00",
+      "fromPrecision": "day",
+      "toPrecision": "day",
+      "fromQualifier": null,
+      "toQualifier": null
+    },
+    {
+      "input": "1825-07-28/1825-09-25",
+      "ok": true,
+      "isInterval": true,
+      "start": -4557772800,
+      "end": -4552588800,
+      "startIso": "1825-07-28T00:00:00",
+      "endIso": "1825-09-26T00:00:00",
+      "fromPrecision": "day",
+      "toPrecision": "day",
+      "fromQualifier": null,
+      "toQualifier": null
+    },
+    {
+      "input": "1825-07-21/1825-09~",
+      "ok": true,
+      "isInterval": true,
+      "start": -4558377600,
+      "end": -4552156800,
+      "startIso": "1825-07-21T00:00:00",
+      "endIso": "1825-10-01T00:00:00",
+      "fromPrecision": "day",
+      "toPrecision": "month",
+      "fromQualifier": null,
+      "toQualifier": "approximate"
+    },
+    {
+      "input": "1827/..",
+      "ok": true,
+      "isInterval": true,
+      "start": -4512672000,
+      "end": null,
+      "startIso": "1827-01-01T00:00:00",
+      "endIso": null,
+      "fromPrecision": "year",
+      "toPrecision": null,
+      "fromQualifier": null,
+      "toQualifier": null
+    },
+    {
+      "input": "../1830-03-28",
+      "ok": true,
+      "isInterval": true,
+      "start": null,
+      "end": -4410460800,
+      "startIso": null,
+      "endIso": "1830-03-29T00:00:00",
+      "fromPrecision": null,
+      "toPrecision": "day",
+      "fromQualifier": null,
+      "toQualifier": null
+    },
+    {
+      "input": "1830-03-28/1830-03-28",
+      "ok": true,
+      "isInterval": true,
+      "start": -4410547200,
+      "end": -4410460800,
+      "startIso": "1830-03-28T00:00:00",
+      "endIso": "1830-03-29T00:00:00",
+      "fromPrecision": "day",
+      "toPrecision": "day",
+      "fromQualifier": null,
+      "toQualifier": null
+    },
+    {
+      "input": "1830-03-08T12:00/1830-03-27",
+      "ok": true,
+      "isInterval": true,
+      "start": -4412232000,
+      "end": -4410547200,
+      "startIso": "1830-03-08T12:00:00",
+      "endIso": "1830-03-28T00:00:00",
+      "fromPrecision": "minute",
+      "toPrecision": "day",
+      "fromQualifier": null,
+      "toQualifier": null
+    },
+    {
+      "input": "-0010-03/-0010-05-24",
+      "ok": true,
+      "isInterval": true,
+      "start": -62477654400,
+      "end": -62470310400,
+      "startIso": "-000010-03-01T00:00:00",
+      "endIso": "-000010-05-25T00:00:00",
+      "fromPrecision": "month",
+      "toPrecision": "day",
+      "fromQualifier": null,
+      "toQualifier": null
+    },
+    {
+      "input": "1900-02-29",
+      "ok": false,
+      "error": "\"1900-02-29\": day 29 does not exist in 1900-02"
+    },
+    {
+      "input": "1825-13",
+      "ok": false,
+      "error": "\"1825-13\": month 13 out of range"
+    },
+    {
+      "input": "1825-00",
+      "ok": false,
+      "error": "\"1825-00\": month 0 out of range"
+    },
+    {
+      "input": "1825-07-32",
+      "ok": false,
+      "error": "\"1825-07-32\": day 32 does not exist in 1825-07"
+    },
+    {
+      "input": "1825-7-20",
+      "ok": false,
+      "error": "\"1825-7-20\" is not a valid date (expected YYYY, YYYY-MM, YYYY-MM-DD or YYYY-MM-DDTHH:MM[:SS], optional ?~% suffix)"
+    },
+    {
+      "input": "825",
+      "ok": false,
+      "error": "\"825\" is not a valid date (expected YYYY, YYYY-MM, YYYY-MM-DD or YYYY-MM-DDTHH:MM[:SS], optional ?~% suffix)"
+    },
+    {
+      "input": "-0000",
+      "ok": false,
+      "error": "\"-0000\": -0000 is not allowed; year zero is 0000"
+    },
+    {
+      "input": "1825-07-20T24:00",
+      "ok": false,
+      "error": "\"1825-07-20T24:00\": hour out of range"
+    },
+    {
+      "input": "../..",
+      "ok": false,
+      "error": "\"../..\": both ends open"
+    },
+    {
+      "input": "1830/1829",
+      "ok": false,
+      "error": "\"1830/1829\": interval ends before it starts"
+    },
+    {
+      "input": "1825/",
+      "ok": false,
+      "error": "\"1825/\": empty (unknown) interval ends are not supported in v1; use \"..\" for open"
+    },
+    {
+      "input": "/1825",
+      "ok": false,
+      "error": "\"/1825\": empty (unknown) interval ends are not supported in v1; use \"..\" for open"
+    },
+    {
+      "input": "1825-07-20Z",
+      "ok": false,
+      "error": "\"1825-07-20Z\" is not a valid date (expected YYYY, YYYY-MM, YYYY-MM-DD or YYYY-MM-DDTHH:MM[:SS], optional ?~% suffix)"
+    },
+    {
+      "input": "1825~?",
+      "ok": false,
+      "error": "\"1825~?\" is not a valid date (expected YYYY, YYYY-MM, YYYY-MM-DD or YYYY-MM-DDTHH:MM[:SS], optional ?~% suffix)"
+    },
+    {
+      "input": "Y170000",
+      "ok": false,
+      "error": "\"Y170000\" is not a valid date (expected YYYY, YYYY-MM, YYYY-MM-DD or YYYY-MM-DDTHH:MM[:SS], optional ?~% suffix)"
+    },
+    {
+      "input": "2001-21",
+      "ok": false,
+      "error": "\"2001-21\": month 21 out of range"
+    },
+    {
+      "input": "201X",
+      "ok": false,
+      "error": "\"201X\" is not a valid date (expected YYYY, YYYY-MM, YYYY-MM-DD or YYYY-MM-DDTHH:MM[:SS], optional ?~% suffix)"
+    },
+    {
+      "input": "",
+      "ok": false,
+      "error": "when must be a non-empty string"
+    }
+  ]
+}

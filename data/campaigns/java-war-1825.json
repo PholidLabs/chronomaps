@@ -1,0 +1,3529 @@
+{
+  "$schema": "../schema/campaign.schema.json",
+  "chronomap": "1.0",
+  "meta": {
+    "id": "java-war-1825",
+    "version": "0.1.0",
+    "title": {
+      "en": "The Java War, 1825–1830",
+      "id": "Perang Jawa (Perang Diponegoro), 1825–1830"
+    },
+    "subtitle": {
+      "en": "Prince Diponegoro's war against Dutch colonial rule",
+      "id": "Perlawanan Pangeran Diponegoro terhadap kekuasaan kolonial Belanda"
+    },
+    "description": {
+      "en": "A five-year war in Central and East Java between the forces of Prince Diponegoro of Yogyakarta and the Dutch colonial government with its Javanese allies. It ended with Diponegoro's arrest at Magelang and exile to Sulawesi, cost some 200,000 Javanese lives, and opened the way to the Cultivation System.",
+      "id": "Perang lima tahun di Jawa Tengah dan Jawa Timur antara pasukan Pangeran Diponegoro dari Yogyakarta dan pemerintah kolonial Belanda beserta sekutu Jawanya. Perang berakhir dengan penangkapan Diponegoro di Magelang dan pengasingannya ke Sulawesi, menelan sekitar 200.000 jiwa orang Jawa, dan membuka jalan bagi Tanam Paksa."
+    },
+    "contentWarning": {
+      "en": "Describes warfare, killings of civilians (including the 1825 attack on the Chinese community of Ngawi), famine and exile.",
+      "id": "Memuat kisah peperangan, pembunuhan warga sipil (termasuk serangan tahun 1825 terhadap komunitas Tionghoa di Ngawi), kelaparan, dan pengasingan."
+    },
+    "languages": ["en", "id"],
+    "defaultLanguage": "en",
+    "license": "CC-BY-4.0",
+    "authors": [
+      {
+        "name": "PholidLabs"
+      }
+    ],
+    "updated": "2026-09-17",
+    "timeline": {
+      "extent": "1785-11-11/1855-01-08",
+      "focus": "1825-05/1830-10"
+    },
+    "map": {
+      "center": [110.3, -7.65],
+      "zoom": 8.5,
+      "pitch": 45,
+      "bearing": 0,
+      "bounds": [104, -9.5, 126.5, 3],
+      "terrain": {
+        "exaggeration": 1.5
+      },
+      "theme": "parchment-sepia"
+    }
+  },
+  "factions": [
+    {
+      "id": "diponegoro",
+      "name": {
+        "en": "Diponegoro's forces",
+        "id": "Pasukan Diponegoro"
+      },
+      "shortName": {
+        "en": "Diponegoro",
+        "id": "Diponegoro"
+      },
+      "color": "#8B1E1E",
+      "description": {
+        "en": "Prince Diponegoro, his commanders (Kyai Maja, Sentot Ali Basah Prawirodirjo, Pangeran Mangkubumi and others), religious networks and village levies across Central and East Java.",
+        "id": "Pangeran Diponegoro, para panglimanya (Kyai Maja, Sentot Ali Basah Prawirodirjo, Pangeran Mangkubumi, dan lainnya), jaringan ulama dan santri, serta laskar desa di Jawa Tengah dan Jawa Timur."
+      },
+      "notes": {
+        "en": "Colonial-era sources call these forces 'rebels' (opstandelingen). This dataset uses neutral terms.",
+        "id": "Sumber kolonial menyebut mereka 'pemberontak' (opstandelingen). Dataset ini memakai istilah netral."
+      }
+    },
+    {
+      "id": "dutch-colonial",
+      "name": {
+        "en": "Dutch colonial forces",
+        "id": "Pasukan kolonial Belanda"
+      },
+      "shortName": {
+        "en": "Dutch",
+        "id": "Belanda"
+      },
+      "color": "#1F3A5F",
+      "description": {
+        "en": "The Netherlands-Indies army (the name KNIL came later) of European and Indonesian soldiers, with auxiliaries recruited from Java, Madura, North Sulawesi, Buton, Maluku and Bali.",
+        "id": "Tentara Hindia Belanda (nama KNIL baru dipakai kemudian) yang terdiri atas prajurit Eropa dan pribumi, ditambah pasukan bantu dari Jawa, Madura, Sulawesi Utara, Buton, Maluku, dan Bali."
+      },
+      "sources": ["wikipedia-java-war"]
+    },
+    {
+      "id": "yogyakarta-court",
+      "name": {
+        "en": "Yogyakarta court",
+        "id": "Keraton Yogyakarta"
+      },
+      "shortName": {
+        "en": "Yogyakarta",
+        "id": "Yogyakarta"
+      },
+      "color": "#B08D2E",
+      "description": {
+        "en": "The Yogyakarta sultanate and its court troops. The court was divided: many princes joined Diponegoro, while the regency and the sultan's troops sided with the colonial government.",
+        "id": "Kesultanan Yogyakarta dan prajurit keraton. Keraton terpecah: banyak pangeran bergabung dengan Diponegoro, sementara pemerintahan wali dan prajurit sultan berpihak pada pemerintah kolonial."
+      }
+    },
+    {
+      "id": "surakarta-courts",
+      "name": {
+        "en": "Surakarta and Mangkunegaran courts",
+        "id": "Keraton Surakarta dan Mangkunegaran"
+      },
+      "shortName": {
+        "en": "Surakarta",
+        "id": "Surakarta"
+      },
+      "color": "#7A6A3A",
+      "description": {
+        "en": "The Susuhunan of Surakarta and the Mangkunegaran principality, whose Legion fought on the colonial side.",
+        "id": "Kasunanan Surakarta dan Kadipaten Mangkunegaran, yang Legiunnya bertempur di pihak kolonial."
+      }
+    },
+    {
+      "id": "british",
+      "name": {
+        "en": "British forces (1811–1816)",
+        "id": "Pasukan Inggris (1811–1816)"
+      },
+      "shortName": {
+        "en": "British",
+        "id": "Inggris"
+      },
+      "color": "#5E4B6B"
+    }
+  ],
+  "parts": [
+    {
+      "id": "prologue",
+      "title": {
+        "en": "Prologue: a court in crisis",
+        "id": "Prolog: keraton dalam krisis"
+      }
+    },
+    {
+      "id": "outbreak-1825",
+      "title": {
+        "en": "1825: The war begins",
+        "id": "1825: Perang meletus"
+      }
+    },
+    {
+      "id": "battles-1826",
+      "title": {
+        "en": "1826: The year of battles",
+        "id": "1826: Tahun pertempuran"
+      }
+    },
+    {
+      "id": "forts-1827-1828",
+      "title": {
+        "en": "1827–1828: The war of forts",
+        "id": "1827–1828: Perang benteng"
+      }
+    },
+    {
+      "id": "collapse-1829",
+      "title": {
+        "en": "1829: The resistance breaks",
+        "id": "1829: Perlawanan runtuh"
+      }
+    },
+    {
+      "id": "end-1830",
+      "title": {
+        "en": "1830: Magelang",
+        "id": "1830: Magelang"
+      }
+    },
+    {
+      "id": "epilogue",
+      "title": {
+        "en": "Epilogue: exile and aftermath",
+        "id": "Epilog: pengasingan dan akibat perang"
+      }
+    }
+  ],
+  "places": [
+    {
+      "id": "kraton-yogyakarta",
+      "name": {
+        "en": "Kraton Yogyakarta",
+        "id": "Keraton Yogyakarta"
+      },
+      "modernName": {
+        "en": "Kraton, Kota Yogyakarta",
+        "id": "Kraton, Kota Yogyakarta"
+      },
+      "kind": "palace",
+      "coordinates": [110.36406, -7.80569],
+      "certainty": "exact",
+      "rank": 1,
+      "notes": "Wikipedia infobox; Jogjacagar record 841 within 140 m.",
+      "sources": ["jogjacagar"]
+    },
+    {
+      "id": "tegalrejo",
+      "name": {
+        "en": "Tegalreja",
+        "id": "Tegalrejo"
+      },
+      "modernName": {
+        "en": "Museum Sasana Wiratama, Tegalrejo, Kota Yogyakarta",
+        "id": "Museum Sasana Wiratama, Tegalrejo, Kota Yogyakarta"
+      },
+      "kind": "residence",
+      "coordinates": [110.3513, -7.78696],
+      "certainty": "exact",
+      "rank": 2,
+      "notes": "DIY museum register. The 'Tembok Jebol' (broken wall) he escaped through is 24 m away.",
+      "sources": ["jogjacagar"]
+    },
+    {
+      "id": "benteng-vredeburg",
+      "name": {
+        "en": "Fort Vredeburg",
+        "id": "Benteng Vredeburg"
+      },
+      "modernName": {
+        "en": "Jl. Ahmad Yani 6, Gondomanan, Yogyakarta",
+        "id": "Jl. Ahmad Yani 6, Gondomanan, Yogyakarta"
+      },
+      "kind": "fort",
+      "coordinates": [110.36611, -7.80028],
+      "certainty": "exact",
+      "rank": 3,
+      "notes": "Jogjacagar record 4327.",
+      "sources": ["jogjacagar"]
+    },
+    {
+      "id": "goa-selarong",
+      "name": {
+        "en": "Selarong cave",
+        "id": "Goa Selarong"
+      },
+      "modernName": {
+        "en": "Kembangputihan, Guwosari, Pajangan, Bantul",
+        "id": "Kembangputihan, Guwosari, Pajangan, Bantul"
+      },
+      "kind": "cave",
+      "coordinates": [110.31476, -7.86187],
+      "certainty": "exact",
+      "rank": 1,
+      "notes": "Jogjacagar record 3994 (UTM cross-checked). The western 'kakung' cave was Diponegoro's.",
+      "sources": ["jogjacagar"]
+    },
+    {
+      "id": "dekso",
+      "name": {
+        "en": "Deksa",
+        "id": "Dekso"
+      },
+      "modernName": {
+        "en": "Banjararum, Kalibawang, Kulon Progo",
+        "id": "Banjararum, Kalibawang, Kulon Progo"
+      },
+      "kind": "settlement",
+      "coordinates": [110.22424, -7.71607],
+      "certainty": "approximate",
+      "rank": 2,
+      "notes": "Village point from a tourism listing. Local tradition also names Ngipikrejo and Goa Sriti (Samigaluh) as bases."
+    },
+    {
+      "id": "pleret",
+      "name": {
+        "en": "Plered",
+        "id": "Pleret"
+      },
+      "modernName": {
+        "en": "Situs Kedaton Plered, Bantul",
+        "id": "Situs Kedaton Plered, Bantul"
+      },
+      "kind": "fort",
+      "coordinates": [110.40441, -7.8658],
+      "certainty": "exact",
+      "rank": 2,
+      "notes": "Jogjacagar record 4343 (former Mataram court site).",
+      "sources": ["jogjacagar"]
+    },
+    {
+      "id": "lengkong",
+      "name": {
+        "en": "Lengkong",
+        "id": "Lengkong"
+      },
+      "modernName": {
+        "en": "Nglengkong, Sleman (Sumberrejo, Tempel claims the site)",
+        "id": "Nglengkong, Sleman (diklaim Sumberrejo, Tempel)"
+      },
+      "kind": "battlefield",
+      "coordinates": [110.29222, -7.67917],
+      "certainty": "approximate",
+      "notes": "Wikipedia 'Battle of Lengkong (1826)'. Not the 1946 battle of Lengkong in Tangerang.",
+      "sources": ["wp-lengkong"]
+    },
+    {
+      "id": "kejiwan",
+      "name": {
+        "en": "Kejiwan",
+        "id": "Kejiwan"
+      },
+      "modernName": {
+        "en": "Between Kalasan and Prambanan (village not identified)",
+        "id": "Antara Kalasan dan Prambanan (desa belum teridentifikasi)"
+      },
+      "kind": "battlefield",
+      "coordinates": [110.482, -7.75977],
+      "certainty": "conjectural",
+      "notes": "Placed at the midpoint of Candi Kalasan and Candi Prambanan."
+    },
+    {
+      "id": "delanggu",
+      "name": {
+        "en": "Delanggu",
+        "id": "Delanggu"
+      },
+      "modernName": {
+        "en": "Delanggu, Klaten",
+        "id": "Delanggu, Klaten"
+      },
+      "kind": "settlement",
+      "coordinates": [110.6993, -7.6194],
+      "certainty": "approximate",
+      "notes": "OpenStreetMap place node."
+    },
+    {
+      "id": "gawok",
+      "name": {
+        "en": "Gawok",
+        "id": "Gawok"
+      },
+      "modernName": {
+        "en": "Gawok, Geneng, Gatak, Sukoharjo",
+        "id": "Gawok, Geneng, Gatak, Sukoharjo"
+      },
+      "kind": "battlefield",
+      "coordinates": [110.75167, -7.60306],
+      "certainty": "approximate",
+      "notes": "Wikipedia 'Battle of Gawok'. Local tradition places it at the Pasar Gawok market.",
+      "sources": ["wp-gawok"]
+    },
+    {
+      "id": "kraton-surakarta",
+      "name": {
+        "en": "Kraton Surakarta",
+        "id": "Keraton Surakarta"
+      },
+      "modernName": {
+        "en": "Baluwarti, Pasar Kliwon, Surakarta",
+        "id": "Baluwarti, Pasar Kliwon, Surakarta"
+      },
+      "kind": "palace",
+      "coordinates": [110.82883, -7.57786],
+      "certainty": "exact",
+      "rank": 1
+    },
+    {
+      "id": "klaten",
+      "name": {
+        "en": "Klaten",
+        "id": "Klaten"
+      },
+      "kind": "settlement",
+      "coordinates": [110.6018, -7.705],
+      "certainty": "approximate",
+      "rank": 3,
+      "notes": "OpenStreetMap place node."
+    },
+    {
+      "id": "imogiri",
+      "name": {
+        "en": "Imogiri",
+        "id": "Imogiri"
+      },
+      "modernName": {
+        "en": "Royal graves, Pajimatan, Girirejo, Imogiri, Bantul",
+        "id": "Makam raja-raja, Pajimatan, Girirejo, Imogiri, Bantul"
+      },
+      "kind": "grave",
+      "coordinates": [110.39316, -7.92277],
+      "certainty": "exact",
+      "rank": 3,
+      "sources": ["jogjacagar"]
+    },
+    {
+      "id": "siluk",
+      "name": {
+        "en": "Siluk",
+        "id": "Siluk"
+      },
+      "modernName": {
+        "en": "Possibly Siluk, Selopamioro, Imogiri",
+        "id": "Kemungkinan Siluk, Selopamioro, Imogiri"
+      },
+      "kind": "battlefield",
+      "coordinates": [110.39003, -7.95225],
+      "certainty": "conjectural",
+      "radiusMeters": 20000,
+      "notes": "Sources place the battle 'near the Selarong hills' or 'in the Progo valley'; identification with this hamlet is unverified."
+    },
+    {
+      "id": "mlangi",
+      "name": {
+        "en": "Mlangi",
+        "id": "Mlangi"
+      },
+      "modernName": {
+        "en": "Mlangi, Nogotirto, Gamping, Sleman",
+        "id": "Mlangi, Nogotirto, Gamping, Sleman"
+      },
+      "kind": "settlement",
+      "coordinates": [110.33043, -7.76166],
+      "certainty": "conjectural",
+      "notes": "Kyai Maja's capture site is given as Mlangi near the Bedog river (Djamhari via tirto.id), 'Kembang Arum north of Yogyakarta' (NU Online) or the slopes of Merapi.",
+      "sources": ["tirto-mojo", "jogjacagar"]
+    },
+    {
+      "id": "nanggulan",
+      "name": {
+        "en": "Nanggulan",
+        "id": "Nanggulan"
+      },
+      "modernName": {
+        "en": "Nanggulan, Kulon Progo",
+        "id": "Nanggulan, Kulon Progo"
+      },
+      "kind": "fort",
+      "coordinates": [110.2092, -7.7656],
+      "certainty": "approximate"
+    },
+    {
+      "id": "bagelen",
+      "name": {
+        "en": "Bagelen",
+        "id": "Bagelen"
+      },
+      "modernName": {
+        "en": "Bagelen, Purworejo (the former Bagelen residency covered Purworejo and eastern Kebumen)",
+        "id": "Bagelen, Purworejo (bekas karesidenan Bagelen meliputi Purworejo dan Kebumen timur)"
+      },
+      "kind": "region",
+      "coordinates": [110.04006, -7.81128],
+      "certainty": "approximate",
+      "radiusMeters": 25000,
+      "rank": 2
+    },
+    {
+      "id": "remo-kamal",
+      "name": {
+        "en": "Remo Kamal",
+        "id": "Remokamal"
+      },
+      "modernName": {
+        "en": "Northern Bagelen (exact village unknown)",
+        "id": "Bagelen utara (desa pastinya belum diketahui)"
+      },
+      "kind": "settlement",
+      "coordinates": [110.04006, -7.81128],
+      "certainty": "conjectural",
+      "radiusMeters": 20000,
+      "notes": "Placeholder at Bagelen until the village is identified.",
+      "sources": ["carey-1982"]
+    },
+    {
+      "id": "kedung-kebo",
+      "name": {
+        "en": "Kedung Kebo",
+        "id": "Kedung Kebo"
+      },
+      "modernName": {
+        "en": "Purworejo town",
+        "id": "Kota Purworejo"
+      },
+      "kind": "fort",
+      "coordinates": [110.0091, -7.7131],
+      "certainty": "approximate",
+      "notes": "Fort and barracks from the war; the town was renamed Purworejo around 1831.",
+      "sources": ["historia-bagelen"]
+    },
+    {
+      "id": "menoreh",
+      "name": {
+        "en": "Menoreh",
+        "id": "Menoreh"
+      },
+      "modernName": {
+        "en": "Desa Menoreh, Salaman, Magelang",
+        "id": "Desa Menoreh, Salaman, Magelang"
+      },
+      "kind": "settlement",
+      "coordinates": [110.1302, -7.5892],
+      "certainty": "approximate",
+      "rank": 3
+    },
+    {
+      "id": "metesih",
+      "name": {
+        "en": "Metesih",
+        "id": "Metesih"
+      },
+      "modernName": {
+        "en": "By the Progo river below the Kedu residency, Magelang",
+        "id": "Di tepi Kali Progo di bawah karesidenan Kedu, Magelang"
+      },
+      "kind": "settlement",
+      "coordinates": [110.2182, -7.4771],
+      "certainty": "conjectural",
+      "notes": "Placeholder at Magelang town; Kampung Meteseh is not confirmed as the same place."
+    },
+    {
+      "id": "magelang-residency",
+      "name": {
+        "en": "Kedu Residency house, Magelang",
+        "id": "Rumah Residen Kedu, Magelang"
+      },
+      "modernName": {
+        "en": "Museum Diponegoro, Jl. Diponegoro 1, Magelang",
+        "id": "Museum Diponegoro, Jl. Diponegoro 1, Magelang"
+      },
+      "kind": "residence",
+      "coordinates": [110.21303, -7.47473],
+      "certainty": "exact",
+      "rank": 1,
+      "notes": "OpenStreetMap building outline."
+    },
+    {
+      "id": "semarang",
+      "name": {
+        "en": "Semarang",
+        "id": "Semarang"
+      },
+      "kind": "port",
+      "coordinates": [110.4229, -6.9904],
+      "certainty": "approximate",
+      "rank": 1
+    },
+    {
+      "id": "demak",
+      "name": {
+        "en": "Demak",
+        "id": "Demak"
+      },
+      "kind": "settlement",
+      "coordinates": [110.6396, -6.8945],
+      "certainty": "approximate",
+      "notes": "Town centre; coordinate not independently verified."
+    },
+    {
+      "id": "ngawi",
+      "name": {
+        "en": "Ngawi",
+        "id": "Ngawi"
+      },
+      "modernName": {
+        "en": "Ngawi, East Java",
+        "id": "Ngawi, Jawa Timur"
+      },
+      "kind": "settlement",
+      "coordinates": [111.4461, -7.4038],
+      "certainty": "approximate",
+      "notes": "Town centre on the Bengawan Solo; coordinate not independently verified."
+    },
+    {
+      "id": "madiun",
+      "name": {
+        "en": "Madiun",
+        "id": "Madiun"
+      },
+      "kind": "settlement",
+      "coordinates": [111.5169, -7.6291],
+      "certainty": "approximate",
+      "rank": 3
+    },
+    {
+      "id": "banyumas",
+      "name": {
+        "en": "Banyumas",
+        "id": "Banyumas"
+      },
+      "kind": "settlement",
+      "coordinates": [109.29384, -7.51659],
+      "certainty": "approximate",
+      "rank": 3
+    },
+    {
+      "id": "lasem",
+      "name": {
+        "en": "Lasem",
+        "id": "Lasem"
+      },
+      "modernName": {
+        "en": "Lasem, Rembang",
+        "id": "Lasem, Rembang"
+      },
+      "kind": "settlement",
+      "coordinates": [111.4417, -6.6947],
+      "certainty": "approximate",
+      "notes": "Town centre; coordinate not independently verified."
+    },
+    {
+      "id": "rajekwesi",
+      "name": {
+        "en": "Rajekwesi",
+        "id": "Rajekwesi"
+      },
+      "modernName": {
+        "en": "Bojonegoro, East Java",
+        "id": "Bojonegoro, Jawa Timur"
+      },
+      "kind": "settlement",
+      "coordinates": [111.8817, -7.1502],
+      "certainty": "approximate",
+      "notes": "Placed at modern Bojonegoro; coordinate not independently verified."
+    },
+    {
+      "id": "batavia-stadhuis",
+      "name": {
+        "en": "Batavia Town Hall (Stadhuis)",
+        "id": "Balai Kota Batavia (Stadhuis)"
+      },
+      "modernName": {
+        "en": "Museum Fatahillah, Kota Tua, Jakarta",
+        "id": "Museum Fatahillah, Kota Tua, Jakarta"
+      },
+      "kind": "residence",
+      "coordinates": [106.81329, -6.13516],
+      "certainty": "exact",
+      "rank": 1
+    },
+    {
+      "id": "manado-fort",
+      "name": {
+        "en": "Fort Nieuw Amsterdam, Manado",
+        "id": "Benteng Nieuw Amsterdam, Manado"
+      },
+      "modernName": {
+        "en": "Pasar 45 area, Manado (fort demolished)",
+        "id": "Kawasan Pasar 45, Manado (benteng sudah dibongkar)"
+      },
+      "kind": "fort",
+      "coordinates": [124.8408, 1.49],
+      "certainty": "approximate",
+      "rank": 1,
+      "notes": "The fort was destroyed in the 20th century; placed at the city point."
+    },
+    {
+      "id": "tondano",
+      "name": {
+        "en": "Kampung Jawa, Tondano",
+        "id": "Kampung Jawa Tondano"
+      },
+      "modernName": {
+        "en": "Kampung Jawa, Tondano Utara, Minahasa",
+        "id": "Kampung Jawa, Tondano Utara, Minahasa"
+      },
+      "kind": "settlement",
+      "coordinates": [124.92028, 1.31167],
+      "certainty": "approximate"
+    },
+    {
+      "id": "fort-rotterdam",
+      "name": {
+        "en": "Fort Rotterdam, Makassar",
+        "id": "Benteng Rotterdam, Makassar"
+      },
+      "kind": "fort",
+      "coordinates": [119.40556, -5.13417],
+      "certainty": "exact",
+      "rank": 1
+    },
+    {
+      "id": "makam-diponegoro",
+      "name": {
+        "en": "Grave of Prince Diponegoro",
+        "id": "Makam Pangeran Diponegoro"
+      },
+      "modernName": {
+        "en": "Jl. Diponegoro, Kampung Melayu, Wajo, Makassar",
+        "id": "Jl. Diponegoro, Kampung Melayu, Wajo, Makassar"
+      },
+      "kind": "grave",
+      "coordinates": [119.41492, -5.12704],
+      "certainty": "exact",
+      "notes": "GPS from a single site survey; address matches the Makassar heritage register."
+    }
+  ],
+  "entities": [
+    {
+      "id": "diponegoro-hq",
+      "kind": "unit",
+      "name": {
+        "en": "Prince Diponegoro and his headquarters",
+        "id": "Pangeran Diponegoro dan markasnya"
+      },
+      "faction": "diponegoro",
+      "when": "1825-07-20/1855-01-08",
+      "commanders": ["Pangeran Diponegoro"],
+      "description": {
+        "en": "The movements of Diponegoro's own headquarters, from the attack on Tegalrejo to his death in Makassar. Positions between known dates are interpolated; guerrilla-period camps are conjectural.",
+        "id": "Pergerakan markas Diponegoro, dari penyerbuan Tegalrejo hingga wafatnya di Makassar. Posisi di antara tanggal yang diketahui diinterpolasi; kamp masa gerilya bersifat dugaan."
+      },
+      "track": [
+        {
+          "when": "1825-07-20",
+          "at": "tegalrejo",
+          "label": {
+            "en": "Tegalrejo attacked",
+            "id": "Tegalrejo diserbu"
+          }
+        },
+        {
+          "when": "1825-07-21/1825-09~",
+          "at": "goa-selarong",
+          "label": {
+            "en": "Headquarters at Selarong",
+            "id": "Markas di Selarong"
+          },
+          "notes": {
+            "en": "Dutch columns found Selarong empty in early October 1825.",
+            "id": "Kolone Belanda mendapati Selarong kosong pada awal Oktober 1825."
+          }
+        },
+        {
+          "when": "1825-11-04/1826-08-04",
+          "at": "dekso",
+          "label": {
+            "en": "Headquarters at Dekso",
+            "id": "Markas di Dekso"
+          },
+          "notes": {
+            "en": "Dates from id.wikipedia; one account dates the move to November 1826.",
+            "id": "Tanggal dari id.wikipedia; satu sumber menyebut perpindahan terjadi November 1826."
+          },
+          "sources": ["id-wikipedia-perang-diponegoro"]
+        },
+        {
+          "when": "1826-08-09",
+          "at": "kejiwan",
+          "certainty": "conjectural"
+        },
+        {
+          "when": "1826-08-28",
+          "at": "delanggu"
+        },
+        {
+          "when": "1826-10-12~/1826-10-15",
+          "at": "gawok",
+          "label": {
+            "en": "Camp and battle at Gawok",
+            "id": "Berkemah dan bertempur di Gawok"
+          }
+        },
+        {
+          "when": "1826-11~/1827-08~",
+          "at": "dekso",
+          "certainty": "conjectural",
+          "label": {
+            "en": "Base area in the Kulon Progo and Menoreh hills",
+            "id": "Wilayah basis di perbukitan Kulon Progo dan Menoreh"
+          }
+        },
+        {
+          "when": "1827-10/1829-08",
+          "at": "bagelen",
+          "certainty": "conjectural",
+          "label": {
+            "en": "Campaigning in Bagelen, between the Progo and Bogowonto rivers",
+            "id": "Bergerilya di Bagelen, antara Kali Progo dan Kali Bogowonto"
+          }
+        },
+        {
+          "when": "1829-09-17",
+          "at": "siluk",
+          "certainty": "conjectural"
+        },
+        {
+          "when": "1829-10/1830-02-09",
+          "at": "bagelen",
+          "certainty": "conjectural",
+          "label": {
+            "en": "Hiding in the forests of Bagelen and Kedu",
+            "id": "Bersembunyi di hutan Bagelen dan Kedu"
+          }
+        },
+        {
+          "when": "1830-02-16",
+          "at": "remo-kamal",
+          "certainty": "conjectural",
+          "label": {
+            "en": "Meets Colonel Cleerens",
+            "id": "Bertemu Kolonel Cleerens"
+          }
+        },
+        {
+          "when": "1830-02-21/1830-03-07",
+          "at": "menoreh"
+        },
+        {
+          "when": "1830-03-08T12:00/1830-03-27",
+          "at": "metesih",
+          "label": {
+            "en": "Camp at Metesih during Ramadan",
+            "id": "Berkemah di Metesih selama Ramadan"
+          },
+          "notes": {
+            "en": "Arrived on 8 March; the time of day is nominal so the ride from Menoreh is animated.",
+            "id": "Tiba pada 8 Maret; jam kedatangan bersifat nominal agar perjalanan dari Menoreh dapat dianimasikan."
+          }
+        },
+        {
+          "when": "1830-03-28/1830-03-28",
+          "at": "magelang-residency",
+          "label": {
+            "en": "Arrested",
+            "id": "Ditangkap"
+          }
+        },
+        {
+          "when": "1830-04-05",
+          "at": "semarang",
+          "via": [[110.244, -7.402], [110.401, -7.263], [110.405, -7.129]],
+          "notes": {
+            "en": "Overland by carriage, 29 March–5 April 1830, via Ungaran (route along the post road is schematic).",
+            "id": "Lewat darat dengan kereta, 29 Maret–5 April 1830, melalui Ungaran (rute di jalan pos bersifat skematis)."
+          },
+          "sources": ["unesco-babad"]
+        },
+        {
+          "when": "1830-04-08/1830-05-03",
+          "at": "batavia-stadhuis",
+          "mode": "sea",
+          "via": [[110.1, -6.75], [109, -6.62], [108.4, -6.05], [107.3, -5.78], [106.95, -5.82], [106.83, -6.02]],
+          "label": {
+            "en": "Held in the Batavia Stadhuis",
+            "id": "Ditahan di Stadhuis Batavia"
+          },
+          "notes": {
+            "en": "By the steamship Van der Capellen.",
+            "id": "Dengan kapal uap Van der Capellen."
+          }
+        },
+        {
+          "when": "1830-06-12/1833-06-20",
+          "at": "manado-fort",
+          "mode": "sea",
+          "certainty": "approximate",
+          "via": [[106.85, -5.9], [108.5, -5.4], [111, -5.2], [114, -5], [116.8, -5], [118, -2.6], [118.4, -1], [119.2, 0.5], [120.3, 1.6], [123, 1.95], [124.55, 1.62]],
+          "label": {
+            "en": "Exile in Manado",
+            "id": "Pengasingan di Manado"
+          },
+          "notes": {
+            "en": "On the corvette Pollux, sailing 4 May 1830. Arrival given as 10 June (UNESCO) or 12 June (Carey 2022). The sea lane drawn here is schematic.",
+            "id": "Dengan korvet Pollux, berlayar 4 Mei 1830. Tanggal tiba 10 Juni (UNESCO) atau 12 Juni (Carey 2022). Jalur laut yang digambar bersifat skematis."
+          },
+          "sources": ["carey-2022", "unesco-babad"]
+        },
+        {
+          "when": "1833-07-11/1855-01-08",
+          "at": "fort-rotterdam",
+          "mode": "sea",
+          "via": [[124.55, 1.62], [123, 1.95], [120.3, 1.6], [119.2, 0.5], [118.4, -1], [118.3, -3], [118.9, -4.7], [119.3, -5.1]],
+          "label": {
+            "en": "Exile in Fort Rotterdam, Makassar",
+            "id": "Pengasingan di Benteng Rotterdam, Makassar"
+          },
+          "notes": {
+            "en": "On the schooner Circe, leaving Manado 20 June 1833.",
+            "id": "Dengan sekunar Circe, meninggalkan Manado 20 Juni 1833."
+          },
+          "sources": ["carey-2022"]
+        }
+      ],
+      "states": [
+        {
+          "when": "1825-07-20",
+          "status": "active"
+        },
+        {
+          "when": "1830-03-08/1830-03-27",
+          "status": "encamped"
+        },
+        {
+          "when": "1830-03-28",
+          "status": "captive"
+        },
+        {
+          "when": "1830-06-12",
+          "status": "exiled"
+        },
+        {
+          "when": "1855-01-08",
+          "status": "dead"
+        }
+      ],
+      "style": {
+        "trail": "full",
+        "icon": "leader"
+      },
+      "sources": ["carey-2007", "carey-2014"],
+      "media": ["bik-portrait"]
+    },
+    {
+      "id": "fort-vredeburg-garrison",
+      "kind": "fortification",
+      "name": {
+        "en": "Fort Vredeburg garrison",
+        "id": "Garnisun Benteng Vredeburg"
+      },
+      "faction": "dutch-colonial",
+      "at": "benteng-vredeburg",
+      "when": "1825-07/..",
+      "notes": {
+        "en": "The fort dates from the 1760s; it is shown from the outbreak of the war. Also the base of the Yogyakarta mobile column from 1827.",
+        "id": "Benteng ini dibangun pada 1760-an; ditampilkan sejak perang pecah. Sejak 1827 juga menjadi pangkalan kolone mobil Yogyakarta."
+      },
+      "states": [
+        {
+          "when": "1825-07",
+          "status": "active"
+        },
+        {
+          "when": "1825-07-28/1825-09-25",
+          "status": "besieged"
+        }
+      ],
+      "sources": ["wikipedia-java-war"]
+    },
+    {
+      "id": "pleret-stronghold",
+      "kind": "fortification",
+      "name": {
+        "en": "Pleret stronghold",
+        "id": "Benteng Pleret"
+      },
+      "faction": "diponegoro",
+      "at": "pleret",
+      "when": "1825-08~/..",
+      "states": [
+        {
+          "when": "1825-08~",
+          "status": "active"
+        },
+        {
+          "when": "1826-06-09",
+          "status": "captured",
+          "faction": "dutch-colonial"
+        }
+      ],
+      "notes": {
+        "en": "Held for Diponegoro by Ali Basah Kertapengalasan; a Dutch garrison of about 700 held it after June 1826. When the defences were first raised is not known.",
+        "id": "Dipertahankan untuk Diponegoro oleh Ali Basah Kertapengalasan; setelah Juni 1826 dijaga garnisun Belanda sekitar 700 orang. Kapan pertahanan ini mulai dibangun belum diketahui."
+      },
+      "sources": ["pleret-village", "wp-pleret"]
+    },
+    {
+      "id": "delanggu-post",
+      "kind": "fortification",
+      "name": {
+        "en": "Delanggu post",
+        "id": "Pos Delanggu"
+      },
+      "faction": "dutch-colonial",
+      "at": "delanggu",
+      "when": "1826-08/..",
+      "states": [
+        {
+          "when": "1826-08",
+          "status": "active"
+        },
+        {
+          "when": "1826-08-28",
+          "status": "captured",
+          "faction": "diponegoro"
+        },
+        {
+          "when": "1827~",
+          "status": "active",
+          "faction": "dutch-colonial",
+          "notes": {
+            "en": "Later a fort of the fortress system; the date it was retaken is not known.",
+            "id": "Kemudian menjadi benteng dalam stelsel benteng; tanggal direbut kembali belum diketahui."
+          }
+        }
+      ],
+      "sources": ["wp-delanggu", "detik-klaten-forts"]
+    },
+    {
+      "id": "klaten-column-base",
+      "kind": "fortification",
+      "name": {
+        "en": "Klaten mobile-column base",
+        "id": "Pangkalan kolone mobil Klaten"
+      },
+      "faction": "dutch-colonial",
+      "at": "klaten",
+      "when": "1827/..",
+      "notes": {
+        "en": "One of eight mobile-column bases (Boyolali, Kalitan, Klaten, Yogyakarta, Kalijengking, Menoreh, Wonosobo, Banyumas). De Stuers's January 1830 map shows at least eight forts around Klaten.",
+        "id": "Salah satu dari delapan pangkalan kolone mobil (Boyolali, Kalitan, Klaten, Yogyakarta, Kalijengking, Menoreh, Wonosobo, Banyumas). Peta De Stuers Januari 1830 memperlihatkan sedikitnya delapan benteng di sekitar Klaten."
+      },
+      "sources": ["detik-klaten-forts", "djamhari-2004"]
+    },
+    {
+      "id": "menoreh-column-base",
+      "kind": "fortification",
+      "name": {
+        "en": "Menoreh mobile-column base",
+        "id": "Pangkalan kolone mobil Menoreh"
+      },
+      "faction": "dutch-colonial",
+      "at": "menoreh",
+      "when": "1827/..",
+      "sources": ["djamhari-2004"]
+    },
+    {
+      "id": "banyumas-column-base",
+      "kind": "fortification",
+      "name": {
+        "en": "Banyumas mobile-column base",
+        "id": "Pangkalan kolone mobil Banyumas"
+      },
+      "faction": "dutch-colonial",
+      "at": "banyumas",
+      "when": "1827/..",
+      "sources": ["djamhari-2004"]
+    },
+    {
+      "id": "kedung-kebo-fort",
+      "kind": "fortification",
+      "name": {
+        "en": "Kedung Kebo fort",
+        "id": "Benteng Kedung Kebo"
+      },
+      "faction": "dutch-colonial",
+      "at": "kedung-kebo",
+      "when": "1827-10~/..",
+      "notes": {
+        "en": "Built as the war moved into Bagelen; exact construction date not known.",
+        "id": "Dibangun ketika perang bergeser ke Bagelen; tanggal pembangunan belum diketahui."
+      },
+      "sources": ["historia-bagelen"]
+    },
+    {
+      "id": "nanggulan-fort",
+      "kind": "fortification",
+      "name": {
+        "en": "Nanggulan fort",
+        "id": "Benteng Nanggulan"
+      },
+      "faction": "dutch-colonial",
+      "at": "nanggulan",
+      "when": "1828~/..",
+      "notes": {
+        "en": "Described as one of the larger forts, with a garrison of 200 or more; construction date not known.",
+        "id": "Disebut sebagai salah satu benteng besar dengan garnisun 200 orang lebih; tanggal pembangunan belum diketahui."
+      },
+      "sources": ["wikipedia-java-war"]
+    }
+  ],
+  "events": [
+    {
+      "id": "diponegoro-birth",
+      "kind": "birth",
+      "when": "1785-11-11",
+      "at": "kraton-yogyakarta",
+      "importance": 2,
+      "name": {
+        "en": "Birth of Prince Diponegoro",
+        "id": "Kelahiran Pangeran Diponegoro"
+      },
+      "summary": {
+        "en": "Born at the Yogyakarta court, the eldest son of the future Hamengkubuwono III. From 1793 he was raised by his great-grandmother Ratu Ageng at Tegalrejo, away from court life.",
+        "id": "Lahir di Keraton Yogyakarta sebagai putra sulung calon Hamengkubuwono III. Sejak 1793 ia diasuh buyutnya, Ratu Ageng, di Tegalrejo, jauh dari kehidupan keraton."
+      },
+      "sources": ["unesco-babad", "carey-2007"]
+    },
+    {
+      "id": "geger-sepehi",
+      "kind": "battle",
+      "when": "1812-06-20",
+      "at": "kraton-yogyakarta",
+      "importance": 2,
+      "name": {
+        "en": "British storming of the Yogyakarta kraton (Geger Sepehi)",
+        "id": "Geger Sepehi: Inggris menyerbu Keraton Yogyakarta"
+      },
+      "participants": [
+        {
+          "faction": "british",
+          "role": "attacker",
+          "commanders": ["Col. Robert Rollo Gillespie", "Lt-Governor Thomas Stamford Raffles"]
+        },
+        {
+          "faction": "yogyakarta-court",
+          "role": "defender",
+          "commanders": ["Sultan Hamengkubuwono II"]
+        }
+      ],
+      "outcome": {
+        "victor": "british",
+        "summary": {
+          "en": "The kraton fell and was plundered; Hamengkubuwono II was deposed and exiled to Penang.",
+          "id": "Keraton jatuh dan dijarah; Hamengkubuwono II diturunkan dan diasingkan ke Penang."
+        }
+      },
+      "summary": {
+        "en": "British and sepoy troops stormed and looted the court, a formative humiliation for the Yogyakarta elite.",
+        "id": "Pasukan Inggris dan sepoy menyerbu dan menjarah keraton, sebuah penghinaan yang membekas bagi elite Yogyakarta."
+      },
+      "notes": {
+        "en": "Some sources give 19–20 June 1812.",
+        "id": "Sebagian sumber menyebut 19–20 Juni 1812."
+      },
+      "sources": ["kraton-jogja", "id-wikipedia-perang-diponegoro"]
+    },
+    {
+      "id": "hb4-death",
+      "kind": "death",
+      "when": "1822-12",
+      "at": "kraton-yogyakarta",
+      "importance": 3,
+      "name": {
+        "en": "Death of Hamengkubuwono IV; Diponegoro becomes a guardian",
+        "id": "Wafatnya Hamengkubuwono IV; Diponegoro menjadi wali"
+      },
+      "summary": {
+        "en": "The 19-year-old sultan died suddenly. His son, Hamengkubuwono V, was about three. Diponegoro was named to the regency council but was given little real power, while Patih Danurejo IV ran the administration.",
+        "id": "Sultan yang baru berusia 19 tahun wafat mendadak. Putranya, Hamengkubuwono V, baru sekitar tiga tahun. Diponegoro diangkat menjadi anggota dewan perwalian namun nyaris tanpa kuasa, sementara Patih Danurejo IV menjalankan pemerintahan."
+      },
+      "notes": {
+        "en": "The day is disputed: 3, 6 or 9 December 1822. The kraton's own site gives 1823, which conflicts with the 1823 chronology.",
+        "id": "Tanggalnya diperdebatkan: 3, 6, atau 9 Desember 1822. Situs resmi keraton menyebut 1823, yang bertentangan dengan kronologi tahun 1823."
+      },
+      "sources": ["carey-1976", "kraton-jogja"]
+    },
+    {
+      "id": "land-lease-decree",
+      "kind": "decree",
+      "when": "1823-05-06",
+      "importance": 3,
+      "name": {
+        "en": "Van der Capellen ends land leases in the principalities",
+        "id": "Van der Capellen menghapus sewa tanah di Vorstenlanden"
+      },
+      "participants": [
+        {
+          "faction": "dutch-colonial",
+          "role": "party",
+          "commanders": ["Governor-General G.A.G.Ph. van der Capellen"]
+        }
+      ],
+      "summary": {
+        "en": "European and Chinese leases of court land had to end by 31 January 1824, and the Javanese nobles who had leased out their estates owed compensation. Carey treats the resulting debts as a major cause of the war.",
+        "id": "Sewa tanah bangsawan oleh orang Eropa dan Tionghoa harus berakhir paling lambat 31 Januari 1824, dan para bangsawan Jawa yang menyewakan tanahnya wajib membayar ganti rugi. Carey memandang utang yang timbul sebagai salah satu penyebab utama perang."
+      },
+      "sources": ["carey-1976"]
+    },
+    {
+      "id": "patok-incident",
+      "kind": "other",
+      "when": "1825-06~",
+      "at": "tegalrejo",
+      "importance": 2,
+      "name": {
+        "en": "Road stakes across Tegalrejo",
+        "id": "Peristiwa patok jalan di Tegalrejo"
+      },
+      "participants": [
+        {
+          "faction": "dutch-colonial",
+          "role": "party",
+          "commanders": ["Resident A.H. Smissaert"]
+        },
+        {
+          "faction": "yogyakarta-court",
+          "role": "party",
+          "commanders": ["Patih Danurejo IV"]
+        },
+        {
+          "faction": "diponegoro",
+          "role": "party"
+        }
+      ],
+      "summary": {
+        "en": "Stakes marking a new road were planted across Diponegoro's land without consulting him. His retainers pulled them out and clashed with the workers.",
+        "id": "Patok untuk jalan baru dipasang melintasi tanah Diponegoro tanpa meminta izinnya. Para pengikutnya mencabut patok itu dan bentrok dengan para pekerja."
+      },
+      "notes": {
+        "en": "Timing varies: the decision at the end of May (Carey 1976), works beginning 17 June 1825 (Wikipedia).",
+        "id": "Waktunya berbeda-beda: keputusan diambil akhir Mei (Carey 1976), pengerjaan dimulai 17 Juni 1825 (Wikipedia)."
+      },
+      "sources": ["carey-1976", "wikipedia-java-war"]
+    },
+    {
+      "id": "tegalrejo-attack",
+      "kind": "raid",
+      "when": "1825-07-20",
+      "at": "tegalrejo",
+      "importance": 1,
+      "name": {
+        "en": "Attack on Tegalrejo",
+        "id": "Penyerbuan Tegalrejo"
+      },
+      "participants": [
+        {
+          "faction": "dutch-colonial",
+          "role": "attacker",
+          "commanders": ["Assistant-Resident P.F.H. Chevallier"]
+        },
+        {
+          "faction": "diponegoro",
+          "role": "defender",
+          "commanders": ["Pangeran Diponegoro", "Pangeran Mangkubumi"]
+        }
+      ],
+      "outcome": {
+        "summary": {
+          "en": "Tegalrejo was shelled and burned; Diponegoro and his uncle Mangkubumi escaped.",
+          "id": "Tegalrejo ditembaki dan dibakar; Diponegoro dan pamannya, Mangkubumi, lolos."
+        }
+      },
+      "summary": {
+        "en": "A colonial detachment sent to arrest Diponegoro attacked his estate. The war began that day.",
+        "id": "Satu detasemen kolonial yang dikirim untuk menangkap Diponegoro menyerang kediamannya. Perang dimulai hari itu."
+      },
+      "notes": {
+        "en": "Some sources give 21 July.",
+        "id": "Sebagian sumber menyebut 21 Juli."
+      },
+      "sources": ["carey-1976", "unesco-babad"]
+    },
+    {
+      "id": "selarong-base",
+      "kind": "uprising",
+      "when": "1825-07-21",
+      "at": "goa-selarong",
+      "importance": 1,
+      "name": {
+        "en": "Diponegoro establishes his base at Selarong",
+        "id": "Diponegoro bermarkas di Goa Selarong"
+      },
+      "participants": [
+        {
+          "faction": "diponegoro",
+          "role": "belligerent",
+          "commanders": ["Pangeran Diponegoro", "Pangeran Mangkubumi", "Kyai Maja"]
+        }
+      ],
+      "summary": {
+        "en": "In the limestone hills south-west of Yogyakarta, Diponegoro raised his standard. Letters mobilising supporters in Kedu went out on 31 July.",
+        "id": "Di perbukitan kapur barat daya Yogyakarta, Diponegoro mengibarkan panji perang. Surat seruan untuk menggerakkan pendukung di Kedu dikirim pada 31 Juli."
+      },
+      "notes": {
+        "en": "Kyai Maja is listed among the Selarong planners in July 1825 by Kemendikbud; Wikipedia dates his arrival to August.",
+        "id": "Kemendikbud mencantumkan Kyai Maja di antara perencana di Selarong pada Juli 1825; Wikipedia menyebut ia datang pada Agustus."
+      },
+      "sources": ["carey-1976", "jogjacagar", "kemendikbud-2017"]
+    },
+    {
+      "id": "siege-of-yogyakarta",
+      "kind": "siege",
+      "when": "1825-07-28/1825-09-25",
+      "at": "benteng-vredeburg",
+      "importance": 1,
+      "name": {
+        "en": "Siege of Yogyakarta",
+        "id": "Pengepungan Yogyakarta"
+      },
+      "participants": [
+        {
+          "faction": "diponegoro",
+          "role": "attacker"
+        },
+        {
+          "faction": "dutch-colonial",
+          "role": "defender"
+        },
+        {
+          "faction": "surakarta-courts",
+          "role": "belligerent",
+          "commanders": ["Mangkunegaran Legion"]
+        }
+      ],
+      "outcome": {
+        "victor": "dutch-colonial",
+        "summary": {
+          "en": "Yogyakarta did not fall.",
+          "id": "Yogyakarta tidak jatuh."
+        }
+      },
+      "summary": {
+        "en": "Diponegoro's forces cut off the city and the Dutch fort. A major assault by about 6,000 men came on 7 August; a relief force with Sumenep and Mangkunegaran troops arrived on 19 August.",
+        "id": "Pasukan Diponegoro mengepung kota dan benteng Belanda. Serangan besar oleh sekitar 6.000 orang terjadi pada 7 Agustus; pasukan bantuan berisi prajurit Sumenep dan Mangkunegaran tiba pada 19 Agustus."
+      },
+      "sources": ["wikipedia-java-war", "kemendikbud-2017"]
+    },
+    {
+      "id": "erucakra-title",
+      "kind": "proclamation",
+      "when": "1825-08-15",
+      "at": "goa-selarong",
+      "importance": 2,
+      "name": {
+        "en": "Diponegoro takes the title Sultan Erucakra",
+        "id": "Diponegoro bergelar Sultan Ngabdulkamid Erucakra"
+      },
+      "summary": {
+        "en": "On 1 Sura of the Javanese year 1753, Diponegoro assumed a sultan's title that included Erucakra, a name of the Ratu Adil, the prophesied Just King.",
+        "id": "Pada 1 Sura tahun Jawa 1753, Diponegoro memakai gelar sultan yang memuat nama Erucakra, sebutan bagi Ratu Adil yang dinubuatkan."
+      },
+      "notes": {
+        "en": "The DIY cultural office dates a formal coronation to 1826 at Goa Sriti near Dekso; possibly the title came first and the ceremony later.",
+        "id": "Dinas Kebudayaan DIY menyebut penobatan resmi terjadi tahun 1826 di Goa Sriti dekat Dekso; mungkin gelar dipakai lebih dulu dan upacaranya kemudian."
+      },
+      "sources": ["carey-1976"]
+    },
+    {
+      "id": "war-spreads",
+      "kind": "uprising",
+      "when": "1825-08/1825-12",
+      "importance": 2,
+      "name": {
+        "en": "The war spreads beyond Yogyakarta",
+        "id": "Perang meluas ke luar Yogyakarta"
+      },
+      "participants": [
+        {
+          "faction": "diponegoro",
+          "role": "belligerent",
+          "commanders": ["Pangeran Serang II", "Raden Ayu Yudakusuma"]
+        }
+      ],
+      "summary": {
+        "en": "Fighting spread to Kedu, to the north-coast districts of Serang and Demak (where Pangeran Serang II led some 8,000 men) and east to Madiun and Ngawi.",
+        "id": "Pertempuran meluas ke Kedu, ke daerah pesisir utara Serang dan Demak (tempat Pangeran Serang II memimpin sekitar 8.000 orang), dan ke timur hingga Madiun dan Ngawi."
+      },
+      "sources": ["wikipedia-java-war", "carey-1984"]
+    },
+    {
+      "id": "ngawi-attack",
+      "kind": "massacre",
+      "when": "1825-09-23",
+      "at": "ngawi",
+      "importance": 2,
+      "name": {
+        "en": "Attack on the Chinese community of Ngawi",
+        "id": "Penyerangan komunitas Tionghoa di Ngawi"
+      },
+      "participants": [
+        {
+          "faction": "diponegoro",
+          "role": "perpetrator",
+          "commanders": ["Raden Ayu Yudakusuma"]
+        }
+      ],
+      "summary": {
+        "en": "Cavalry aligned with Diponegoro under Raden Ayu Yudakusuma, a daughter of Hamengkubuwono I, attacked Ngawi on the Bengawan Solo and killed its Chinese community. Carey analyses it as part of the anti-Chinese violence of the war's early months.",
+        "id": "Pasukan berkuda yang berpihak pada Diponegoro di bawah Raden Ayu Yudakusuma, putri Hamengkubuwono I, menyerang Ngawi di tepi Bengawan Solo dan membunuh komunitas Tionghoanya. Carey menganalisisnya sebagai bagian dari kekerasan anti-Tionghoa pada bulan-bulan awal perang."
+      },
+      "sources": ["carey-1984"]
+    },
+    {
+      "id": "de-kock-arrives",
+      "kind": "appointment",
+      "when": "1825-09-25",
+      "at": "benteng-vredeburg",
+      "importance": 2,
+      "name": {
+        "en": "General De Kock relieves Yogyakarta",
+        "id": "Jenderal De Kock membebaskan Yogyakarta"
+      },
+      "participants": [
+        {
+          "faction": "dutch-colonial",
+          "role": "party",
+          "commanders": ["Lt-Gen. Hendrik Merkus de Kock"]
+        }
+      ],
+      "summary": {
+        "en": "Appointed on 26 July as commander and government commissioner for the principalities, De Kock reached Yogyakarta with reinforcements and ended the siege.",
+        "id": "Diangkat pada 26 Juli sebagai panglima dan komisaris pemerintah untuk wilayah kerajaan, De Kock tiba di Yogyakarta dengan bala bantuan dan mengakhiri pengepungan."
+      },
+      "notes": {
+        "en": "Kemendikbud gives 24 September.",
+        "id": "Kemendikbud menyebut 24 September."
+      },
+      "media": ["de-kock-portrait"],
+      "sources": ["wikipedia-java-war", "kemendikbud-2017"]
+    },
+    {
+      "id": "selarong-attacked",
+      "kind": "raid",
+      "when": "1825-10~",
+      "at": "goa-selarong",
+      "importance": 3,
+      "name": {
+        "en": "Dutch columns attack Selarong",
+        "id": "Kolone Belanda menyerbu Selarong"
+      },
+      "participants": [
+        {
+          "faction": "dutch-colonial",
+          "role": "attacker"
+        }
+      ],
+      "outcome": {
+        "summary": {
+          "en": "Selarong was found abandoned; Diponegoro's headquarters moved west to Dekso by 4 November.",
+          "id": "Selarong didapati kosong; markas Diponegoro pindah ke barat, ke Dekso, paling lambat 4 November."
+        }
+      },
+      "notes": {
+        "en": "Accounts give attacks in late July, September, early October and 4 November 1825.",
+        "id": "Berbagai sumber menyebut serangan pada akhir Juli, September, awal Oktober, dan 4 November 1825."
+      },
+      "sources": ["wikipedia-java-war", "id-wikipedia-perang-diponegoro"]
+    },
+    {
+      "id": "pleret-storming",
+      "kind": "battle",
+      "when": "1826-06-09",
+      "at": "pleret",
+      "importance": 1,
+      "name": {
+        "en": "Storming of Pleret",
+        "id": "Penyerbuan Benteng Pleret"
+      },
+      "participants": [
+        {
+          "faction": "dutch-colonial",
+          "role": "attacker",
+          "commanders": ["Col. F.D. Cochius"],
+          "strength": {
+            "min": 3420,
+            "max": 7342,
+            "note": {
+              "en": "Figures vary by source",
+              "id": "Angka berbeda antarsumber"
+            }
+          }
+        },
+        {
+          "faction": "diponegoro",
+          "role": "defender",
+          "commanders": ["Ali Basah Kertapengalasan"],
+          "strength": {
+            "min": 700,
+            "max": 1000
+          },
+          "losses": {
+            "min": 500,
+            "max": 1300
+          }
+        }
+      ],
+      "outcome": {
+        "victor": "dutch-colonial",
+        "summary": {
+          "en": "The first major defeat of Diponegoro's forces in a pitched battle.",
+          "id": "Kekalahan besar pertama pasukan Diponegoro dalam pertempuran terbuka."
+        }
+      },
+      "summary": {
+        "en": "After failed attempts on 16 April and in May, colonial columns stormed the fortified old court site of Pleret.",
+        "id": "Setelah upaya yang gagal pada 16 April dan Mei, kolone kolonial menyerbu bekas keraton Pleret yang telah diperkuat."
+      },
+      "notes": {
+        "en": "Kemendikbud gives 8 July 1826.",
+        "id": "Kemendikbud menyebut 8 Juli 1826."
+      },
+      "sources": ["pleret-village", "historia-pleret", "wp-pleret"]
+    },
+    {
+      "id": "battle-of-lengkong",
+      "kind": "battle",
+      "when": "1826-07-30",
+      "at": "lengkong",
+      "importance": 2,
+      "name": {
+        "en": "Battle of Lengkong",
+        "id": "Pertempuran Lengkong"
+      },
+      "participants": [
+        {
+          "faction": "diponegoro",
+          "role": "attacker",
+          "commanders": ["Sentot Ali Basah Prawirodirjo"],
+          "strength": 2000
+        },
+        {
+          "faction": "dutch-colonial",
+          "role": "defender",
+          "commanders": ["Lt. Haubert"],
+          "strength": 140
+        },
+        {
+          "faction": "yogyakarta-court",
+          "role": "defender"
+        }
+      ],
+      "outcome": {
+        "victor": "diponegoro",
+        "summary": {
+          "en": "The column was destroyed and several Yogyakarta princes serving with it were killed.",
+          "id": "Kolone itu dihancurkan dan beberapa pangeran Yogyakarta yang ikut di dalamnya tewas."
+        }
+      },
+      "notes": {
+        "en": "The date rests on a single source.",
+        "id": "Tanggal ini hanya bersandar pada satu sumber."
+      },
+      "sources": ["wp-lengkong"]
+    },
+    {
+      "id": "battle-of-kejiwan",
+      "kind": "battle",
+      "when": "1826-08-09",
+      "at": "kejiwan",
+      "importance": 3,
+      "name": {
+        "en": "Battle of Kejiwan",
+        "id": "Pertempuran Kejiwan"
+      },
+      "participants": [
+        {
+          "faction": "diponegoro",
+          "role": "attacker",
+          "commanders": ["Pangeran Diponegoro"],
+          "strength": 3000
+        },
+        {
+          "faction": "dutch-colonial",
+          "role": "defender",
+          "commanders": ["Maj. B. Sollewijn"],
+          "strength": 390,
+          "losses": 150
+        }
+      ],
+      "outcome": {
+        "victor": "diponegoro",
+        "summary": {
+          "en": "About 150 of the column were killed and seven guns taken.",
+          "id": "Sekitar 150 anggota kolone tewas dan tujuh meriam dirampas."
+        }
+      },
+      "notes": {
+        "en": "Diponegoro's strength is a Dutch estimate; single source.",
+        "id": "Kekuatan pasukan Diponegoro adalah perkiraan Belanda; satu sumber."
+      },
+      "sources": ["wp-kejiwan"]
+    },
+    {
+      "id": "hb2-restored",
+      "kind": "appointment",
+      "when": "1826-08/1826-09",
+      "at": "kraton-yogyakarta",
+      "importance": 3,
+      "name": {
+        "en": "The Dutch restore the old sultan, Hamengkubuwono II",
+        "id": "Belanda menobatkan kembali Sultan Sepuh, Hamengkubuwono II"
+      },
+      "participants": [
+        {
+          "faction": "yogyakarta-court",
+          "role": "party",
+          "commanders": ["Hamengkubuwono II"]
+        }
+      ],
+      "summary": {
+        "en": "Brought back from exile in Ambon and put on the throne in place of the child Hamengkubuwono V, to draw legitimacy away from Diponegoro.",
+        "id": "Didatangkan kembali dari pengasingan di Ambon dan dinaikkan takhta menggantikan Hamengkubuwono V yang masih kanak-kanak, untuk menarik legitimasi dari Diponegoro."
+      },
+      "notes": {
+        "en": "17 August 1826 (Wikipedia) or 20 September 1826 (Kraton Yogyakarta); possibly return and installation respectively.",
+        "id": "17 Agustus 1826 (Wikipedia) atau 20 September 1826 (Keraton Yogyakarta); mungkin masing-masing tanggal kepulangan dan penobatan."
+      },
+      "sources": ["kraton-jogja", "wp-hb5"]
+    },
+    {
+      "id": "battle-of-delanggu",
+      "kind": "battle",
+      "when": "1826-08-28",
+      "at": "delanggu",
+      "importance": 2,
+      "name": {
+        "en": "Battle of Delanggu",
+        "id": "Pertempuran Delanggu"
+      },
+      "participants": [
+        {
+          "faction": "diponegoro",
+          "role": "attacker",
+          "commanders": ["Pangeran Diponegoro"],
+          "strength": {
+            "min": 7000,
+            "max": 10000
+          }
+        },
+        {
+          "faction": "dutch-colonial",
+          "role": "defender",
+          "commanders": ["Maj. B. Sollewijn", "Maj-Gen. J.J. van Geen"],
+          "strength": 500
+        }
+      ],
+      "outcome": {
+        "victor": "diponegoro",
+        "summary": {
+          "en": "Diponegoro's forces took the town, on the road to Surakarta.",
+          "id": "Pasukan Diponegoro merebut kota di jalan menuju Surakarta itu."
+        }
+      },
+      "sources": ["wp-delanggu", "kemendikbud-2017"]
+    },
+    {
+      "id": "battle-of-gawok",
+      "kind": "battle",
+      "when": "1826-10-15",
+      "at": "gawok",
+      "importance": 1,
+      "name": {
+        "en": "Battle of Gawok",
+        "id": "Pertempuran Gawok"
+      },
+      "participants": [
+        {
+          "faction": "dutch-colonial",
+          "role": "belligerent",
+          "commanders": ["Maj-Gen. J.J. van Geen", "Col. F.D. Cochius", "Lt-Col. Le Bron de Vexela"],
+          "strength": 1500
+        },
+        {
+          "faction": "diponegoro",
+          "role": "belligerent",
+          "commanders": ["Pangeran Diponegoro", "Sentot Ali Basah Prawirodirjo", "Kyai Maja"],
+          "strength": 4000
+        }
+      ],
+      "outcome": {
+        "victor": "dutch-colonial",
+        "summary": {
+          "en": "Diponegoro was shot and fell from his horse. Afterwards his forces turned mainly to guerrilla warfare.",
+          "id": "Diponegoro tertembak dan jatuh dari kudanya. Setelah itu pasukannya lebih banyak beralih ke perang gerilya."
+        }
+      },
+      "sources": ["wp-gawok", "wikipedia-java-war"]
+    },
+    {
+      "id": "fortress-system",
+      "kind": "other",
+      "when": "1827",
+      "importance": 1,
+      "name": {
+        "en": "The fortress system (benteng stelsel) is introduced",
+        "id": "Stelsel benteng mulai diterapkan"
+      },
+      "participants": [
+        {
+          "faction": "dutch-colonial",
+          "role": "party",
+          "commanders": ["Lt-Gen. H.M. de Kock", "Col. F.D. Cochius"]
+        }
+      ],
+      "summary": {
+        "en": "Small forts of 25–30 men, linked by roads, were built across the contested countryside, while mobile columns hunted Diponegoro's bands between them. By April 1827, 1,603 of 6,000 European soldiers had already died.",
+        "id": "Benteng-benteng kecil berisi 25–30 prajurit, dihubungkan jalan, dibangun di seluruh daerah yang diperebutkan, sementara kolone mobil memburu pasukan Diponegoro di antaranya. Hingga April 1827, 1.603 dari 6.000 prajurit Eropa telah tewas."
+      },
+      "notes": {
+        "en": "Total forts by 1830: 258 (Djamhari), 161 (De Stuers), 263 (Louw) or about 165 (id.wikipedia). This dataset maps only a few whose locations are known.",
+        "id": "Jumlah benteng hingga 1830: 258 (Djamhari), 161 (De Stuers), 263 (Louw), atau sekitar 165 (id.wikipedia). Dataset ini hanya memetakan beberapa yang lokasinya diketahui."
+      },
+      "media": ["de-stuers-map"],
+      "sources": ["djamhari-2004", "wikipedia-java-war", "kemendikbud-2017"]
+    },
+    {
+      "id": "klaten-talks-1827",
+      "kind": "negotiation",
+      "when": "1827-08-29",
+      "at": "klaten",
+      "importance": 3,
+      "name": {
+        "en": "Peace talks at Klaten",
+        "id": "Perundingan Klaten 1827"
+      },
+      "participants": [
+        {
+          "faction": "diponegoro",
+          "role": "negotiator",
+          "commanders": ["Kyai Maja"]
+        },
+        {
+          "faction": "dutch-colonial",
+          "role": "negotiator"
+        }
+      ],
+      "outcome": {
+        "summary": {
+          "en": "The talks failed; the Dutch judged the demands excessive.",
+          "id": "Perundingan gagal; Belanda menilai tuntutannya berlebihan."
+        }
+      },
+      "summary": {
+        "en": "A ceasefire in August–September 1827 produced talks, with Kyai Maja speaking for Diponegoro.",
+        "id": "Gencatan senjata pada Agustus–September 1827 membuka perundingan, dengan Kyai Maja mewakili Diponegoro."
+      },
+      "notes": {
+        "en": "Exact date from a single source.",
+        "id": "Tanggal pasti dari satu sumber."
+      },
+      "sources": ["tirto-mojo", "kemendikbud-2017"]
+    },
+    {
+      "id": "sasradilaga-campaign",
+      "kind": "uprising",
+      "when": "1827-11-28/1828-03-07",
+      "at": "lasem",
+      "importance": 2,
+      "name": {
+        "en": "Sasradilaga's campaign in Rembang and Lasem",
+        "id": "Perlawanan Sasradilaga di Rembang dan Lasem"
+      },
+      "participants": [
+        {
+          "faction": "diponegoro",
+          "role": "attacker",
+          "commanders": ["Raden Tumenggung Sasradilaga"]
+        },
+        {
+          "faction": "dutch-colonial",
+          "role": "defender"
+        }
+      ],
+      "outcome": {
+        "victor": "dutch-colonial",
+        "summary": {
+          "en": "Defeated by March 1828; Sasradilaga surrendered on 3 October 1828.",
+          "id": "Dikalahkan pada Maret 1828; Sasradilaga menyerah pada 3 Oktober 1828."
+        }
+      },
+      "summary": {
+        "en": "Diponegoro's brother-in-law opened a front on the north-east coast, far from the main theatre.",
+        "id": "Ipar Diponegoro membuka front di pesisir timur laut, jauh dari medan utama."
+      },
+      "sources": ["wp-sasradilaga", "kemendikbud-2017"]
+    },
+    {
+      "id": "rajekwesi-falls",
+      "kind": "capture",
+      "when": "1828-01-27",
+      "at": "rajekwesi",
+      "importance": 3,
+      "name": {
+        "en": "Sasradilaga takes the Dutch post at Rajekwesi",
+        "id": "Sasradilaga merebut pos Belanda di Rajekwesi"
+      },
+      "participants": [
+        {
+          "faction": "diponegoro",
+          "role": "attacker",
+          "commanders": ["Raden Tumenggung Sasradilaga"]
+        },
+        {
+          "faction": "dutch-colonial",
+          "role": "defender"
+        }
+      ],
+      "outcome": {
+        "victor": "diponegoro"
+      },
+      "sources": ["wp-sasradilaga"]
+    },
+    {
+      "id": "hb2-death",
+      "kind": "death",
+      "when": "1828-01-03",
+      "at": "kraton-yogyakarta",
+      "importance": 3,
+      "name": {
+        "en": "Death of Hamengkubuwono II",
+        "id": "Wafatnya Hamengkubuwono II"
+      },
+      "summary": {
+        "en": "The restored old sultan died and, because of the war, was buried at Kotagede. Hamengkubuwono V returned to the throne.",
+        "id": "Sultan Sepuh wafat dan, karena perang, dimakamkan di Kotagede, bukan di Imogiri. Hamengkubuwono V kembali naik takhta."
+      },
+      "sources": ["kraton-jogja"]
+    },
+    {
+      "id": "kyai-maja-capture",
+      "kind": "capture",
+      "when": "1828-11-12",
+      "at": "mlangi",
+      "certainty": "conjectural",
+      "importance": 1,
+      "name": {
+        "en": "Capture of Kyai Maja",
+        "id": "Penangkapan Kyai Maja"
+      },
+      "participants": [
+        {
+          "faction": "diponegoro",
+          "role": "defender",
+          "commanders": ["Kyai Maja"],
+          "strength": 500
+        },
+        {
+          "faction": "dutch-colonial",
+          "role": "attacker"
+        }
+      ],
+      "outcome": {
+        "victor": "dutch-colonial",
+        "summary": {
+          "en": "Kyai Maja and 62 or more followers were exiled to Tondano in Minahasa, where he died in 1849.",
+          "id": "Kyai Maja dan 62 pengikut atau lebih diasingkan ke Tondano, Minahasa, tempat ia wafat pada 1849."
+        }
+      },
+      "summary": {
+        "en": "After a split with Diponegoro and talks with Dutch officials on 25 October, Diponegoro's chief religious adviser was taken with about 500 followers north of Yogyakarta.",
+        "id": "Setelah berselisih dengan Diponegoro dan berunding dengan pejabat Belanda pada 25 Oktober, penasihat agama utama Diponegoro itu ditangkap bersama sekitar 500 pengikutnya di utara Yogyakarta."
+      },
+      "notes": {
+        "en": "Wikipedia gives 10 November. The site is given as Mlangi, Kembang Arum or the slopes of Merapi.",
+        "id": "Wikipedia menyebut 10 November. Lokasinya disebut Mlangi, Kembang Arum, atau lereng Merapi."
+      },
+      "sources": ["tirto-mojo", "nu-kyai-maja"]
+    },
+    {
+      "id": "ceasefire-1829",
+      "kind": "negotiation",
+      "when": "1829-04~",
+      "importance": 3,
+      "name": {
+        "en": "Ceasefire, then the final Dutch offensive",
+        "id": "Gencatan senjata, lalu serangan pamungkas Belanda"
+      },
+      "summary": {
+        "en": "A pause in 1829 let the colonial army regroup before a final offensive from June, with cavalry actions through July and August.",
+        "id": "Jeda pada 1829 memberi tentara kolonial kesempatan menata ulang pasukan sebelum serangan pamungkas sejak Juni, dengan aksi kavaleri sepanjang Juli dan Agustus."
+      },
+      "notes": {
+        "en": "Wikipedia describes a three-month ceasefire; Kemendikbud a one-week truce from 2 April 1829.",
+        "id": "Wikipedia menyebut gencatan senjata tiga bulan; Kemendikbud menyebut gencatan satu minggu sejak 2 April 1829."
+      },
+      "sources": ["wikipedia-java-war", "kemendikbud-2017"]
+    },
+    {
+      "id": "battle-of-siluk",
+      "kind": "battle",
+      "when": "1829-09-17",
+      "at": "siluk",
+      "certainty": "conjectural",
+      "importance": 2,
+      "name": {
+        "en": "Battle of Siluk",
+        "id": "Pertempuran Siluk"
+      },
+      "participants": [
+        {
+          "faction": "dutch-colonial",
+          "role": "attacker",
+          "commanders": ["Col. F.D. Cochius", "Lt-Col. Le Bron de Vexela", "Lt-Col. B. Sollewijn"],
+          "strength": 1500
+        },
+        {
+          "faction": "diponegoro",
+          "role": "defender",
+          "commanders": ["Pangeran Diponegoro", "Sentot Ali Basah Prawirodirjo", "Pangeran Prabuningrat"],
+          "strength": 300,
+          "losses": 54
+        }
+      ],
+      "outcome": {
+        "victor": "dutch-colonial",
+        "summary": {
+          "en": "Prabuningrat was among the dead. Diponegoro and Sentot escaped separately.",
+          "id": "Prabuningrat termasuk yang gugur. Diponegoro dan Sentot lolos secara terpisah."
+        }
+      },
+      "sources": ["wp-siluk", "kemendikbud-2017"]
+    },
+    {
+      "id": "bounty-and-kelir",
+      "kind": "skirmish",
+      "when": "1829-09-21",
+      "importance": 3,
+      "name": {
+        "en": "A bounty on Diponegoro; Pangeran Jayakusuma killed at Mount Kelir",
+        "id": "Sayembara 20.000 gulden; Pangeran Joyokusumo gugur di Gunung Kelir"
+      },
+      "participants": [
+        {
+          "faction": "dutch-colonial",
+          "role": "attacker",
+          "commanders": ["Lt-Gen. H.M. de Kock"]
+        },
+        {
+          "faction": "diponegoro",
+          "role": "defender",
+          "commanders": ["Pangeran Ngabehi Jayakusuma"],
+          "strength": 20
+        }
+      ],
+      "summary": {
+        "en": "De Kock offered 20,000 guilders for Diponegoro. The same day his veteran commander Jayakusuma, riding with about 20 men, was killed in Kulon Progo by native troops on the colonial side.",
+        "id": "De Kock menawarkan 20.000 gulden untuk Diponegoro. Pada hari yang sama panglima veterannya, Joyokusumo, yang berkuda bersama sekitar 20 orang, gugur di Kulon Progo oleh prajurit pribumi di pihak kolonial."
+      },
+      "notes": {
+        "en": "Mount Kelir's location is not yet mapped in this dataset.",
+        "id": "Lokasi Gunung Kelir belum dipetakan dalam dataset ini."
+      },
+      "sources": ["kemendikbud-2017", "wp-kelir"]
+    },
+    {
+      "id": "mangkubumi-surrender",
+      "kind": "surrender",
+      "when": "1829-10",
+      "importance": 3,
+      "name": {
+        "en": "Pangeran Mangkubumi surrenders",
+        "id": "Pangeran Mangkubumi menyerah"
+      },
+      "participants": [
+        {
+          "faction": "diponegoro",
+          "role": "party",
+          "commanders": ["Pangeran Mangkubumi"]
+        }
+      ],
+      "summary": {
+        "en": "Diponegoro's uncle, with him since the escape from Tegalrejo, gave himself up.",
+        "id": "Paman Diponegoro, yang mendampinginya sejak lolos dari Tegalrejo, menyerahkan diri."
+      },
+      "sources": ["observer-carey", "id-wikipedia-perang-diponegoro"]
+    },
+    {
+      "id": "sentot-surrender",
+      "kind": "surrender",
+      "when": "1829-10-17/1829-10-24",
+      "at": "imogiri",
+      "importance": 1,
+      "name": {
+        "en": "Sentot surrenders at Imogiri",
+        "id": "Sentot Alibasah menyerah di Imogiri"
+      },
+      "participants": [
+        {
+          "faction": "diponegoro",
+          "role": "party",
+          "commanders": ["Sentot Ali Basah Prawirodirjo"]
+        },
+        {
+          "faction": "dutch-colonial",
+          "role": "party"
+        }
+      ],
+      "summary": {
+        "en": "Diponegoro's most successful field commander, then about 21, agreed terms at Imogiri on 17 October and formally surrendered on 24 October. He later led a unit in colonial service in Sumatra and died in exile in Bengkulu in 1855.",
+        "id": "Panglima lapangan Diponegoro yang paling berhasil, saat itu sekitar 21 tahun, menyepakati syarat di Imogiri pada 17 Oktober dan resmi menyerah pada 24 Oktober. Ia kemudian memimpin pasukan dalam dinas kolonial di Sumatra dan wafat dalam pengasingan di Bengkulu pada 1855."
+      },
+      "notes": {
+        "en": "Wikipedia gives 16 October.",
+        "id": "Wikipedia menyebut 16 Oktober."
+      },
+      "sources": ["kemendikbud-2017", "historia-sentot"]
+    },
+    {
+      "id": "gowong-escape",
+      "kind": "skirmish",
+      "when": "1829-11-11",
+      "importance": 2,
+      "name": {
+        "en": "Near-capture in the Gowong hills",
+        "id": "Nyaris tertangkap di Pegunungan Gowong"
+      },
+      "participants": [
+        {
+          "faction": "dutch-colonial",
+          "role": "attacker",
+          "commanders": ["Maj. A.V. Michiels"],
+          "strength": 50
+        },
+        {
+          "faction": "diponegoro",
+          "role": "defender",
+          "commanders": ["Pangeran Diponegoro"]
+        }
+      ],
+      "summary": {
+        "en": "On his 44th birthday Diponegoro escaped a patrol by leaping into a ravine. His horses, saddle, spear and parasol were seized; he spent the following months in the forest with a handful of followers, sick with malaria.",
+        "id": "Tepat di hari ulang tahunnya yang ke-44, Diponegoro lolos dari patroli dengan melompat ke jurang. Kuda, pelana, tombak, dan payungnya dirampas; bulan-bulan berikutnya ia lalui di hutan bersama segelintir pengikut, sakit malaria."
+      },
+      "notes": {
+        "en": "The Gowong hills lie between Kedu and western Bagelen; the exact site is not mapped.",
+        "id": "Pegunungan Gowong terletak antara Kedu dan Bagelen barat; lokasi tepatnya belum dipetakan."
+      },
+      "sources": ["okezone-gowong"]
+    },
+    {
+      "id": "cleerens-meeting",
+      "kind": "negotiation",
+      "when": "1830-02-16",
+      "at": "remo-kamal",
+      "certainty": "conjectural",
+      "importance": 2,
+      "name": {
+        "en": "Meeting with Colonel Cleerens at Remo Kamal",
+        "id": "Pertemuan dengan Kolonel Cleerens di Remokamal"
+      },
+      "participants": [
+        {
+          "faction": "diponegoro",
+          "role": "negotiator",
+          "commanders": ["Pangeran Diponegoro"]
+        },
+        {
+          "faction": "dutch-colonial",
+          "role": "negotiator",
+          "commanders": ["Col. J.B. Cleerens"]
+        }
+      ],
+      "outcome": {
+        "summary": {
+          "en": "Diponegoro agreed to negotiate with De Kock at Magelang; a truce was to hold over Ramadan.",
+          "id": "Diponegoro bersedia berunding dengan De Kock di Magelang; gencatan senjata disepakati selama Ramadan."
+        }
+      },
+      "sources": ["carey-1982", "kemendikbud-2017"]
+    },
+    {
+      "id": "magelang-arrival",
+      "kind": "negotiation",
+      "when": "1830-03-08",
+      "at": "metesih",
+      "importance": 2,
+      "name": {
+        "en": "Diponegoro arrives at Magelang",
+        "id": "Diponegoro tiba di Magelang"
+      },
+      "participants": [
+        {
+          "faction": "diponegoro",
+          "role": "negotiator",
+          "commanders": ["Pangeran Diponegoro"],
+          "strength": 700
+        },
+        {
+          "faction": "dutch-colonial",
+          "role": "negotiator",
+          "commanders": ["Lt-Gen. H.M. de Kock"]
+        }
+      ],
+      "summary": {
+        "en": "With about 700 followers he met De Kock and camped at Metesih, by the Progo below the residency, through the fasting month.",
+        "id": "Bersama sekitar 700 pengikut ia bertemu De Kock dan berkemah di Metesih, di tepi Kali Progo di bawah karesidenan, selama bulan puasa."
+      },
+      "sources": ["carey-1982", "kompas-arrest"]
+    },
+    {
+      "id": "arrest-at-magelang",
+      "kind": "arrest",
+      "when": "1830-03-28",
+      "at": "magelang-residency",
+      "importance": 1,
+      "name": {
+        "en": "Arrest of Diponegoro at Magelang",
+        "id": "Penangkapan Pangeran Diponegoro di Magelang"
+      },
+      "participants": [
+        {
+          "faction": "dutch-colonial",
+          "role": "party",
+          "commanders": [
+            "Lt-Gen. H.M. de Kock",
+            "Col. Louis du Perron",
+            "Lt-Col. W.A. Roest",
+            "Maj. F.V.H.A. de Stuers",
+            "Resident F.G. Valck",
+            "Col. J.B. Cleerens"
+          ]
+        },
+        {
+          "faction": "diponegoro",
+          "role": "party",
+          "commanders": ["Pangeran Diponegoro"]
+        }
+      ],
+      "outcome": {
+        "victor": "dutch-colonial",
+        "summary": {
+          "en": "Diponegoro was detained during the talks. The war was over.",
+          "id": "Diponegoro ditahan di tengah perundingan. Perang pun berakhir."
+        }
+      },
+      "summary": {
+        "en": "On the second day of Lebaran, at the Kedu residency house, De Kock refused Diponegoro's demands and had him arrested.",
+        "id": "Pada hari kedua Lebaran, di rumah Residen Kedu, De Kock menolak tuntutan Diponegoro lalu menangkapnya."
+      },
+      "notes": {
+        "en": "The number of followers disarmed is given as about 100, 700 or 1,400.",
+        "id": "Jumlah pengikut yang dilucuti disebut sekitar 100, 700, atau 1.400 orang."
+      },
+      "media": ["saleh-arrest", "pieneman-arrest"],
+      "sources": ["carey-1982", "unesco-babad", "kompas-arrest"]
+    },
+    {
+      "id": "batavia-detention",
+      "kind": "exile",
+      "when": "1830-04-08/1830-05-03",
+      "at": "batavia-stadhuis",
+      "importance": 3,
+      "name": {
+        "en": "Held in the Batavia Stadhuis",
+        "id": "Ditahan di Stadhuis Batavia"
+      },
+      "summary": {
+        "en": "Brought by steamship from Semarang, Diponegoro was held in the town hall for almost four weeks. A.J. Bik drew his portrait there.",
+        "id": "Dibawa dengan kapal uap dari Semarang, Diponegoro ditahan di balai kota hampir empat minggu. A.J. Bik menggambar potretnya di sana."
+      },
+      "media": ["bik-portrait"],
+      "sources": ["unesco-babad", "carey-2022"]
+    },
+    {
+      "id": "exile-to-manado",
+      "kind": "exile",
+      "when": "1830-05-04/1830-06-12",
+      "at": "manado-fort",
+      "importance": 2,
+      "name": {
+        "en": "Voyage into exile in Manado",
+        "id": "Pelayaran ke pengasingan di Manado"
+      },
+      "summary": {
+        "en": "A party of 19 sailed on the corvette Pollux to Fort Nieuw Amsterdam in Manado.",
+        "id": "Rombongan 19 orang berlayar dengan korvet Pollux ke Benteng Nieuw Amsterdam di Manado."
+      },
+      "notes": {
+        "en": "UNESCO gives the voyage as 4 May–10 June; Carey (2022) has arrival on 12 June.",
+        "id": "UNESCO menyebut pelayaran 4 Mei–10 Juni; Carey (2022) menyebut tiba 12 Juni."
+      },
+      "sources": ["carey-2022", "unesco-babad"]
+    },
+    {
+      "id": "pb6-arrest",
+      "kind": "arrest",
+      "when": "1830-06-08",
+      "importance": 3,
+      "name": {
+        "en": "Pakubuwono VI arrested and exiled",
+        "id": "Pakubuwono VI ditangkap dan diasingkan"
+      },
+      "participants": [
+        {
+          "faction": "surakarta-courts",
+          "role": "party",
+          "commanders": ["Susuhunan Pakubuwono VI"]
+        },
+        {
+          "faction": "dutch-colonial",
+          "role": "party"
+        }
+      ],
+      "summary": {
+        "en": "The Surakarta ruler, suspected of sympathy with Diponegoro, was arrested at Mancingan and deported to Ambon. Pakubuwono VII was installed on 14 June.",
+        "id": "Penguasa Surakarta yang dicurigai bersimpati pada Diponegoro ditangkap di Mancingan dan dibuang ke Ambon. Pakubuwono VII dinobatkan pada 14 Juni."
+      },
+      "sources": ["wp-pb6"]
+    },
+    {
+      "id": "cultivation-system",
+      "kind": "decree",
+      "when": "1830",
+      "importance": 2,
+      "name": {
+        "en": "The Cultivation System begins",
+        "id": "Tanam Paksa (Cultuurstelsel) dimulai"
+      },
+      "participants": [
+        {
+          "faction": "dutch-colonial",
+          "role": "party",
+          "commanders": ["Governor-General Johannes van den Bosch"]
+        }
+      ],
+      "summary": {
+        "en": "With the colonial treasury drained by the war, villages in government lands were made to grow export crops on part of their land or give labour instead. It returned hundreds of millions of guilders to the Netherlands over the following decades.",
+        "id": "Dengan kas kolonial terkuras perang, desa-desa di wilayah gubernemen diwajibkan menanam tanaman ekspor di sebagian tanahnya atau menggantinya dengan kerja. Selama puluhan tahun berikutnya sistem ini menghasilkan ratusan juta gulden bagi Belanda."
+      },
+      "sources": ["wp-cultivation", "carey-2011"]
+    },
+    {
+      "id": "klaten-treaty",
+      "kind": "treaty",
+      "when": "1830-09-27",
+      "at": "klaten",
+      "importance": 2,
+      "name": {
+        "en": "Treaty of Klaten: the outlying provinces annexed",
+        "id": "Perjanjian Klaten: wilayah mancanegara dicaplok"
+      },
+      "participants": [
+        {
+          "faction": "dutch-colonial",
+          "role": "party"
+        },
+        {
+          "faction": "yogyakarta-court",
+          "role": "party",
+          "commanders": ["Hamengkubuwono V"]
+        },
+        {
+          "faction": "surakarta-courts",
+          "role": "party",
+          "commanders": ["Pakubuwono VII"]
+        }
+      ],
+      "summary": {
+        "en": "The treaty fixed the Surakarta–Yogyakarta boundary and handed Banyumas, Bagelen, Madiun and Kediri to the colonial government. Pakubuwono VII ratified it on 1 October, Hamengkubuwono V on 24 October.",
+        "id": "Perjanjian ini menetapkan batas Surakarta–Yogyakarta dan menyerahkan Banyumas, Bagelen, Madiun, dan Kediri kepada pemerintah kolonial. Pakubuwono VII meratifikasinya pada 1 Oktober, Hamengkubuwono V pada 24 Oktober."
+      },
+      "sources": ["gnfi-klaten-treaty", "wikipedia-java-war"]
+    },
+    {
+      "id": "babad-written",
+      "kind": "other",
+      "when": "1831-05-20/1832-02-05",
+      "at": "manado-fort",
+      "importance": 2,
+      "name": {
+        "en": "Diponegoro writes his Babad",
+        "id": "Diponegoro menulis Babad Diponegoro"
+      },
+      "summary": {
+        "en": "In exile he composed his autobiographical chronicle in Javanese verse, written in Pegon script. It was inscribed on UNESCO's Memory of the World Register in 2013.",
+        "id": "Di pengasingan ia menyusun babad otobiografinya dalam tembang Jawa beraksara Pegon. Naskah ini tercatat dalam Memory of the World UNESCO pada 2013."
+      },
+      "sources": ["unesco-babad"]
+    },
+    {
+      "id": "move-to-makassar",
+      "kind": "exile",
+      "when": "1833-06-20/1833-07-11",
+      "at": "fort-rotterdam",
+      "importance": 3,
+      "name": {
+        "en": "Transferred to Fort Rotterdam, Makassar",
+        "id": "Dipindahkan ke Benteng Rotterdam, Makassar"
+      },
+      "summary": {
+        "en": "Moved secretly on the schooner Circe to a stricter prison in Makassar.",
+        "id": "Dipindahkan diam-diam dengan sekunar Circe ke penjara yang lebih ketat di Makassar."
+      },
+      "notes": {
+        "en": "Some sources give 1834.",
+        "id": "Sebagian sumber menyebut 1834."
+      },
+      "sources": ["carey-2022"]
+    },
+    {
+      "id": "kyai-maja-death",
+      "kind": "death",
+      "when": "1849-12-20",
+      "at": "tondano",
+      "importance": 4,
+      "name": {
+        "en": "Death of Kyai Maja in Tondano",
+        "id": "Kyai Maja wafat di Tondano"
+      },
+      "summary": {
+        "en": "He died in exile in Minahasa, where the community of his followers became Kampung Jawa Tondano.",
+        "id": "Ia wafat di pengasingan di Minahasa, tempat komunitas pengikutnya menjadi Kampung Jawa Tondano."
+      },
+      "sources": ["nu-kyai-maja"]
+    },
+    {
+      "id": "diponegoro-death",
+      "kind": "death",
+      "when": "1855-01-08",
+      "at": "fort-rotterdam",
+      "importance": 1,
+      "name": {
+        "en": "Death of Prince Diponegoro",
+        "id": "Wafatnya Pangeran Diponegoro"
+      },
+      "summary": {
+        "en": "Diponegoro died in Fort Rotterdam after almost 25 years of exile and was buried at Kampung Melayu, Makassar. Indonesia declared him a National Hero in 1973.",
+        "id": "Diponegoro wafat di Benteng Rotterdam setelah hampir 25 tahun diasingkan dan dimakamkan di Kampung Melayu, Makassar. Indonesia menetapkannya sebagai Pahlawan Nasional pada 1973."
+      },
+      "sources": ["unesco-babad", "carey-2014"]
+    }
+  ],
+  "chapters": [
+    {
+      "id": "ch-01-birth",
+      "part": "prologue",
+      "when": "1785-11-11",
+      "title": {
+        "en": "A prince of Yogyakarta",
+        "id": "Seorang pangeran Yogyakarta"
+      },
+      "body": {
+        "en": "Diponegoro was born at the Yogyakarta court on 11 November 1785, the eldest son of the future Sultan Hamengkubuwono III.\n\nFrom about the age of eight he was raised by his great-grandmother, Ratu Ageng, on her estate at **Tegalrejo**, north-west of the kraton. He grew up away from court life and close to the religious teachers and farmers of the countryside, and that upbringing shaped the man who would later lead a war.",
+        "id": "Diponegoro lahir di Keraton Yogyakarta pada 11 November 1785 sebagai putra sulung calon Sultan Hamengkubuwono III.\n\nSejak sekitar usia delapan tahun ia diasuh buyutnya, Ratu Ageng, di kediamannya di **Tegalrejo**, barat laut keraton. Ia tumbuh jauh dari kehidupan istana, dekat dengan para ulama dan petani di pedesaan. Pengasuhan itu membentuk sosok yang kelak memimpin perang."
+      },
+      "camera": {
+        "center": [110.358, -7.796],
+        "zoom": 13.2,
+        "pitch": 50,
+        "bearing": -15,
+        "durationMs": 3000,
+        "transition": "fly"
+      },
+      "focus": ["kraton-yogyakarta", "tegalrejo", "diponegoro-birth"],
+      "sources": ["unesco-babad", "carey-2007"]
+    },
+    {
+      "id": "ch-02-geger-sepehi",
+      "part": "prologue",
+      "when": "1812-06-20",
+      "title": {
+        "en": "The fall of the kraton, 1812",
+        "id": "Jatuhnya keraton, 1812"
+      },
+      "body": {
+        "en": "During the brief British rule of Java, troops under Colonel Gillespie stormed the Yogyakarta kraton on 20 June 1812. The court was plundered, and Sultan Hamengkubuwono II was deposed and exiled to Penang.\n\nThe Javanese remember it as *Geger Sepehi*, after the Indian sepoys in the assault. For the Yogyakarta elite it was a lasting humiliation, and it set the pattern of foreign interference in the court that followed.",
+        "id": "Pada masa singkat kekuasaan Inggris di Jawa, pasukan di bawah Kolonel Gillespie menyerbu Keraton Yogyakarta pada 20 Juni 1812. Keraton dijarah, dan Sultan Hamengkubuwono II diturunkan lalu diasingkan ke Penang.\n\nPeristiwa ini dikenang sebagai *Geger Sepehi*, dari nama prajurit sepoy India yang ikut menyerbu. Bagi elite Yogyakarta, ini penghinaan yang membekas, dan sejak itu campur tangan asing dalam urusan keraton menjadi pola."
+      },
+      "camera": {
+        "center": [110.3641, -7.8057],
+        "zoom": 14.5,
+        "pitch": 55,
+        "bearing": 10,
+        "durationMs": 2500
+      },
+      "focus": ["geger-sepehi", "kraton-yogyakarta"],
+      "sources": ["kraton-jogja"]
+    },
+    {
+      "id": "ch-03-regency",
+      "part": "prologue",
+      "when": "1822-12",
+      "title": {
+        "en": "A guardian without power",
+        "id": "Wali tanpa kuasa"
+      },
+      "body": {
+        "en": "In December 1822 Sultan Hamengkubuwono IV died suddenly at the age of 19. His heir, Hamengkubuwono V, was about three years old.\n\nDiponegoro was named to the regency council as one of the boy's guardians, but the day-to-day administration lay with Patih Danurejo IV. Diponegoro had the title of guardian but little say in how the court was run.",
+        "id": "Pada Desember 1822 Sultan Hamengkubuwono IV wafat mendadak dalam usia 19 tahun. Pewarisnya, Hamengkubuwono V, baru berusia sekitar tiga tahun.\n\nDiponegoro diangkat ke dalam dewan perwalian sebagai salah satu wali sang anak, tetapi pemerintahan sehari-hari dipegang Patih Danurejo IV. Diponegoro menyandang gelar wali, tetapi hampir tidak punya suara dalam urusan keraton."
+      },
+      "camera": {
+        "center": [110.36, -7.8],
+        "zoom": 13.5,
+        "pitch": 45,
+        "bearing": 0,
+        "durationMs": 2000
+      },
+      "focus": ["hb4-death", "kraton-yogyakarta"],
+      "sources": ["carey-1976"]
+    },
+    {
+      "id": "ch-04-land-leases",
+      "part": "prologue",
+      "when": "1823-05-06",
+      "title": {
+        "en": "Debts for the nobility",
+        "id": "Utang bagi para bangsawan"
+      },
+      "body": {
+        "en": "On 6 May 1823 Governor-General Van der Capellen ordered an end to the leasing of court lands to Europeans and Chinese in Yogyakarta and Surakarta.\n\nNobles who had already received advance rents were now required to pay compensation, and many could not. Historian Peter Carey counts these debts, and the resentment they caused, among the main causes of the war.",
+        "id": "Pada 6 Mei 1823 Gubernur Jenderal Van der Capellen memerintahkan penghentian penyewaan tanah bangsawan kepada orang Eropa dan Tionghoa di Yogyakarta dan Surakarta.\n\nPara bangsawan yang telah menerima uang sewa di muka kini wajib membayar ganti rugi, dan banyak yang tidak sanggup. Sejarawan Peter Carey menilai utang ini, beserta rasa kesal yang ditimbulkannya, sebagai salah satu penyebab utama perang."
+      },
+      "camera": {
+        "center": [110.6, -7.68],
+        "zoom": 9.3,
+        "pitch": 35,
+        "bearing": 0,
+        "durationMs": 3000
+      },
+      "focus": ["land-lease-decree", "kraton-yogyakarta", "kraton-surakarta"],
+      "sources": ["carey-1976"]
+    },
+    {
+      "id": "ch-05-stakes",
+      "part": "prologue",
+      "when": "1825-05/1825-07-19",
+      "title": {
+        "en": "Stakes across Tegalrejo",
+        "id": "Patok di tanah Tegalrejo"
+      },
+      "body": {
+        "en": "In mid-1825 the Resident, A.H. Smissaert, and Patih Danurejo IV had a new road staked out across Diponegoro's land at Tegalrejo without asking him.\n\nHis people pulled the stakes out and clashed with the workers. Over the following weeks the quarrel over the road became a confrontation, and the colonial authorities decided to arrest him.",
+        "id": "Pada pertengahan 1825 Residen A.H. Smissaert dan Patih Danurejo IV memasang patok jalan baru melintasi tanah Diponegoro di Tegalrejo tanpa meminta izinnya.\n\nPara pengikutnya mencabut patok itu dan bentrok dengan para pekerja. Dalam beberapa minggu, sengketa jalan itu berubah menjadi konfrontasi, dan penguasa kolonial memutuskan untuk menangkapnya."
+      },
+      "notes": {
+        "en": "Accounts differ on whether the road works began at the end of May or on 17 June 1825.",
+        "id": "Sumber berbeda tentang apakah pengerjaan jalan dimulai akhir Mei atau 17 Juni 1825."
+      },
+      "camera": {
+        "center": [110.3513, -7.787],
+        "zoom": 15,
+        "pitch": 55,
+        "bearing": 20,
+        "durationMs": 2500
+      },
+      "focus": ["patok-incident", "tegalrejo"],
+      "sources": ["carey-1976", "wikipedia-java-war"]
+    },
+    {
+      "id": "ch-06-tegalrejo",
+      "part": "outbreak-1825",
+      "when": "1825-07-20",
+      "title": {
+        "en": "Tegalrejo burns",
+        "id": "Tegalrejo terbakar"
+      },
+      "body": {
+        "en": "On 20 July 1825 a colonial detachment led by Assistant-Resident Chevallier came to Tegalrejo to seize Diponegoro. The buildings were shelled and set on fire.\n\nDiponegoro and his uncle, Pangeran Mangkubumi, escaped through a gap in the western wall. The broken section, the *Tembok Jebol*, still stands. They fled south-west toward the hills, and the Java War had begun.",
+        "id": "Pada 20 Juli 1825 satu detasemen kolonial pimpinan Asisten Residen Chevallier datang ke Tegalrejo untuk menangkap Diponegoro. Bangunan-bangunannya ditembaki dan dibakar.\n\nDiponegoro dan pamannya, Pangeran Mangkubumi, lolos lewat celah di tembok barat, yang bekasnya, *Tembok Jebol*, masih berdiri hingga kini. Mereka menyingkir ke arah perbukitan di barat daya, dan Perang Jawa pun dimulai."
+      },
+      "camera": {
+        "center": [110.345, -7.8],
+        "zoom": 13,
+        "pitch": 55,
+        "bearing": 20,
+        "durationMs": 3000
+      },
+      "focus": ["tegalrejo-attack", "diponegoro-hq"],
+      "sources": ["carey-1976", "unesco-babad", "jogjacagar"]
+    },
+    {
+      "id": "ch-07-selarong",
+      "part": "outbreak-1825",
+      "when": "1825-07-21/1825-07-27",
+      "title": {
+        "en": "The standard raised at Selarong",
+        "id": "Panji perang di Selarong"
+      },
+      "body": {
+        "en": "The next day Diponegoro reached **Selarong**, a pair of caves in the limestone hills of Bantul about 8 km south-west of the kraton. It became his first headquarters.\n\nPrinces, religious scholars and villagers came to join him, among them Kyai Maja, who became his chief religious adviser. On 31 July letters went out calling on the people of Kedu to rise.",
+        "id": "Keesokan harinya Diponegoro tiba di **Selarong**, sepasang gua di perbukitan kapur Bantul sekitar 8 km di barat daya keraton. Tempat itu menjadi markas pertamanya.\n\nPara pangeran, ulama, dan warga desa berdatangan untuk bergabung, di antaranya Kyai Mojo, yang menjadi penasihat agama utamanya. Pada 31 Juli surat-surat seruan dikirim agar rakyat Kedu bangkit."
+      },
+      "camera": {
+        "center": [110.3148, -7.8619],
+        "zoom": 13.8,
+        "pitch": 62,
+        "bearing": 35,
+        "durationMs": 3500
+      },
+      "focus": ["selarong-base", "goa-selarong", "diponegoro-hq"],
+      "sources": ["carey-1976", "jogjacagar", "kemendikbud-2017"]
+    },
+    {
+      "id": "ch-08-siege",
+      "part": "outbreak-1825",
+      "when": "1825-07-28/1825-08-14",
+      "title": {
+        "en": "Yogyakarta cut off",
+        "id": "Yogyakarta terkepung"
+      },
+      "body": {
+        "en": "From 28 July Diponegoro's forces blockaded Yogyakarta. The Dutch garrison and the court held out in and around **Fort Vredeburg**.\n\nOn 7 August some 6,000 of Diponegoro's men attacked the city. They could not take it, but for weeks the colonial government's hold on the heart of the sultanate hung by a thread.",
+        "id": "Sejak 28 Juli pasukan Diponegoro mengepung Yogyakarta. Garnisun Belanda dan pihak keraton bertahan di dalam dan sekitar **Benteng Vredeburg**.\n\nPada 7 Agustus sekitar 6.000 pasukan Diponegoro menyerbu kota. Kota itu tidak jatuh, tetapi selama berminggu-minggu kendali pemerintah kolonial atas jantung kesultanan berada di ujung tanduk."
+      },
+      "camera": {
+        "center": [110.35, -7.82],
+        "zoom": 11.2,
+        "pitch": 45,
+        "bearing": 0,
+        "durationMs": 3000
+      },
+      "focus": ["siege-of-yogyakarta", "fort-vredeburg-garrison"],
+      "sources": ["wikipedia-java-war", "kemendikbud-2017"]
+    },
+    {
+      "id": "ch-09-erucakra",
+      "part": "outbreak-1825",
+      "when": "1825-08-15",
+      "title": {
+        "en": "Sultan Erucakra",
+        "id": "Sultan Erucakra"
+      },
+      "body": {
+        "en": "On 15 August 1825, the first day of the Javanese year 1753, Diponegoro took a sultan's title that included the name **Erucakra**.\n\nIn Javanese prophecy Erucakra is a name of the *Ratu Adil*, the Just King expected to restore order in a time of chaos. The title gave the war a religious and messianic meaning for many of his followers.",
+        "id": "Pada 15 Agustus 1825, hari pertama tahun Jawa 1753, Diponegoro memakai gelar sultan yang memuat nama **Erucakra**.\n\nDalam ramalan Jawa, Erucakra adalah sebutan bagi *Ratu Adil*, raja adil yang dinantikan untuk memulihkan tatanan di masa kacau. Bagi banyak pengikutnya, gelar ini memberi perang makna religius dan mesianis."
+      },
+      "notes": {
+        "en": "The DIY cultural office dates a formal coronation to 1826 at Goa Sriti near Dekso.",
+        "id": "Dinas Kebudayaan DIY menyebut penobatan resmi terjadi tahun 1826 di Goa Sriti dekat Dekso."
+      },
+      "camera": {
+        "center": [110.3148, -7.8619],
+        "zoom": 14.5,
+        "pitch": 65,
+        "bearing": 80,
+        "durationMs": 2000
+      },
+      "focus": ["erucakra-title", "goa-selarong"],
+      "sources": ["carey-1976"]
+    },
+    {
+      "id": "ch-10-spread",
+      "part": "outbreak-1825",
+      "when": "1825-08-16/1825-09-22",
+      "title": {
+        "en": "The war spreads",
+        "id": "Perang meluas"
+      },
+      "body": {
+        "en": "Within weeks the fighting spread well beyond Yogyakarta: north to Kedu, to Serang and Demak on the north coast, where Pangeran Serang II led some 8,000 men, and east toward Madiun.\n\nWhen the war began the colonial army numbered about 12,500 soldiers, half of them Indonesians, and it was badly stretched.",
+        "id": "Dalam hitungan minggu, pertempuran meluas jauh ke luar Yogyakarta: ke utara hingga Kedu, ke Serang dan Demak di pesisir utara, tempat Pangeran Serang II memimpin sekitar 8.000 orang, dan ke timur ke arah Madiun.\n\nSaat perang pecah, tentara kolonial hanya berjumlah sekitar 12.500 prajurit, separuhnya orang pribumi, sehingga kekuatannya terbentang sangat tipis."
+      },
+      "camera": {
+        "center": [110.75, -7.25],
+        "zoom": 7.7,
+        "pitch": 30,
+        "bearing": 0,
+        "durationMs": 3500
+      },
+      "focus": ["war-spreads", "demak", "madiun", "magelang-residency"],
+      "sources": ["wikipedia-java-war"]
+    },
+    {
+      "id": "ch-11-ngawi",
+      "part": "outbreak-1825",
+      "when": "1825-09-23",
+      "title": {
+        "en": "Ngawi",
+        "id": "Ngawi"
+      },
+      "body": {
+        "en": "On 23 September 1825 cavalry fighting on Diponegoro's side, led by Raden Ayu Yudakusuma, a daughter of Hamengkubuwono I, attacked Ngawi on the Bengawan Solo and killed its Chinese community.\n\nChinese tollgate keepers and tax farmers had become hated figures in the years before the war. Peter Carey examines how that resentment turned into violence against whole communities in the war's first months.",
+        "id": "Pada 23 September 1825 pasukan berkuda di pihak Diponegoro, dipimpin Raden Ayu Yudakusuma, putri Hamengkubuwono I, menyerang Ngawi di tepi Bengawan Solo dan membunuh komunitas Tionghoanya.\n\nPada tahun-tahun menjelang perang, penjaga gerbang cukai dan pemungut pajak Tionghoa menjadi sasaran kebencian. Peter Carey menelaah bagaimana kebencian itu berubah menjadi kekerasan terhadap seluruh komunitas pada bulan-bulan pertama perang."
+      },
+      "camera": {
+        "center": [111.4461, -7.4038],
+        "zoom": 11,
+        "pitch": 40,
+        "bearing": 0,
+        "durationMs": 3000
+      },
+      "focus": ["ngawi-attack", "ngawi"],
+      "sources": ["carey-1984"]
+    },
+    {
+      "id": "ch-12-de-kock",
+      "part": "outbreak-1825",
+      "when": "1825-09-25",
+      "title": {
+        "en": "De Kock takes command",
+        "id": "De Kock mengambil alih komando"
+      },
+      "body": {
+        "en": "A relief force with Sumenep and Mangkunegaran troops had reached Yogyakarta on 19 August. On 25 September Lieutenant-General **Hendrik Merkus de Kock**, appointed in July as commander and government commissioner for the principalities, arrived with reinforcements, and the siege was over.\n\nDe Kock would direct the colonial war effort for the next five years.",
+        "id": "Pasukan bantuan berisi prajurit Sumenep dan Mangkunegaran telah tiba di Yogyakarta pada 19 Agustus. Pada 25 September Letnan Jenderal **Hendrik Merkus de Kock**, yang diangkat pada Juli sebagai panglima dan komisaris pemerintah untuk wilayah kerajaan, datang dengan bala bantuan, dan pengepungan pun berakhir.\n\nDe Kock memimpin upaya perang kolonial selama lima tahun berikutnya."
+      },
+      "camera": {
+        "center": [110.366, -7.8003],
+        "zoom": 14,
+        "pitch": 50,
+        "bearing": -30,
+        "durationMs": 2500
+      },
+      "focus": ["de-kock-arrives", "siege-of-yogyakarta", "fort-vredeburg-garrison"],
+      "media": ["de-kock-portrait"],
+      "sources": ["wikipedia-java-war", "kemendikbud-2017"]
+    },
+    {
+      "id": "ch-13-dekso",
+      "part": "outbreak-1825",
+      "when": "1825-10/1825-11-04",
+      "title": {
+        "en": "From Selarong to Dekso",
+        "id": "Dari Selarong ke Dekso"
+      },
+      "body": {
+        "en": "In October Dutch columns marched on Selarong and found the caves empty. Diponegoro had already moved his headquarters north-west across the Progo river to **Dekso** in the Kulon Progo hills, where it stayed until August 1826.\n\nThe pattern was set early: the colonial army could take places, but not the prince.",
+        "id": "Pada Oktober kolone Belanda bergerak ke Selarong dan mendapati gua-gua itu kosong. Diponegoro telah memindahkan markasnya ke barat laut, menyeberangi Kali Progo, ke **Dekso** di perbukitan Kulon Progo, dan bertahan di sana hingga Agustus 1826.\n\nPolanya terbentuk sejak awal: tentara kolonial bisa merebut tempat, tetapi tidak bisa menangkap sang pangeran."
+      },
+      "notes": {
+        "en": "Accounts give Dutch attacks on Selarong in late July, September, early October and 4 November 1825.",
+        "id": "Berbagai sumber menyebut serangan Belanda ke Selarong pada akhir Juli, September, awal Oktober, dan 4 November 1825."
+      },
+      "camera": {
+        "center": [110.27, -7.79],
+        "zoom": 11,
+        "pitch": 50,
+        "bearing": -20,
+        "durationMs": 3000
+      },
+      "focus": ["selarong-attacked", "dekso", "diponegoro-hq"],
+      "sources": ["wikipedia-java-war", "id-wikipedia-perang-diponegoro"]
+    },
+    {
+      "id": "ch-14-pleret",
+      "part": "battles-1826",
+      "when": "1826-06-09",
+      "title": {
+        "en": "The storming of Pleret",
+        "id": "Penyerbuan Pleret"
+      },
+      "body": {
+        "en": "Diponegoro's commander Ali Basah Kertapengalasan had fortified **Pleret**, the site of a former Mataram court south-east of Yogyakarta. Dutch attacks in April and May failed.\n\nOn 9 June 1826 columns under Colonel Cochius stormed it. Hundreds of defenders were killed, with estimates ranging from 500 to 1,300. It was the first major defeat of Diponegoro's forces in open battle, and a colonial garrison held Pleret from then on.",
+        "id": "Panglima Diponegoro, Ali Basah Kertapengalasan, telah membentengi **Pleret**, bekas keraton Mataram di tenggara Yogyakarta. Serangan Belanda pada April dan Mei gagal.\n\nPada 9 Juni 1826 kolone di bawah Kolonel Cochius menyerbunya. Ratusan pembela gugur, dengan perkiraan antara 500 hingga 1.300 orang. Inilah kekalahan besar pertama pasukan Diponegoro dalam pertempuran terbuka, dan sejak itu Pleret dijaga garnisun kolonial."
+      },
+      "notes": {
+        "en": "Kemendikbud dates the storming to 8 July 1826.",
+        "id": "Kemendikbud menyebut penyerbuan terjadi 8 Juli 1826."
+      },
+      "camera": {
+        "center": [110.4044, -7.8658],
+        "zoom": 13.5,
+        "pitch": 55,
+        "bearing": 15,
+        "durationMs": 3000
+      },
+      "focus": ["pleret-storming", "pleret-stronghold"],
+      "sources": ["pleret-village", "historia-pleret", "wp-pleret"]
+    },
+    {
+      "id": "ch-15-lengkong",
+      "part": "battles-1826",
+      "when": "1826-07-30",
+      "title": {
+        "en": "Ambush at Lengkong",
+        "id": "Sergapan di Lengkong"
+      },
+      "body": {
+        "en": "On 30 July 1826 the young commander **Sentot Ali Basah Prawirodirjo**, with about 2,000 men, ambushed a small column under Lieutenant Haubert at Lengkong, north of Yogyakarta.\n\nThe column was destroyed. Several Yogyakarta princes riding with it were among the dead, a blow to the court that had sided with the Dutch.",
+        "id": "Pada 30 Juli 1826 panglima muda **Sentot Alibasah Prawirodirjo** bersama sekitar 2.000 orang menyergap kolone kecil pimpinan Letnan Haubert di Lengkong, utara Yogyakarta.\n\nKolone itu dihancurkan. Beberapa pangeran Yogyakarta yang ikut di dalamnya tewas, pukulan bagi keraton yang berpihak pada Belanda."
+      },
+      "camera": {
+        "center": [110.2922, -7.6792],
+        "zoom": 12.5,
+        "pitch": 50,
+        "bearing": 0,
+        "durationMs": 2500
+      },
+      "focus": ["battle-of-lengkong", "lengkong"],
+      "sources": ["wp-lengkong"]
+    },
+    {
+      "id": "ch-16-kejiwan",
+      "part": "battles-1826",
+      "when": "1826-08-05/1826-08-09",
+      "title": {
+        "en": "Kejiwan",
+        "id": "Kejiwan"
+      },
+      "body": {
+        "en": "In early August Diponegoro left Dekso and moved east across the plain toward Prambanan.\n\nOn 9 August, at Kejiwan, his forces, put by the Dutch at about 3,000, overwhelmed a column of 390 under Major Sollewijn. About 150 of the column were killed and seven guns were captured.",
+        "id": "Pada awal Agustus Diponegoro meninggalkan Dekso dan bergerak ke timur melintasi dataran menuju Prambanan.\n\nPada 9 Agustus di Kejiwan, pasukannya, yang oleh Belanda diperkirakan sekitar 3.000 orang, mengalahkan kolone berkekuatan 390 orang pimpinan Mayor Sollewijn. Sekitar 150 anggota kolone tewas dan tujuh meriam dirampas."
+      },
+      "notes": {
+        "en": "Kejiwan's exact location is unknown; it is placed between Kalasan and Prambanan.",
+        "id": "Lokasi pasti Kejiwan belum diketahui; ditempatkan antara Kalasan dan Prambanan."
+      },
+      "camera": {
+        "center": [110.36, -7.74],
+        "zoom": 10.8,
+        "pitch": 45,
+        "bearing": 0,
+        "durationMs": 3000
+      },
+      "focus": ["battle-of-kejiwan", "diponegoro-hq"],
+      "sources": ["wp-kejiwan"]
+    },
+    {
+      "id": "ch-17-old-sultan",
+      "part": "battles-1826",
+      "when": "1826-08-10/1826-08-27",
+      "title": {
+        "en": "The old sultan returns",
+        "id": "Sultan Sepuh kembali"
+      },
+      "body": {
+        "en": "To win back Javanese loyalty, the colonial government brought Hamengkubuwono II, the sultan deposed by the British in 1812, back from exile in Ambon and put him on the throne in place of the boy Hamengkubuwono V.\n\nThe old sultan was Diponegoro's grandfather. His return was meant to give the court a figure more legitimate than the prince in the hills.",
+        "id": "Untuk merebut kembali kesetiaan orang Jawa, pemerintah kolonial memulangkan Hamengkubuwono II, sultan yang diturunkan Inggris pada 1812, dari pengasingan di Ambon dan menaikkannya ke takhta menggantikan Hamengkubuwono V yang masih kanak-kanak.\n\nSultan Sepuh adalah kakek Diponegoro. Kepulangannya dimaksudkan untuk menghadirkan tokoh yang lebih sah daripada sang pangeran di perbukitan."
+      },
+      "notes": {
+        "en": "Dates given are 17 August 1826 (Wikipedia) and 20 September 1826 (Kraton Yogyakarta).",
+        "id": "Tanggal yang disebut: 17 Agustus 1826 (Wikipedia) dan 20 September 1826 (Keraton Yogyakarta)."
+      },
+      "camera": {
+        "center": [110.3641, -7.8057],
+        "zoom": 14.2,
+        "pitch": 50,
+        "bearing": 30,
+        "durationMs": 2500
+      },
+      "focus": ["hb2-restored", "kraton-yogyakarta"],
+      "sources": ["kraton-jogja", "wp-hb5"]
+    },
+    {
+      "id": "ch-18-delanggu",
+      "part": "battles-1826",
+      "when": "1826-08-28",
+      "title": {
+        "en": "Delanggu",
+        "id": "Delanggu"
+      },
+      "body": {
+        "en": "On 28 August 1826 Diponegoro struck at **Delanggu**, on the road between Klaten and Surakarta. His army, estimated at 7,000 to 10,000, overran the garrison of about 500.\n\nIt was one of his greatest successes, and it brought his forces within reach of Surakarta.",
+        "id": "Pada 28 Agustus 1826 Diponegoro menyerang **Delanggu**, di jalan antara Klaten dan Surakarta. Pasukannya, diperkirakan 7.000 hingga 10.000 orang, menggulung garnisun berkekuatan sekitar 500 orang.\n\nInilah salah satu kemenangan terbesarnya, dan pasukannya kini berada tak jauh dari Surakarta."
+      },
+      "camera": {
+        "center": [110.72, -7.61],
+        "zoom": 11.5,
+        "pitch": 45,
+        "bearing": 45,
+        "durationMs": 3000
+      },
+      "focus": ["battle-of-delanggu", "delanggu-post", "diponegoro-hq"],
+      "sources": ["wp-delanggu", "kemendikbud-2017"]
+    },
+    {
+      "id": "ch-19-gawok",
+      "part": "battles-1826",
+      "when": "1826-10-12/1826-10-15",
+      "title": {
+        "en": "Gawok: the prince is wounded",
+        "id": "Gawok: sang pangeran terluka"
+      },
+      "body": {
+        "en": "In mid-October Diponegoro camped at **Gawok**, west of Surakarta. On 15 October about 1,500 colonial troops under General Van Geen and Colonel Cochius met his force of some 4,000.\n\nDiponegoro was shot and fell from his horse. His army was defeated, and from then on it fought mainly as guerrillas, avoiding pitched battles.",
+        "id": "Pada pertengahan Oktober Diponegoro berkemah di **Gawok**, barat Surakarta. Pada 15 Oktober sekitar 1.500 pasukan kolonial pimpinan Jenderal Van Geen dan Kolonel Cochius menghadapi pasukannya yang berjumlah sekitar 4.000 orang.\n\nDiponegoro tertembak dan jatuh dari kudanya. Pasukannya kalah, dan sejak itu mereka lebih banyak berperang secara gerilya, menghindari pertempuran terbuka."
+      },
+      "camera": {
+        "center": [110.7517, -7.6031],
+        "zoom": 12.5,
+        "pitch": 55,
+        "bearing": 90,
+        "durationMs": 3000
+      },
+      "focus": ["battle-of-gawok", "diponegoro-hq"],
+      "sources": ["wp-gawok", "wikipedia-java-war"]
+    },
+    {
+      "id": "ch-20-forts",
+      "part": "forts-1827-1828",
+      "when": "1827-01/1827-08-28",
+      "title": {
+        "en": "A web of forts",
+        "id": "Jaring benteng"
+      },
+      "body": {
+        "en": "In 1827 De Kock and Colonel Cochius changed strategy. Instead of chasing Diponegoro with large columns, they built small forts of 25–30 men, linked by roads, across the contested countryside. Eight mobile columns, based at places such as Yogyakarta, Klaten, Menoreh and Banyumas, hunted his bands between them.\n\nThe network grew to between 160 and 260 forts, depending on the source. It was slow and costly, and by April 1827 1,603 of 6,000 European soldiers had already died.",
+        "id": "Pada 1827 De Kock dan Kolonel Cochius mengubah strategi. Alih-alih mengejar Diponegoro dengan kolone besar, mereka membangun benteng-benteng kecil berisi 25–30 prajurit, dihubungkan jalan, di seluruh daerah yang diperebutkan. Delapan kolone mobil, yang berpangkalan antara lain di Yogyakarta, Klaten, Menoreh, dan Banyumas, memburu pasukan Diponegoro di antara benteng-benteng itu.\n\nJaringan ini berkembang hingga 160 sampai 260 benteng, tergantung sumbernya. Cara ini lambat dan mahal, dan hingga April 1827 sudah 1.603 dari 6.000 prajurit Eropa yang tewas."
+      },
+      "camera": {
+        "center": [110.2, -7.6],
+        "zoom": 8.6,
+        "pitch": 35,
+        "bearing": 0,
+        "durationMs": 3500
+      },
+      "focus": [
+        "fortress-system",
+        "klaten-column-base",
+        "menoreh-column-base",
+        "banyumas-column-base",
+        "fort-vredeburg-garrison"
+      ],
+      "media": ["de-stuers-map"],
+      "sources": ["djamhari-2004", "wikipedia-java-war", "kemendikbud-2017", "detik-klaten-forts"]
+    },
+    {
+      "id": "ch-21-klaten-talks",
+      "part": "forts-1827-1828",
+      "when": "1827-08-29",
+      "title": {
+        "en": "Talks at Klaten",
+        "id": "Perundingan di Klaten"
+      },
+      "body": {
+        "en": "A ceasefire in August and September 1827 led to talks at Klaten, with Kyai Maja speaking for Diponegoro.\n\nThe Dutch judged Diponegoro's demands excessive, and the talks collapsed.",
+        "id": "Gencatan senjata pada Agustus dan September 1827 membuka perundingan di Klaten, dengan Kyai Mojo mewakili Diponegoro.\n\nBelanda menilai tuntutan pihak Diponegoro berlebihan, dan perundingan pun gagal."
+      },
+      "camera": {
+        "center": [110.6018, -7.705],
+        "zoom": 12.5,
+        "pitch": 45,
+        "bearing": 0,
+        "durationMs": 2500
+      },
+      "focus": ["klaten-talks-1827", "klaten"],
+      "sources": ["tirto-mojo", "kemendikbud-2017"]
+    },
+    {
+      "id": "ch-22-bagelen",
+      "part": "forts-1827-1828",
+      "when": "1827-09/1827-11-27",
+      "title": {
+        "en": "West into Bagelen",
+        "id": "Ke barat, ke Bagelen"
+      },
+      "body": {
+        "en": "Squeezed by the forts, Diponegoro shifted west in late 1827 into **Bagelen**, the hilly country between the Progo and Bogowonto rivers. He surprised several Dutch posts there.\n\nThe colonial army answered by building more forts, among them Kedung Kebo, the barracks around which the town of Purworejo later grew.",
+        "id": "Terdesak oleh benteng-benteng, Diponegoro bergeser ke barat pada akhir 1827, ke **Bagelen**, daerah perbukitan antara Kali Progo dan Kali Bogowonto. Di sana ia menyerang beberapa pos Belanda secara mendadak.\n\nTentara kolonial membalas dengan membangun lebih banyak benteng, di antaranya Kedung Kebo, tangsi yang kelak menjadi cikal bakal kota Purworejo."
+      },
+      "camera": {
+        "center": [110.1, -7.72],
+        "zoom": 10.2,
+        "pitch": 50,
+        "bearing": -20,
+        "durationMs": 3500
+      },
+      "focus": ["diponegoro-hq", "kedung-kebo-fort", "bagelen"],
+      "sources": ["wikipedia-java-war", "historia-bagelen"]
+    },
+    {
+      "id": "ch-23-sasradilaga",
+      "part": "forts-1827-1828",
+      "when": "1827-11-28/1828-03-07",
+      "title": {
+        "en": "A second front on the north coast",
+        "id": "Front kedua di pesisir utara"
+      },
+      "body": {
+        "en": "On 28 November 1827 Raden Tumenggung Sasradilaga, Diponegoro's brother-in-law, opened a new front around Lasem and Rembang on the north-east coast. On 27 January 1828 his men took the Dutch post at Rajekwesi, today's Bojonegoro.\n\nBy 7 March 1828 the campaign had been defeated. Sasradilaga surrendered in October.",
+        "id": "Pada 28 November 1827 Raden Tumenggung Sasradilaga, ipar Diponegoro, membuka front baru di sekitar Lasem dan Rembang di pesisir timur laut. Pada 27 Januari 1828 pasukannya merebut pos Belanda di Rajekwesi, kini Bojonegoro.\n\nPada 7 Maret 1828 perlawanan ini telah dipatahkan. Sasradilaga menyerah pada Oktober."
+      },
+      "camera": {
+        "center": [111.62, -6.95],
+        "zoom": 8.8,
+        "pitch": 35,
+        "bearing": 0,
+        "durationMs": 3500
+      },
+      "focus": ["sasradilaga-campaign", "rajekwesi-falls", "lasem", "rajekwesi"],
+      "sources": ["wp-sasradilaga", "kemendikbud-2017"]
+    },
+    {
+      "id": "ch-24-kyai-maja",
+      "part": "forts-1827-1828",
+      "when": "1828-11-12",
+      "title": {
+        "en": "Kyai Maja taken",
+        "id": "Kyai Mojo tertangkap"
+      },
+      "body": {
+        "en": "Kyai Maja, Diponegoro's chief religious adviser, had fallen out with the prince. After talks with Dutch officials in late October, he was captured on 12 November 1828 with about 500 followers near Yogyakarta.\n\nHe was exiled with dozens of followers to Tondano in Minahasa, North Sulawesi, where he died in 1849.",
+        "id": "Kyai Mojo, penasihat agama utama Diponegoro, telah berselisih dengan sang pangeran. Setelah berunding dengan pejabat Belanda pada akhir Oktober, ia ditangkap pada 12 November 1828 bersama sekitar 500 pengikut di dekat Yogyakarta.\n\nIa diasingkan bersama puluhan pengikutnya ke Tondano, Minahasa, Sulawesi Utara, dan wafat di sana pada 1849."
+      },
+      "notes": {
+        "en": "Wikipedia gives 10 November. The site is given variously as Mlangi, Kembang Arum or the slopes of Merapi.",
+        "id": "Wikipedia menyebut 10 November. Lokasinya disebut Mlangi, Kembang Arum, atau lereng Merapi."
+      },
+      "camera": {
+        "center": [110.3304, -7.7617],
+        "zoom": 12.5,
+        "pitch": 45,
+        "bearing": 0,
+        "durationMs": 3000
+      },
+      "focus": ["kyai-maja-capture", "mlangi"],
+      "sources": ["tirto-mojo", "nu-kyai-maja"]
+    },
+    {
+      "id": "ch-25-offensive",
+      "part": "collapse-1829",
+      "when": "1829-04/1829-09-16",
+      "title": {
+        "en": "The final offensive",
+        "id": "Serangan pamungkas"
+      },
+      "body": {
+        "en": "A pause in the fighting in 1829 gave the colonial army time to regroup. From June it launched a final offensive, with cavalry sweeping the country between the forts through July and August.\n\nDiponegoro's forces were increasingly confined to the hills and forests west of the Progo.",
+        "id": "Jeda pertempuran pada 1829 memberi tentara kolonial waktu untuk menata ulang pasukan. Sejak Juni mereka melancarkan serangan pamungkas, dengan pasukan berkuda menyisir daerah di antara benteng-benteng sepanjang Juli dan Agustus.\n\nPasukan Diponegoro kian terdesak ke perbukitan dan hutan di sebelah barat Kali Progo."
+      },
+      "notes": {
+        "en": "Sources describe either a three-month ceasefire or a one-week truce from 2 April 1829.",
+        "id": "Sumber menyebut gencatan senjata tiga bulan atau gencatan satu minggu sejak 2 April 1829."
+      },
+      "camera": {
+        "center": [110.12, -7.72],
+        "zoom": 9.8,
+        "pitch": 45,
+        "bearing": -10,
+        "durationMs": 3000
+      },
+      "focus": ["ceasefire-1829", "diponegoro-hq", "nanggulan-fort", "kedung-kebo-fort"],
+      "sources": ["wikipedia-java-war", "kemendikbud-2017"]
+    },
+    {
+      "id": "ch-26-siluk",
+      "part": "collapse-1829",
+      "when": "1829-09-17/1829-09-21",
+      "title": {
+        "en": "Siluk and Mount Kelir",
+        "id": "Siluk dan Gunung Kelir"
+      },
+      "body": {
+        "en": "On 17 September 1829 three colonial columns caught Diponegoro, Sentot and Pangeran Prabuningrat with about 300 men at Siluk. Fifty-four were killed, Prabuningrat among them. Diponegoro and Sentot escaped separately.\n\nFour days later De Kock offered a bounty of 20,000 guilders for Diponegoro. The same day his veteran commander Pangeran Jayakusuma was killed in an ambush at Mount Kelir in Kulon Progo.",
+        "id": "Pada 17 September 1829 tiga kolone kolonial memergoki Diponegoro, Sentot, dan Pangeran Prabuningrat bersama sekitar 300 orang di Siluk. Lima puluh empat orang gugur, termasuk Prabuningrat. Diponegoro dan Sentot lolos secara terpisah.\n\nEmpat hari kemudian De Kock mengumumkan sayembara berhadiah 20.000 gulden untuk menangkap Diponegoro. Pada hari yang sama panglima veterannya, Pangeran Joyokusumo, gugur disergap di Gunung Kelir, Kulon Progo."
+      },
+      "notes": {
+        "en": "Siluk's location is uncertain ('near the Selarong hills' or 'in the Progo valley').",
+        "id": "Lokasi Siluk belum pasti ('dekat perbukitan Selarong' atau 'di lembah Progo')."
+      },
+      "camera": {
+        "center": [110.3, -7.86],
+        "zoom": 10.4,
+        "pitch": 45,
+        "bearing": 0,
+        "durationMs": 3000
+      },
+      "focus": ["battle-of-siluk", "bounty-and-kelir"],
+      "sources": ["wp-siluk", "wp-kelir", "kemendikbud-2017"]
+    },
+    {
+      "id": "ch-27-sentot",
+      "part": "collapse-1829",
+      "when": "1829-10-17/1829-10-24",
+      "title": {
+        "en": "Sentot and Mangkubumi surrender",
+        "id": "Sentot dan Mangkubumi menyerah"
+      },
+      "body": {
+        "en": "In October 1829 Diponegoro lost two of his most important companions. His uncle Pangeran Mangkubumi, with him since Tegalrejo, gave himself up. At Imogiri, **Sentot Ali Basah Prawirodirjo**, his most effective field commander and still only about 21, agreed terms on 17 October and formally surrendered a week later.\n\nSentot later led a unit in colonial service in Sumatra and died in exile in Bengkulu in 1855.",
+        "id": "Pada Oktober 1829 Diponegoro kehilangan dua pendamping terpentingnya. Pamannya, Pangeran Mangkubumi, yang bersamanya sejak Tegalrejo, menyerahkan diri. Di Imogiri, **Sentot Alibasah Prawirodirjo**, panglima lapangannya yang paling tangguh dan baru berusia sekitar 21 tahun, menyepakati syarat pada 17 Oktober dan resmi menyerah sepekan kemudian.\n\nSentot kemudian memimpin pasukan dalam dinas kolonial di Sumatra dan wafat dalam pengasingan di Bengkulu pada 1855."
+      },
+      "camera": {
+        "center": [110.3932, -7.9228],
+        "zoom": 12.8,
+        "pitch": 55,
+        "bearing": -30,
+        "durationMs": 3000
+      },
+      "focus": ["sentot-surrender", "mangkubumi-surrender", "imogiri"],
+      "sources": ["kemendikbud-2017", "historia-sentot", "observer-carey"]
+    },
+    {
+      "id": "ch-28-gowong",
+      "part": "collapse-1829",
+      "when": "1829-11-11",
+      "title": {
+        "en": "A leap in the Gowong hills",
+        "id": "Melompat di Pegunungan Gowong"
+      },
+      "body": {
+        "en": "On 11 November 1829, his 44th birthday, Diponegoro was nearly caught by a patrol of about 50 men under Major Michiels in the Gowong hills. He escaped by leaping into a ravine, but lost his horses, saddle, spear and parasol. The Netherlands returned those heirlooms to Indonesia in 1977.\n\nFor the next three months he hid in the forests with a handful of followers, sick with malaria.",
+        "id": "Pada 11 November 1829, tepat di ulang tahunnya yang ke-44, Diponegoro nyaris tertangkap patroli berkekuatan sekitar 50 orang pimpinan Mayor Michiels di Pegunungan Gowong. Ia lolos dengan melompat ke jurang, tetapi kehilangan kuda, pelana, tombak, dan payungnya. Belanda mengembalikan pusaka-pusaka itu ke Indonesia pada 1977.\n\nTiga bulan berikutnya ia bersembunyi di hutan bersama segelintir pengikut, menderita malaria."
+      },
+      "notes": {
+        "en": "The Gowong hills lie between Kedu and western Bagelen; the exact site is not mapped.",
+        "id": "Pegunungan Gowong terletak antara Kedu dan Bagelen barat; lokasi tepatnya belum dipetakan."
+      },
+      "camera": {
+        "center": [110.05, -7.66],
+        "zoom": 10,
+        "pitch": 55,
+        "bearing": -40,
+        "durationMs": 3000
+      },
+      "focus": ["gowong-escape", "diponegoro-hq"],
+      "sources": ["okezone-gowong"]
+    },
+    {
+      "id": "ch-29-cleerens",
+      "part": "end-1830",
+      "when": "1830-02-16",
+      "title": {
+        "en": "Colonel Cleerens at Remo Kamal",
+        "id": "Kolonel Cleerens di Remokamal"
+      },
+      "body": {
+        "en": "On 16 February 1830 Diponegoro met Colonel J.B. Cleerens at Remo Kamal in Bagelen. Cleerens persuaded him to come to Magelang and negotiate with General De Kock, with a truce to hold through the fasting month of Ramadan.",
+        "id": "Pada 16 Februari 1830 Diponegoro bertemu Kolonel J.B. Cleerens di Remokamal, Bagelen. Cleerens membujuknya datang ke Magelang untuk berunding dengan Jenderal De Kock, dengan gencatan senjata selama bulan puasa Ramadan."
+      },
+      "camera": {
+        "center": [110.04, -7.8],
+        "zoom": 10.5,
+        "pitch": 45,
+        "bearing": 0,
+        "durationMs": 3000
+      },
+      "focus": ["cleerens-meeting", "remo-kamal"],
+      "sources": ["carey-1982", "kemendikbud-2017"]
+    },
+    {
+      "id": "ch-30-to-magelang",
+      "part": "end-1830",
+      "when": "1830-02-17/1830-03-08",
+      "title": {
+        "en": "The road to Magelang",
+        "id": "Jalan menuju Magelang"
+      },
+      "body": {
+        "en": "Diponegoro reached Menoreh on 21 February and stayed there about two weeks. On 8 March he rode into Magelang with around 700 followers, met De Kock, and set up camp at **Metesih**, by the Progo river below the Kedu residency house.",
+        "id": "Diponegoro tiba di Menoreh pada 21 Februari dan tinggal di sana sekitar dua minggu. Pada 8 Maret ia memasuki Magelang bersama sekitar 700 pengikut, bertemu De Kock, lalu mendirikan kemah di **Metesih**, di tepi Kali Progo di bawah rumah Residen Kedu."
+      },
+      "camera": {
+        "center": [110.16, -7.54],
+        "zoom": 10.8,
+        "pitch": 50,
+        "bearing": 20,
+        "durationMs": 3000
+      },
+      "focus": ["diponegoro-hq", "menoreh", "magelang-arrival"],
+      "sources": ["carey-1982", "kompas-arrest"]
+    },
+    {
+      "id": "ch-31-ramadan",
+      "part": "end-1830",
+      "when": "1830-03-09/1830-03-27",
+      "title": {
+        "en": "Ramadan at Metesih",
+        "id": "Ramadan di Metesih"
+      },
+      "body": {
+        "en": "Through the fasting month the truce held. Diponegoro met De Kock informally, and the formal talks were put off until after Lebaran.",
+        "id": "Sepanjang bulan puasa gencatan senjata tetap terjaga. Diponegoro bertemu De Kock secara tidak resmi, dan perundingan resmi ditunda hingga selepas Lebaran."
+      },
+      "camera": {
+        "center": [110.215, -7.476],
+        "zoom": 14,
+        "pitch": 55,
+        "bearing": -20,
+        "durationMs": 2500
+      },
+      "focus": ["metesih", "magelang-residency", "diponegoro-hq"],
+      "sources": ["carey-1982", "kompas-arrest"]
+    },
+    {
+      "id": "ch-32-arrest",
+      "part": "end-1830",
+      "when": "1830-03-28",
+      "title": {
+        "en": "Arrest at Magelang",
+        "id": "Penangkapan di Magelang"
+      },
+      "body": {
+        "en": "On 28 March 1830, the second day of Lebaran, Diponegoro came to the Kedu residency house for talks. The talks broke down over his demands, and De Kock had him arrested on the spot. His followers were disarmed, and the next day he was sent under escort to Semarang.\n\nTwo paintings record the scene. Nicolaas Pieneman's Dutch version shows a defeated prince 'submitting'. Raden Saleh's 1857 answer shows Diponegoro upright and defiant among his grieving people.",
+        "id": "Pada 28 Maret 1830, hari kedua Lebaran, Diponegoro datang ke rumah Residen Kedu untuk berunding. Perundingan buntu karena tuntutannya, dan De Kock menangkapnya saat itu juga. Para pengikutnya dilucuti, dan keesokan harinya ia dikawal menuju Semarang.\n\nDua lukisan mengabadikan peristiwa ini. Versi Belanda karya Nicolaas Pieneman menggambarkan pangeran yang kalah dan 'tunduk'. Jawaban Raden Saleh pada 1857 menampilkan Diponegoro tegak dan menantang di tengah rakyatnya yang berduka."
+      },
+      "camera": {
+        "center": [110.21303, -7.47473],
+        "zoom": 16,
+        "pitch": 60,
+        "bearing": 30,
+        "durationMs": 4000
+      },
+      "focus": ["arrest-at-magelang", "magelang-residency"],
+      "media": ["saleh-arrest", "pieneman-arrest"],
+      "sources": ["carey-1982", "unesco-babad", "kompas-arrest"]
+    },
+    {
+      "id": "ch-33-batavia",
+      "part": "epilogue",
+      "when": "1830-03-29/1830-05-03",
+      "title": {
+        "en": "Semarang and Batavia",
+        "id": "Semarang dan Batavia"
+      },
+      "body": {
+        "en": "Diponegoro was taken overland to Semarang and then by steamship to Batavia, arriving on 8 April 1830. He was held for almost four weeks in the Stadhuis, the town hall that is now the Jakarta History Museum.\n\nThere the artist A.J. Bik drew him from life, a rare portrait made while he was alive.",
+        "id": "Diponegoro dibawa lewat darat ke Semarang, lalu dengan kapal uap ke Batavia, dan tiba pada 8 April 1830. Ia ditahan hampir empat minggu di Stadhuis, balai kota yang kini menjadi Museum Sejarah Jakarta.\n\nDi sana pelukis A.J. Bik menggambarnya secara langsung, potret langka yang dibuat semasa hidupnya."
+      },
+      "camera": {
+        "center": [108.6, -6.6],
+        "zoom": 6.9,
+        "pitch": 20,
+        "bearing": 0,
+        "durationMs": 4000
+      },
+      "focus": ["batavia-detention", "diponegoro-hq"],
+      "media": ["bik-portrait"],
+      "sources": ["unesco-babad", "carey-2022"]
+    },
+    {
+      "id": "ch-34-manado",
+      "part": "epilogue",
+      "when": "1830-05-04/1830-06-12",
+      "title": {
+        "en": "Exile to Manado",
+        "id": "Diasingkan ke Manado"
+      },
+      "body": {
+        "en": "On 4 May 1830 Diponegoro and a party of 19 sailed from Batavia on the corvette *Pollux*. Five weeks later they reached Manado, at the northern tip of Sulawesi, where he was confined in Fort Nieuw Amsterdam.",
+        "id": "Pada 4 Mei 1830 Diponegoro dan rombongan 19 orang berlayar dari Batavia dengan korvet *Pollux*. Lima minggu kemudian mereka tiba di Manado, di ujung utara Sulawesi, dan ia ditahan di Benteng Nieuw Amsterdam."
+      },
+      "notes": {
+        "en": "Arrival is given as 10 June (UNESCO) or 12 June (Carey 2022). The sea route is drawn schematically.",
+        "id": "Tanggal tiba disebut 10 Juni (UNESCO) atau 12 Juni (Carey 2022). Jalur laut digambar secara skematis."
+      },
+      "camera": {
+        "center": [115.8, -2.6],
+        "zoom": 4.7,
+        "pitch": 0,
+        "bearing": 0,
+        "durationMs": 4500
+      },
+      "focus": ["exile-to-manado", "diponegoro-hq"],
+      "sources": ["carey-2022", "unesco-babad"]
+    },
+    {
+      "id": "ch-35-annexation",
+      "part": "epilogue",
+      "when": "1830-06-13/1830-10-24",
+      "title": {
+        "en": "The price of victory",
+        "id": "Harga kemenangan"
+      },
+      "body": {
+        "en": "The colonial government moved fast to secure its victory. Pakubuwono VI of Surakarta, suspected of sympathy with Diponegoro, had been arrested and exiled to Ambon in June. By the Treaty of Klaten of 27 September 1830, Banyumas, Bagelen, Madiun and Kediri were taken from the courts and placed under direct colonial rule.\n\nThat same year Governor-General Van den Bosch began the **Cultivation System**, which forced villages in the government-ruled parts of Java to grow export crops to refill a treasury the war had emptied.",
+        "id": "Pemerintah kolonial bergerak cepat mengamankan kemenangannya. Pakubuwono VI dari Surakarta, yang dicurigai bersimpati pada Diponegoro, ditangkap dan dibuang ke Ambon pada Juni. Melalui Perjanjian Klaten 27 September 1830, Banyumas, Bagelen, Madiun, dan Kediri diambil dari keraton dan diperintah langsung oleh pemerintah kolonial.\n\nPada tahun yang sama Gubernur Jenderal Van den Bosch memulai **Tanam Paksa**, yang mewajibkan desa-desa di wilayah gubernemen di Jawa menanam tanaman ekspor untuk mengisi kembali kas yang dikuras perang."
+      },
+      "camera": {
+        "center": [110.6, -7.45],
+        "zoom": 7.9,
+        "pitch": 30,
+        "bearing": 0,
+        "durationMs": 4000
+      },
+      "focus": ["pb6-arrest", "klaten-treaty", "cultivation-system"],
+      "sources": ["wp-pb6", "gnfi-klaten-treaty", "wp-cultivation", "carey-2011"]
+    },
+    {
+      "id": "ch-36-babad",
+      "part": "epilogue",
+      "when": "1831-05-20/1832-02-05",
+      "title": {
+        "en": "Writing the Babad",
+        "id": "Menulis Babad"
+      },
+      "body": {
+        "en": "In Manado, between May 1831 and February 1832, Diponegoro composed the **Babad Diponegoro**, an autobiographical chronicle in Javanese verse written in Pegon, the Arabic-derived script.\n\nIt tells the war from his side, and in 2013 UNESCO added it to the Memory of the World Register.",
+        "id": "Di Manado, antara Mei 1831 dan Februari 1832, Diponegoro menyusun **Babad Diponegoro**, babad otobiografi dalam tembang Jawa yang ditulis dengan aksara Pegon.\n\nBabad ini menuturkan perang dari sudut pandangnya, dan pada 2013 UNESCO mencatatnya dalam Memory of the World Register."
+      },
+      "camera": {
+        "center": [124.8408, 1.49],
+        "zoom": 11.5,
+        "pitch": 40,
+        "bearing": 0,
+        "durationMs": 4000
+      },
+      "focus": ["babad-written", "manado-fort"],
+      "sources": ["unesco-babad"]
+    },
+    {
+      "id": "ch-37-makassar",
+      "part": "epilogue",
+      "when": "1833-06-20/1833-07-11",
+      "title": {
+        "en": "Fort Rotterdam",
+        "id": "Benteng Rotterdam"
+      },
+      "body": {
+        "en": "In June 1833 Diponegoro was moved in secret on the schooner *Circe* to Fort Rotterdam in Makassar, a stricter prison. He would never leave it.",
+        "id": "Pada Juni 1833 Diponegoro dipindahkan diam-diam dengan sekunar *Circe* ke Benteng Rotterdam di Makassar, penjara yang lebih ketat. Ia tidak pernah keluar lagi dari sana."
+      },
+      "camera": {
+        "center": [121.4, -1.8],
+        "zoom": 5.4,
+        "pitch": 10,
+        "bearing": 0,
+        "durationMs": 4000
+      },
+      "focus": ["move-to-makassar", "diponegoro-hq"],
+      "sources": ["carey-2022"]
+    },
+    {
+      "id": "ch-38-legacy",
+      "part": "epilogue",
+      "when": "1855-01-08",
+      "title": {
+        "en": "Death and legacy",
+        "id": "Wafat dan warisan"
+      },
+      "body": {
+        "en": "Diponegoro died in Fort Rotterdam on 8 January 1855 and was buried in Kampung Melayu, Makassar. Kyai Maja had died in Tondano six years earlier.\n\nThe war had cost around 200,000 Javanese lives, most from disease and famine. On the colonial side some 8,000 European and 7,000 Indonesian soldiers died, and the war cost 20 to 25 million guilders. Indonesia declared Diponegoro a National Hero in 1973.",
+        "id": "Diponegoro wafat di Benteng Rotterdam pada 8 Januari 1855 dan dimakamkan di Kampung Melayu, Makassar. Kyai Mojo telah wafat di Tondano enam tahun sebelumnya.\n\nPerang ini merenggut sekitar 200.000 jiwa orang Jawa, sebagian besar karena penyakit dan kelaparan. Di pihak kolonial sekitar 8.000 prajurit Eropa dan 7.000 prajurit pribumi tewas, dan biaya perang mencapai 20 hingga 25 juta gulden. Indonesia menetapkan Diponegoro sebagai Pahlawan Nasional pada 1973."
+      },
+      "camera": {
+        "center": [119.41, -5.13],
+        "zoom": 14.5,
+        "pitch": 50,
+        "bearing": 0,
+        "durationMs": 4000
+      },
+      "focus": ["diponegoro-death", "fort-rotterdam", "makam-diponegoro"],
+      "sources": ["unesco-babad", "carey-1976", "carey-2011", "wikipedia-java-war"]
+    }
+  ],
+  "sources": [
+    {
+      "id": "carey-2007",
+      "type": "book",
+      "citation": "Carey, Peter. The Power of Prophecy: Prince Dipanagara and the End of an Old Order in Java, 1785–1855. Leiden: KITLV Press, 2007 (2nd ed. 2008).",
+      "url": "https://library.oapen.org/handle/20.500.12657/34573"
+    },
+    {
+      "id": "carey-2014",
+      "type": "book",
+      "citation": "Carey, Peter. Destiny: The Life of Prince Diponegoro of Yogyakarta, 1785–1855. Oxford: Peter Lang, 2014.",
+      "url": "https://www.peterlang.com/document/1052610"
+    },
+    {
+      "id": "carey-1976",
+      "type": "article",
+      "citation": "Carey, Peter. \"The Origins of the Java War (1825–30).\" English Historical Review 91, no. 358 (1976): 52ff.",
+      "url": "https://academic.oup.com/ehr/article-abstract/XCI/CCCLVIII/52/550610"
+    },
+    {
+      "id": "carey-1982",
+      "type": "article",
+      "citation": "Carey, Peter. \"Raden Saleh, Dipanagara and the Painting of the Capture of Dipanagara at Magelang (28 March 1830).\" Journal of the Malaysian Branch of the Royal Asiatic Society 55, no. 1 (1982): 1–25."
+    },
+    {
+      "id": "carey-1984",
+      "type": "article",
+      "citation": "Carey, Peter. \"Changing Javanese Perceptions of the Chinese Communities in Central Java, 1785–1825.\" Indonesia 37 (1984).",
+      "url": "https://ecommons.cornell.edu/server/api/core/bitstreams/927cb3ac-146c-4365-940b-46453145ff58/content"
+    },
+    {
+      "id": "carey-2011",
+      "type": "article",
+      "citation": "Carey, Peter. \"Revolutionary Europe and the Destruction of Java's Old Order, 1808–1830.\" Historia: Jurnal Pendidik dan Peneliti Sejarah 12, no. 2 (2011): 296–317.",
+      "url": "https://doi.org/10.17509/historia.v12i2.12107"
+    },
+    {
+      "id": "carey-2022",
+      "type": "article",
+      "citation": "Carey, Peter. \"Outsider Insiders: Four Officers' Exile Conversations with Diponegoro, 1830–1837.\" Bijdragen tot de Taal-, Land- en Volkenkunde 178, no. 4 (2022): 440–476.",
+      "url": "https://doi.org/10.1163/22134379-BJA10045"
+    },
+    {
+      "id": "djamhari-2004",
+      "type": "book",
+      "citation": "Djamhari, Saleh As'ad. Strategi Menjinakkan Diponegoro: Stelsel Benteng 1827–1830. Jakarta: Komunitas Bambu, 2004."
+    },
+    {
+      "id": "kemendikbud-2017",
+      "type": "book",
+      "citation": "Tjahjawulan, Indah. Peperangan dan Serangan. Jakarta: Direktorat Sejarah, Kementerian Pendidikan dan Kebudayaan, 2017.",
+      "url": "https://online.flipbuilder.com/direktoratsejarahh/mxkf/",
+      "notes": "Detailed day-by-day dates; some figures are outliers."
+    },
+    {
+      "id": "unesco-babad",
+      "type": "primary",
+      "citation": "Perpustakaan Nasional RI and KITLV. Babad Diponegoro: nomination form, UNESCO Memory of the World Register (inscribed 2013).",
+      "url": "https://media.unesco.org/sites/default/files/webform/mow001/indonesia_netherlands_babad_diponegoro.pdf"
+    },
+    {
+      "id": "kraton-jogja",
+      "type": "web",
+      "citation": "Kraton Yogyakarta. Official pages on Sultan Hamengku Buwono II, Hamengku Buwono V and Geger Sepehi.",
+      "url": "https://www.kratonjogja.id/",
+      "accessed": "2026-09"
+    },
+    {
+      "id": "jogjacagar",
+      "type": "web",
+      "citation": "Dinas Kebudayaan DIY. Jogjacagar cultural heritage register.",
+      "url": "https://jogjacagar.jogjaprov.go.id/",
+      "accessed": "2026-09"
+    },
+    {
+      "id": "wikipedia-java-war",
+      "type": "encyclopedia",
+      "citation": "\"Java War.\" Wikipedia (sections citing Louw & De Klerck, Djamhari and Carey).",
+      "url": "https://en.wikipedia.org/wiki/Java_War",
+      "accessed": "2026-09"
+    },
+    {
+      "id": "id-wikipedia-perang-diponegoro",
+      "type": "encyclopedia",
+      "citation": "\"Perang Diponegoro.\" Wikipedia bahasa Indonesia.",
+      "url": "https://id.wikipedia.org/wiki/Perang_Diponegoro",
+      "accessed": "2026-09"
+    },
+    {
+      "id": "wp-pleret",
+      "type": "encyclopedia",
+      "citation": "\"Storming of Pleret.\" Wikipedia.",
+      "url": "https://en.wikipedia.org/wiki/Storming_of_Pleret",
+      "accessed": "2026-09"
+    },
+    {
+      "id": "wp-lengkong",
+      "type": "encyclopedia",
+      "citation": "\"Battle of Lengkong (1826).\" Wikipedia.",
+      "url": "https://en.wikipedia.org/wiki/Battle_of_Lengkong_(1826)",
+      "accessed": "2026-09"
+    },
+    {
+      "id": "wp-kejiwan",
+      "type": "encyclopedia",
+      "citation": "\"Battle of Kejiwan.\" Wikipedia (citing Louw and Djamhari).",
+      "url": "https://en.wikipedia.org/wiki/Battle_of_Kejiwan",
+      "accessed": "2026-09"
+    },
+    {
+      "id": "wp-delanggu",
+      "type": "encyclopedia",
+      "citation": "\"Battle of Delanggu.\" Wikipedia.",
+      "url": "https://en.wikipedia.org/wiki/Battle_of_Delanggu",
+      "accessed": "2026-09"
+    },
+    {
+      "id": "wp-gawok",
+      "type": "encyclopedia",
+      "citation": "\"Battle of Gawok.\" Wikipedia (citing Louw, Hageman, Carey and Djamhari).",
+      "url": "https://en.wikipedia.org/wiki/Battle_of_Gawok",
+      "accessed": "2026-09"
+    },
+    {
+      "id": "wp-siluk",
+      "type": "encyclopedia",
+      "citation": "\"Battle of Siluk.\" Wikipedia.",
+      "url": "https://en.wikipedia.org/wiki/Battle_of_Siluk",
+      "accessed": "2026-09"
+    },
+    {
+      "id": "wp-kelir",
+      "type": "encyclopedia",
+      "citation": "\"Ambush at Mount Kelir.\" Wikipedia.",
+      "url": "https://en.wikipedia.org/wiki/Ambush_at_Mount_Kelir",
+      "accessed": "2026-09"
+    },
+    {
+      "id": "wp-sasradilaga",
+      "type": "encyclopedia",
+      "citation": "\"Sasradilaga rebellion.\" Wikipedia.",
+      "url": "https://en.wikipedia.org/wiki/Sasradilaga_rebellion",
+      "accessed": "2026-09"
+    },
+    {
+      "id": "wp-hb5",
+      "type": "encyclopedia",
+      "citation": "\"Hamengkubuwono V.\" Wikipedia.",
+      "url": "https://en.wikipedia.org/wiki/Hamengkubuwono_V",
+      "accessed": "2026-09"
+    },
+    {
+      "id": "wp-pb6",
+      "type": "encyclopedia",
+      "citation": "\"Pakubuwono VI.\" Wikipedia.",
+      "url": "https://en.wikipedia.org/wiki/Pakubuwono_VI",
+      "accessed": "2026-09"
+    },
+    {
+      "id": "wp-cultivation",
+      "type": "encyclopedia",
+      "citation": "\"Cultivation System.\" Wikipedia.",
+      "url": "https://en.wikipedia.org/wiki/Cultivation_System",
+      "accessed": "2026-09"
+    },
+    {
+      "id": "tirto-mojo",
+      "type": "web",
+      "citation": "\"Pecah Kongsi Pangeran Diponegoro dan Kyai Mojo.\" tirto.id.",
+      "url": "https://tirto.id/pecah-kongsi-pangeran-diponegoro-dan-kyai-mojo-cwyp",
+      "accessed": "2026-09"
+    },
+    {
+      "id": "nu-kyai-maja",
+      "type": "web",
+      "citation": "\"Kiai Maja, Ahli Strategi dan Perang Gerilya dari Pesantren.\" NU Online.",
+      "url": "https://www.nu.or.id/tokoh/kiai-maja-ahli-strategi-dan-perang-gerilya-dari-pesantren-fSFWJ",
+      "accessed": "2026-09"
+    },
+    {
+      "id": "historia-pleret",
+      "type": "web",
+      "citation": "\"Kekalahan Pasukan Diponegoro dalam Pertempuran Plered.\" Historia.",
+      "url": "https://www.historia.id/article/kekalahan-pasukan-diponegoro-dalam-pertempuran-plered-pzwag",
+      "accessed": "2026-09"
+    },
+    {
+      "id": "historia-sentot",
+      "type": "web",
+      "citation": "\"Sentot Alibasah Prawirodirjo.\" Historia.",
+      "url": "https://www.historia.id/article/sentot-alibasah-prawirodirjo-putera-hansip-pmb9x",
+      "accessed": "2026-09"
+    },
+    {
+      "id": "historia-bagelen",
+      "type": "web",
+      "citation": "\"Dari Bagelen ke Purworejo.\" Historia.",
+      "url": "https://www.historia.id/article/dari-bagelen-ke-purworejo-vg8x7",
+      "accessed": "2026-09"
+    },
+    {
+      "id": "pleret-village",
+      "type": "web",
+      "citation": "Pemerintah Kalurahan Pleret. Article on the 1826 battle of Pleret.",
+      "url": "https://www.pleret-bantul.desa.id/apps/berita/6875",
+      "accessed": "2026-09"
+    },
+    {
+      "id": "detik-klaten-forts",
+      "type": "web",
+      "citation": "\"Benteng Stelsel Klaten, Jejak Kompeni Persempit Ruang Gerak Diponegoro.\" detikJateng.",
+      "url": "https://www.detik.com/jateng/berita/d-7987371/benteng-stelsel-klaten-jejak-kompeni-persempit-ruang-gerak-diponegoro",
+      "accessed": "2026-09"
+    },
+    {
+      "id": "kompas-arrest",
+      "type": "web",
+      "citation": "\"Bulan Puasa yang Tak Biasa dan Kisah Penangkapan Pangeran Diponegoro.\" Kompas TV (citing Carey).",
+      "url": "https://www.kompas.tv/nasional/392862/bulan-puasa-yang-tak-biasa-dan-kisah-penangkapan-pangeran-diponegoro",
+      "accessed": "2026-09"
+    },
+    {
+      "id": "okezone-gowong",
+      "type": "web",
+      "citation": "\"Kisah Pangeran Diponegoro Terluka dan Kena Malaria, Nyaris Tertangkap di Pegunungan Gowong.\" Okezone (citing Carey).",
+      "url": "https://news.okezone.com/read/2021/06/24/337/2430072/kisah-pangeran-diponegoro-terluka-dan-kena-malaria-nyaris-tertangkap-di-pegunungan-gowong",
+      "accessed": "2026-09"
+    },
+    {
+      "id": "gnfi-klaten-treaty",
+      "type": "web",
+      "citation": "\"Sejarah Hari Ini (24 Oktober 1830): Sultan Hamengkubuwana V Sahkan Perjanjian Klaten.\" Good News From Indonesia.",
+      "url": "https://www.goodnewsfromindonesia.id/2020/10/24/sejarah-hari-ini-24-oktober-1830-sultan-hamengkubuwana-v-sahkan-perjanjian-klaten",
+      "accessed": "2026-09"
+    },
+    {
+      "id": "observer-carey",
+      "type": "web",
+      "citation": "\"A Prince's Legacy, Part II: Trying to Understand Diponegoro.\" Indonesia Observer (interview with Peter Carey).",
+      "url": "https://observerid.com/a-princes-legacy-part-ii-trying-to-understand-diponegoro/",
+      "accessed": "2026-09"
+    }
+  ],
+  "media": [
+    {
+      "id": "saleh-arrest",
+      "type": "image",
+      "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Raden_Saleh_-_Diponegoro_arrest.jpg",
+      "alt": {
+        "en": "Painting: Diponegoro, head raised, stands among his followers on the steps of the Magelang residency as Dutch officers look on.",
+        "id": "Lukisan: Diponegoro berdiri tegak di antara pengikutnya di tangga karesidenan Magelang, disaksikan para perwira Belanda."
+      },
+      "caption": {
+        "en": "Raden Saleh, The Arrest of Prince Diponegoro (1857).",
+        "id": "Raden Saleh, Penangkapan Pangeran Diponegoro (1857)."
+      },
+      "creator": "Raden Saleh",
+      "date": "1857",
+      "license": "public-domain",
+      "holder": "Istana Kepresidenan Yogyakarta",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Raden_Saleh_-_Diponegoro_arrest.jpg",
+      "notes": "Commons URL not yet link-checked."
+    },
+    {
+      "id": "pieneman-arrest",
+      "type": "image",
+      "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Nicolaas_Pieneman_-_The_Submission_of_Prince_Dipo_Negoro_to_General_De_Kock.jpg",
+      "alt": {
+        "en": "Painting: General De Kock on the residency steps gestures toward a waiting carriage while Diponegoro stands below.",
+        "id": "Lukisan: Jenderal De Kock di tangga karesidenan menunjuk kereta yang menunggu, sementara Diponegoro berdiri di bawahnya."
+      },
+      "caption": {
+        "en": "Nicolaas Pieneman's Dutch version of the same scene (c. 1830–1835). The Rijksmuseum now titles it 'The Arrest of Diponegoro by Lieutenant-General De Kock'.",
+        "id": "Versi Belanda karya Nicolaas Pieneman untuk adegan yang sama (sekitar 1830–1835). Rijksmuseum kini menamainya 'Penangkapan Diponegoro oleh Letnan Jenderal De Kock'."
+      },
+      "creator": "Nicolaas Pieneman",
+      "date": "1830/1835",
+      "license": "public-domain",
+      "holder": "Rijksmuseum, Amsterdam (SK-A-2238)",
+      "sourceUrl": "https://www.rijksmuseum.nl/en/collection/SK-A-2238",
+      "notes": "Commons URL not yet link-checked."
+    },
+    {
+      "id": "bik-portrait",
+      "type": "image",
+      "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Portret_van_Diponegoro,_Adrianus_Johannes_Bik,_1830.jpg",
+      "alt": {
+        "en": "Pencil portrait of Diponegoro wearing a turban.",
+        "id": "Potret pensil Diponegoro bersorban."
+      },
+      "caption": {
+        "en": "Diponegoro drawn from life in Batavia by A.J. Bik, 1830.",
+        "id": "Diponegoro digambar langsung di Batavia oleh A.J. Bik, 1830."
+      },
+      "creator": "Adrianus Johannes Bik",
+      "date": "1830",
+      "license": "public-domain",
+      "holder": "Rijksmuseum, Amsterdam (RP-T-00-467-73)",
+      "sourceUrl": "https://www.rijksmuseum.nl/nl/collectie/RP-T-00-467-73",
+      "notes": "Commons URL not yet link-checked."
+    },
+    {
+      "id": "de-kock-portrait",
+      "type": "image",
+      "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Hendrik_Merkus_Baron_de_Kock_by_Cornelis_Kruseman.jpg",
+      "alt": {
+        "en": "Oil portrait of Hendrik Merkus de Kock in a general's uniform.",
+        "id": "Potret cat minyak Hendrik Merkus de Kock berseragam jenderal."
+      },
+      "caption": {
+        "en": "Lieutenant-General Hendrik Merkus de Kock, by Cornelis Kruseman.",
+        "id": "Letnan Jenderal Hendrik Merkus de Kock, karya Cornelis Kruseman."
+      },
+      "creator": "Cornelis Kruseman",
+      "license": "public-domain",
+      "holder": "Rijksmuseum, Amsterdam (SK-A-3796)",
+      "sourceUrl": "https://www.rijksmuseum.nl/en/collection/SK-A-3796",
+      "notes": "Commons URL not yet link-checked."
+    },
+    {
+      "id": "de-stuers-map",
+      "type": "image",
+      "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Kaart_van_Java,_tijdens_de_Java-oorlog_1825-1830_(linkerdeel),_Alfred_Bayly,_naar_de_Stuers,_1830.jpg",
+      "alt": {
+        "en": "1830 lithographed map of the Java War theatre showing forts and mobile column positions.",
+        "id": "Peta litografi tahun 1830 tentang medan Perang Jawa, memperlihatkan benteng dan posisi kolone mobil."
+      },
+      "caption": {
+        "en": "Theatre of the war, after Major De Stuers's map of 31 January 1830 (left sheet).",
+        "id": "Medan perang, berdasarkan peta Mayor De Stuers tertanggal 31 Januari 1830 (lembar kiri)."
+      },
+      "creator": "Alfred Bayly and J.M. Huart after F.V.H.A. de Stuers",
+      "date": "1830",
+      "license": "public-domain",
+      "holder": "Rijksmuseum, Amsterdam (RP-P-1935-1480A)",
+      "sourceUrl": "https://www.rijksmuseum.nl/en/collection/object/Kaart-van-Java-tijdens-de-Java-oorlog-1825-1830-linkerdeel--138c1e43797d42f086ba3e2672877bc0",
+      "notes": "Commons URL not yet link-checked."
+    }
+  ]
+}

@@ -1,0 +1,1702 @@
+{
+ "description": "resolveFrame() at scroll progress p through each chapter of examples/fixtures/null-island.json",
+ "diagnostics": [
+  {
+   "level": "info",
+   "code": "I201",
+   "path": "/events/2"
+  },
+  {
+   "level": "warning",
+   "code": "W115",
+   "path": "/chapters/1/when"
+  }
+ ],
+ "frames": [
+  {
+   "chapter": "ch-muster",
+   "p": 0,
+   "t": -62477654400,
+   "frame": {
+    "t": -62477654400,
+    "iso": "-000010-03-01T00:00:00",
+    "entities": [
+     {
+      "id": "blue-legion",
+      "kind": "unit",
+      "faction": "blue",
+      "status": "active",
+      "position": [
+       0,
+       0
+      ],
+      "bearing": null,
+      "moving": false,
+      "waypoint": 0,
+      "leg": null,
+      "legProgress": null,
+      "strength": 5000,
+      "certainty": "exact",
+      "trail": [
+       [
+        0,
+        0
+       ]
+      ]
+     },
+     {
+      "id": "red-fort",
+      "kind": "fortification",
+      "faction": "red",
+      "status": "active",
+      "position": [
+       0.4,
+       -0.1
+      ],
+      "strength": null
+     },
+     {
+      "id": "red-land",
+      "kind": "territory",
+      "faction": "red",
+      "status": "active"
+     },
+     {
+      "id": "coast-road",
+      "kind": "route",
+      "faction": "red",
+      "status": "active"
+     },
+     {
+      "id": "lighthouse",
+      "kind": "x-lighthouse",
+      "faction": "blue",
+      "status": "active",
+      "position": [
+       0,
+       0
+      ],
+      "strength": null
+     }
+    ],
+    "events": []
+   }
+  },
+  {
+   "chapter": "ch-muster",
+   "p": 0.25,
+   "t": -62475667201,
+   "frame": {
+    "t": -62475667201,
+    "iso": "-000010-03-23T23:59:59",
+    "entities": [
+     {
+      "id": "blue-legion",
+      "kind": "unit",
+      "faction": "blue",
+      "status": "active",
+      "position": [
+       0,
+       0
+      ],
+      "bearing": null,
+      "moving": false,
+      "waypoint": 0,
+      "leg": null,
+      "legProgress": null,
+      "strength": 5000,
+      "certainty": "exact",
+      "trail": [
+       [
+        0,
+        0
+       ]
+      ]
+     },
+     {
+      "id": "red-fort",
+      "kind": "fortification",
+      "faction": "red",
+      "status": "active",
+      "position": [
+       0.4,
+       -0.1
+      ],
+      "strength": null
+     },
+     {
+      "id": "red-land",
+      "kind": "territory",
+      "faction": "red",
+      "status": "active"
+     },
+     {
+      "id": "coast-road",
+      "kind": "route",
+      "faction": "red",
+      "status": "active"
+     },
+     {
+      "id": "lighthouse",
+      "kind": "x-lighthouse",
+      "faction": "blue",
+      "status": "active",
+      "position": [
+       0,
+       0
+      ],
+      "strength": null
+     }
+    ],
+    "events": []
+   }
+  },
+  {
+   "chapter": "ch-muster",
+   "p": 0.5,
+   "t": -62473680001,
+   "frame": {
+    "t": -62473680001,
+    "iso": "-000010-04-15T23:59:59",
+    "entities": [
+     {
+      "id": "blue-legion",
+      "kind": "unit",
+      "faction": "blue",
+      "status": "active",
+      "position": [
+       0,
+       0
+      ],
+      "bearing": null,
+      "moving": false,
+      "waypoint": 0,
+      "leg": null,
+      "legProgress": null,
+      "strength": 5000,
+      "certainty": "exact",
+      "trail": [
+       [
+        0,
+        0
+       ]
+      ]
+     },
+     {
+      "id": "red-fort",
+      "kind": "fortification",
+      "faction": "red",
+      "status": "active",
+      "position": [
+       0.4,
+       -0.1
+      ],
+      "strength": null
+     },
+     {
+      "id": "red-land",
+      "kind": "territory",
+      "faction": "red",
+      "status": "active"
+     },
+     {
+      "id": "coast-road",
+      "kind": "route",
+      "faction": "red",
+      "status": "active"
+     },
+     {
+      "id": "lighthouse",
+      "kind": "x-lighthouse",
+      "faction": "blue",
+      "status": "active",
+      "position": [
+       0,
+       0
+      ],
+      "strength": null
+     }
+    ],
+    "events": []
+   }
+  },
+  {
+   "chapter": "ch-muster",
+   "p": 0.75,
+   "t": -62471692801,
+   "frame": {
+    "t": -62471692801,
+    "iso": "-000010-05-08T23:59:59",
+    "entities": [
+     {
+      "id": "blue-legion",
+      "kind": "unit",
+      "faction": "blue",
+      "status": "active",
+      "position": [
+       0,
+       0
+      ],
+      "bearing": null,
+      "moving": false,
+      "waypoint": 0,
+      "leg": null,
+      "legProgress": null,
+      "strength": 5000,
+      "certainty": "exact",
+      "trail": [
+       [
+        0,
+        0
+       ]
+      ]
+     },
+     {
+      "id": "red-fort",
+      "kind": "fortification",
+      "faction": "red",
+      "status": "active",
+      "position": [
+       0.4,
+       -0.1
+      ],
+      "strength": null
+     },
+     {
+      "id": "red-land",
+      "kind": "territory",
+      "faction": "red",
+      "status": "active"
+     },
+     {
+      "id": "coast-road",
+      "kind": "route",
+      "faction": "red",
+      "status": "active"
+     },
+     {
+      "id": "lighthouse",
+      "kind": "x-lighthouse",
+      "faction": "blue",
+      "status": "active",
+      "position": [
+       0,
+       0
+      ],
+      "strength": null
+     }
+    ],
+    "events": []
+   }
+  },
+  {
+   "chapter": "ch-muster",
+   "p": 1,
+   "t": -62469705601,
+   "frame": {
+    "t": -62469705601,
+    "iso": "-000010-05-31T23:59:59",
+    "entities": [
+     {
+      "id": "blue-legion",
+      "kind": "unit",
+      "faction": "blue",
+      "status": "active",
+      "position": [
+       0.2,
+       0.1
+      ],
+      "bearing": 63.43487,
+      "moving": true,
+      "waypoint": null,
+      "leg": 1,
+      "legProgress": 0.999998,
+      "strength": 4000,
+      "certainty": "approximate",
+      "trail": [
+       [
+        0,
+        0
+       ],
+       [
+        0.1,
+        0.05
+       ],
+       [
+        0.2,
+        0.1
+       ]
+      ]
+     },
+     {
+      "id": "red-fort",
+      "kind": "fortification",
+      "faction": "red",
+      "status": "active",
+      "position": [
+       0.4,
+       -0.1
+      ],
+      "strength": null
+     },
+     {
+      "id": "red-land",
+      "kind": "territory",
+      "faction": "red",
+      "status": "active"
+     },
+     {
+      "id": "coast-road",
+      "kind": "route",
+      "faction": "red",
+      "status": "active"
+     },
+     {
+      "id": "lighthouse",
+      "kind": "x-lighthouse",
+      "faction": "blue",
+      "status": "active",
+      "position": [
+       0,
+       0
+      ],
+      "strength": null
+     }
+    ],
+    "events": []
+   }
+  },
+  {
+   "chapter": "ch-march",
+   "p": 0,
+   "t": -62470310400,
+   "frame": {
+    "t": -62470310400,
+    "iso": "-000010-05-25T00:00:00",
+    "entities": [
+     {
+      "id": "blue-legion",
+      "kind": "unit",
+      "faction": "blue",
+      "status": "active",
+      "position": [
+       0,
+       0
+      ],
+      "bearing": 63.434931,
+      "moving": true,
+      "waypoint": null,
+      "leg": 1,
+      "legProgress": 0,
+      "strength": 5000,
+      "certainty": "approximate",
+      "trail": [
+       [
+        0,
+        0
+       ]
+      ]
+     },
+     {
+      "id": "red-fort",
+      "kind": "fortification",
+      "faction": "red",
+      "status": "active",
+      "position": [
+       0.4,
+       -0.1
+      ],
+      "strength": null
+     },
+     {
+      "id": "red-land",
+      "kind": "territory",
+      "faction": "red",
+      "status": "active"
+     },
+     {
+      "id": "coast-road",
+      "kind": "route",
+      "faction": "red",
+      "status": "active"
+     },
+     {
+      "id": "lighthouse",
+      "kind": "x-lighthouse",
+      "faction": "blue",
+      "status": "active",
+      "position": [
+       0,
+       0
+      ],
+      "strength": null
+     }
+    ],
+    "events": []
+   }
+  },
+  {
+   "chapter": "ch-march",
+   "p": 0.25,
+   "t": -62470137601,
+   "frame": {
+    "t": -62470137601,
+    "iso": "-000010-05-26T23:59:59",
+    "entities": [
+     {
+      "id": "blue-legion",
+      "kind": "unit",
+      "faction": "blue",
+      "status": "active",
+      "position": [
+       0.057143,
+       0.028571
+      ],
+      "bearing": 63.434931,
+      "moving": true,
+      "waypoint": null,
+      "leg": 1,
+      "legProgress": 0.285713,
+      "strength": 4714,
+      "certainty": "approximate",
+      "trail": [
+       [
+        0,
+        0
+       ],
+       [
+        0.057143,
+        0.028571
+       ]
+      ]
+     },
+     {
+      "id": "red-fort",
+      "kind": "fortification",
+      "faction": "red",
+      "status": "active",
+      "position": [
+       0.4,
+       -0.1
+      ],
+      "strength": null
+     },
+     {
+      "id": "red-land",
+      "kind": "territory",
+      "faction": "red",
+      "status": "active"
+     },
+     {
+      "id": "coast-road",
+      "kind": "route",
+      "faction": "red",
+      "status": "active"
+     },
+     {
+      "id": "lighthouse",
+      "kind": "x-lighthouse",
+      "faction": "blue",
+      "status": "active",
+      "position": [
+       0,
+       0
+      ],
+      "strength": null
+     }
+    ],
+    "events": []
+   }
+  },
+  {
+   "chapter": "ch-march",
+   "p": 0.5,
+   "t": -62469964801,
+   "frame": {
+    "t": -62469964801,
+    "iso": "-000010-05-28T23:59:59",
+    "entities": [
+     {
+      "id": "blue-legion",
+      "kind": "unit",
+      "faction": "blue",
+      "status": "active",
+      "position": [
+       0.114285,
+       0.057143
+      ],
+      "bearing": 63.43487,
+      "moving": true,
+      "waypoint": null,
+      "leg": 1,
+      "legProgress": 0.571427,
+      "strength": 4429,
+      "certainty": "approximate",
+      "trail": [
+       [
+        0,
+        0
+       ],
+       [
+        0.1,
+        0.05
+       ],
+       [
+        0.114285,
+        0.057143
+       ]
+      ]
+     },
+     {
+      "id": "red-fort",
+      "kind": "fortification",
+      "faction": "red",
+      "status": "active",
+      "position": [
+       0.4,
+       -0.1
+      ],
+      "strength": null
+     },
+     {
+      "id": "red-land",
+      "kind": "territory",
+      "faction": "red",
+      "status": "active"
+     },
+     {
+      "id": "coast-road",
+      "kind": "route",
+      "faction": "red",
+      "status": "active"
+     },
+     {
+      "id": "lighthouse",
+      "kind": "x-lighthouse",
+      "faction": "blue",
+      "status": "active",
+      "position": [
+       0,
+       0
+      ],
+      "strength": null
+     }
+    ],
+    "events": []
+   }
+  },
+  {
+   "chapter": "ch-march",
+   "p": 0.75,
+   "t": -62469792001,
+   "frame": {
+    "t": -62469792001,
+    "iso": "-000010-05-30T23:59:59",
+    "entities": [
+     {
+      "id": "blue-legion",
+      "kind": "unit",
+      "faction": "blue",
+      "status": "active",
+      "position": [
+       0.171428,
+       0.085714
+      ],
+      "bearing": 63.43487,
+      "moving": true,
+      "waypoint": null,
+      "leg": 1,
+      "legProgress": 0.857141,
+      "strength": 4143,
+      "certainty": "approximate",
+      "trail": [
+       [
+        0,
+        0
+       ],
+       [
+        0.1,
+        0.05
+       ],
+       [
+        0.171428,
+        0.085714
+       ]
+      ]
+     },
+     {
+      "id": "red-fort",
+      "kind": "fortification",
+      "faction": "red",
+      "status": "active",
+      "position": [
+       0.4,
+       -0.1
+      ],
+      "strength": null
+     },
+     {
+      "id": "red-land",
+      "kind": "territory",
+      "faction": "red",
+      "status": "active"
+     },
+     {
+      "id": "coast-road",
+      "kind": "route",
+      "faction": "red",
+      "status": "active"
+     },
+     {
+      "id": "lighthouse",
+      "kind": "x-lighthouse",
+      "faction": "blue",
+      "status": "active",
+      "position": [
+       0,
+       0
+      ],
+      "strength": null
+     }
+    ],
+    "events": []
+   }
+  },
+  {
+   "chapter": "ch-march",
+   "p": 1,
+   "t": -62469619201,
+   "frame": {
+    "t": -62469619201,
+    "iso": "-000010-06-01T23:59:59",
+    "entities": [
+     {
+      "id": "blue-legion",
+      "kind": "unit",
+      "faction": "blue",
+      "status": "active",
+      "position": [
+       0.206667,
+       0.093333
+      ],
+      "bearing": 134.999956,
+      "moving": true,
+      "waypoint": null,
+      "leg": 2,
+      "legProgress": 0.033333,
+      "strength": 3950,
+      "certainty": "conjectural",
+      "trail": [
+       [
+        0,
+        0
+       ],
+       [
+        0.1,
+        0.05
+       ],
+       [
+        0.2,
+        0.1
+       ],
+       [
+        0.206667,
+        0.093333
+       ]
+      ]
+     },
+     {
+      "id": "red-fort",
+      "kind": "fortification",
+      "faction": "red",
+      "status": "active",
+      "position": [
+       0.4,
+       -0.1
+      ],
+      "strength": null
+     },
+     {
+      "id": "red-land",
+      "kind": "territory",
+      "faction": "red",
+      "status": "active"
+     },
+     {
+      "id": "coast-road",
+      "kind": "route",
+      "faction": "red",
+      "status": "active"
+     },
+     {
+      "id": "lighthouse",
+      "kind": "x-lighthouse",
+      "faction": "blue",
+      "status": "active",
+      "position": [
+       0,
+       0
+      ],
+      "strength": null
+     }
+    ],
+    "events": [
+     {
+      "id": "battle-of-hill",
+      "kind": "battle",
+      "phase": "active",
+      "progress": 0.999988,
+      "sinceEnd": 0,
+      "position": [
+       0.2,
+       0.1
+      ],
+      "importance": 1
+     }
+    ]
+   }
+  },
+  {
+   "chapter": "ch-siege",
+   "p": 0,
+   "t": -62468496000,
+   "frame": {
+    "t": -62468496000,
+    "iso": "-000010-06-15T00:00:00",
+    "entities": [
+     {
+      "id": "blue-legion",
+      "kind": "unit",
+      "faction": "blue",
+      "status": "active",
+      "position": [
+       0.293333,
+       0.006667
+      ],
+      "bearing": 134.999956,
+      "moving": true,
+      "waypoint": null,
+      "leg": 2,
+      "legProgress": 0.466667,
+      "strength": 3300,
+      "certainty": "conjectural",
+      "trail": [
+       [
+        0,
+        0
+       ],
+       [
+        0.1,
+        0.05
+       ],
+       [
+        0.2,
+        0.1
+       ],
+       [
+        0.293333,
+        0.006667
+       ]
+      ]
+     },
+     {
+      "id": "red-fort",
+      "kind": "fortification",
+      "faction": "red",
+      "status": "besieged",
+      "position": [
+       0.4,
+       -0.1
+      ],
+      "strength": null
+     },
+     {
+      "id": "red-land",
+      "kind": "territory",
+      "faction": "red",
+      "status": "active"
+     },
+     {
+      "id": "coast-road",
+      "kind": "route",
+      "faction": "red",
+      "status": "active"
+     },
+     {
+      "id": "lighthouse",
+      "kind": "x-lighthouse",
+      "faction": "blue",
+      "status": "active",
+      "position": [
+       0,
+       0
+      ],
+      "strength": null
+     }
+    ],
+    "events": [
+     {
+      "id": "battle-of-hill",
+      "kind": "battle",
+      "phase": "past",
+      "progress": 1,
+      "sinceEnd": 1123200,
+      "position": [
+       0.2,
+       0.1
+      ],
+      "importance": 1
+     },
+     {
+      "id": "siege-of-ruins",
+      "kind": "siege",
+      "phase": "active",
+      "progress": 0,
+      "sinceEnd": 0,
+      "position": [
+       0.4,
+       -0.1
+      ],
+      "importance": 3
+     }
+    ]
+   }
+  },
+  {
+   "chapter": "ch-siege",
+   "p": 0.25,
+   "t": -62468128801,
+   "frame": {
+    "t": -62468128801,
+    "iso": "-000010-06-19T05:59:59",
+    "entities": [
+     {
+      "id": "blue-legion",
+      "kind": "unit",
+      "faction": "blue",
+      "status": "active",
+      "position": [
+       0.321667,
+       -0.021667
+      ],
+      "bearing": 134.999956,
+      "moving": true,
+      "waypoint": null,
+      "leg": 2,
+      "legProgress": 0.608333,
+      "strength": 3088,
+      "certainty": "conjectural",
+      "trail": [
+       [
+        0,
+        0
+       ],
+       [
+        0.1,
+        0.05
+       ],
+       [
+        0.2,
+        0.1
+       ],
+       [
+        0.321667,
+        -0.021667
+       ]
+      ]
+     },
+     {
+      "id": "red-fort",
+      "kind": "fortification",
+      "faction": "red",
+      "status": "besieged",
+      "position": [
+       0.4,
+       -0.1
+      ],
+      "strength": null
+     },
+     {
+      "id": "red-land",
+      "kind": "territory",
+      "faction": "red",
+      "status": "active"
+     },
+     {
+      "id": "coast-road",
+      "kind": "route",
+      "faction": "red",
+      "status": "active"
+     },
+     {
+      "id": "lighthouse",
+      "kind": "x-lighthouse",
+      "faction": "blue",
+      "status": "active",
+      "position": [
+       0,
+       0
+      ],
+      "strength": null
+     }
+    ],
+    "events": [
+     {
+      "id": "battle-of-hill",
+      "kind": "battle",
+      "phase": "past",
+      "progress": 1,
+      "sinceEnd": 1490399,
+      "position": [
+       0.2,
+       0.1
+      ],
+      "importance": 1
+     },
+     {
+      "id": "siege-of-ruins",
+      "kind": "siege",
+      "phase": "active",
+      "progress": 0.265624,
+      "sinceEnd": 0,
+      "position": [
+       0.4,
+       -0.1
+      ],
+      "importance": 3
+     }
+    ]
+   }
+  },
+  {
+   "chapter": "ch-siege",
+   "p": 0.5,
+   "t": -62467761601,
+   "frame": {
+    "t": -62467761601,
+    "iso": "-000010-06-23T11:59:59",
+    "entities": [
+     {
+      "id": "blue-legion",
+      "kind": "unit",
+      "faction": "blue",
+      "status": "active",
+      "position": [
+       0.35,
+       -0.05
+      ],
+      "bearing": 134.999956,
+      "moving": true,
+      "waypoint": null,
+      "leg": 2,
+      "legProgress": 0.75,
+      "strength": 2875,
+      "certainty": "conjectural",
+      "trail": [
+       [
+        0,
+        0
+       ],
+       [
+        0.1,
+        0.05
+       ],
+       [
+        0.2,
+        0.1
+       ],
+       [
+        0.35,
+        -0.05
+       ]
+      ]
+     },
+     {
+      "id": "red-fort",
+      "kind": "fortification",
+      "faction": "red",
+      "status": "besieged",
+      "position": [
+       0.4,
+       -0.1
+      ],
+      "strength": null
+     },
+     {
+      "id": "red-land",
+      "kind": "territory",
+      "faction": "red",
+      "status": "active"
+     },
+     {
+      "id": "coast-road",
+      "kind": "route",
+      "faction": "red",
+      "status": "active"
+     },
+     {
+      "id": "lighthouse",
+      "kind": "x-lighthouse",
+      "faction": "blue",
+      "status": "active",
+      "position": [
+       0,
+       0
+      ],
+      "strength": null
+     }
+    ],
+    "events": [
+     {
+      "id": "battle-of-hill",
+      "kind": "battle",
+      "phase": "past",
+      "progress": 1,
+      "sinceEnd": 1857599,
+      "position": [
+       0.2,
+       0.1
+      ],
+      "importance": 1
+     },
+     {
+      "id": "siege-of-ruins",
+      "kind": "siege",
+      "phase": "active",
+      "progress": 0.531249,
+      "sinceEnd": 0,
+      "position": [
+       0.4,
+       -0.1
+      ],
+      "importance": 3
+     }
+    ]
+   }
+  },
+  {
+   "chapter": "ch-siege",
+   "p": 0.75,
+   "t": -62467394401,
+   "frame": {
+    "t": -62467394401,
+    "iso": "-000010-06-27T17:59:59",
+    "entities": [
+     {
+      "id": "blue-legion",
+      "kind": "unit",
+      "faction": "blue",
+      "status": "active",
+      "position": [
+       0.378333,
+       -0.078333
+      ],
+      "bearing": 134.999956,
+      "moving": true,
+      "waypoint": null,
+      "leg": 2,
+      "legProgress": 0.891666,
+      "strength": 2663,
+      "certainty": "conjectural",
+      "trail": [
+       [
+        0,
+        0
+       ],
+       [
+        0.1,
+        0.05
+       ],
+       [
+        0.2,
+        0.1
+       ],
+       [
+        0.378333,
+        -0.078333
+       ]
+      ]
+     },
+     {
+      "id": "red-fort",
+      "kind": "fortification",
+      "faction": "red",
+      "status": "besieged",
+      "position": [
+       0.4,
+       -0.1
+      ],
+      "strength": null
+     },
+     {
+      "id": "red-land",
+      "kind": "territory",
+      "faction": "red",
+      "status": "active"
+     },
+     {
+      "id": "coast-road",
+      "kind": "route",
+      "faction": "red",
+      "status": "active"
+     },
+     {
+      "id": "lighthouse",
+      "kind": "x-lighthouse",
+      "faction": "blue",
+      "status": "active",
+      "position": [
+       0,
+       0
+      ],
+      "strength": null
+     }
+    ],
+    "events": [
+     {
+      "id": "battle-of-hill",
+      "kind": "battle",
+      "phase": "past",
+      "progress": 1,
+      "sinceEnd": 2224799,
+      "position": [
+       0.2,
+       0.1
+      ],
+      "importance": 1
+     },
+     {
+      "id": "siege-of-ruins",
+      "kind": "siege",
+      "phase": "active",
+      "progress": 0.796874,
+      "sinceEnd": 0,
+      "position": [
+       0.4,
+       -0.1
+      ],
+      "importance": 3
+     }
+    ]
+   }
+  },
+  {
+   "chapter": "ch-siege",
+   "p": 1,
+   "t": -62467027201,
+   "frame": {
+    "t": -62467027201,
+    "iso": "-000010-07-01T23:59:59",
+    "entities": [
+     {
+      "id": "blue-legion",
+      "kind": "unit",
+      "faction": "blue",
+      "status": "active",
+      "position": [
+       0.4,
+       -0.1
+      ],
+      "bearing": 134.999956,
+      "moving": false,
+      "waypoint": 2,
+      "leg": null,
+      "legProgress": null,
+      "strength": 2500,
+      "certainty": "conjectural",
+      "trail": [
+       [
+        0,
+        0
+       ],
+       [
+        0.1,
+        0.05
+       ],
+       [
+        0.2,
+        0.1
+       ],
+       [
+        0.4,
+        -0.1
+       ]
+      ]
+     },
+     {
+      "id": "red-fort",
+      "kind": "fortification",
+      "faction": "blue",
+      "status": "captured",
+      "position": [
+       0.4,
+       -0.1
+      ],
+      "strength": null
+     },
+     {
+      "id": "red-land",
+      "kind": "territory",
+      "faction": "blue",
+      "status": "active"
+     },
+     {
+      "id": "coast-road",
+      "kind": "route",
+      "faction": "red",
+      "status": "active"
+     },
+     {
+      "id": "lighthouse",
+      "kind": "x-lighthouse",
+      "faction": "blue",
+      "status": "active",
+      "position": [
+       0,
+       0
+      ],
+      "strength": null
+     }
+    ],
+    "events": [
+     {
+      "id": "battle-of-hill",
+      "kind": "battle",
+      "phase": "past",
+      "progress": 1,
+      "sinceEnd": 2591999,
+      "position": [
+       0.2,
+       0.1
+      ],
+      "importance": 1
+     },
+     {
+      "id": "siege-of-ruins",
+      "kind": "siege",
+      "phase": "past",
+      "progress": 1,
+      "sinceEnd": 86399,
+      "position": [
+       0.4,
+       -0.1
+      ],
+      "importance": 3
+     }
+    ]
+   }
+  },
+  {
+   "chapter": "ch-year-one",
+   "p": 0,
+   "t": -62167305600,
+   "frame": {
+    "t": -62167305600,
+    "iso": "-000001-12-31T00:00:00",
+    "entities": [
+     {
+      "id": "red-fort",
+      "kind": "fortification",
+      "faction": "blue",
+      "status": "captured",
+      "position": [
+       0.4,
+       -0.1
+      ],
+      "strength": null
+     },
+     {
+      "id": "red-land",
+      "kind": "territory",
+      "faction": "blue",
+      "status": "active"
+     },
+     {
+      "id": "coast-road",
+      "kind": "route",
+      "faction": "red",
+      "status": "active"
+     },
+     {
+      "id": "lighthouse",
+      "kind": "x-lighthouse",
+      "faction": "blue",
+      "status": "active",
+      "position": [
+       0,
+       0
+      ],
+      "strength": null
+     }
+    ],
+    "events": [
+     {
+      "id": "battle-of-hill",
+      "kind": "battle",
+      "phase": "past",
+      "progress": 1,
+      "sinceEnd": 302313600,
+      "position": [
+       0.2,
+       0.1
+      ],
+      "importance": 1
+     },
+     {
+      "id": "siege-of-ruins",
+      "kind": "siege",
+      "phase": "past",
+      "progress": 1,
+      "sinceEnd": 299808000,
+      "position": [
+       0.4,
+       -0.1
+      ],
+      "importance": 3
+     },
+     {
+      "id": "peace-decree",
+      "kind": "decree",
+      "phase": "past",
+      "progress": 1,
+      "sinceEnd": 252374400,
+      "position": null,
+      "importance": 3
+     }
+    ]
+   }
+  },
+  {
+   "chapter": "ch-year-one",
+   "p": 0.25,
+   "t": -62159356801,
+   "frame": {
+    "t": -62159356801,
+    "iso": "0000-03-31T23:59:59",
+    "entities": [
+     {
+      "id": "red-fort",
+      "kind": "fortification",
+      "faction": "blue",
+      "status": "captured",
+      "position": [
+       0.4,
+       -0.1
+      ],
+      "strength": null
+     },
+     {
+      "id": "red-land",
+      "kind": "territory",
+      "faction": "blue",
+      "status": "active"
+     },
+     {
+      "id": "coast-road",
+      "kind": "route",
+      "faction": "red",
+      "status": "active"
+     },
+     {
+      "id": "lighthouse",
+      "kind": "x-lighthouse",
+      "faction": "blue",
+      "status": "active",
+      "position": [
+       0,
+       0
+      ],
+      "strength": null
+     }
+    ],
+    "events": [
+     {
+      "id": "battle-of-hill",
+      "kind": "battle",
+      "phase": "past",
+      "progress": 1,
+      "sinceEnd": 310262399,
+      "position": [
+       0.2,
+       0.1
+      ],
+      "importance": 1
+     },
+     {
+      "id": "siege-of-ruins",
+      "kind": "siege",
+      "phase": "past",
+      "progress": 1,
+      "sinceEnd": 307756799,
+      "position": [
+       0.4,
+       -0.1
+      ],
+      "importance": 3
+     },
+     {
+      "id": "peace-decree",
+      "kind": "decree",
+      "phase": "past",
+      "progress": 1,
+      "sinceEnd": 260323199,
+      "position": null,
+      "importance": 3
+     }
+    ]
+   }
+  },
+  {
+   "chapter": "ch-year-one",
+   "p": 0.5,
+   "t": -62151408001,
+   "frame": {
+    "t": -62151408001,
+    "iso": "0000-07-01T23:59:59",
+    "entities": [
+     {
+      "id": "red-fort",
+      "kind": "fortification",
+      "faction": "blue",
+      "status": "captured",
+      "position": [
+       0.4,
+       -0.1
+      ],
+      "strength": null
+     },
+     {
+      "id": "red-land",
+      "kind": "territory",
+      "faction": "blue",
+      "status": "active"
+     },
+     {
+      "id": "coast-road",
+      "kind": "route",
+      "faction": "red",
+      "status": "active"
+     },
+     {
+      "id": "lighthouse",
+      "kind": "x-lighthouse",
+      "faction": "blue",
+      "status": "active",
+      "position": [
+       0,
+       0
+      ],
+      "strength": null
+     }
+    ],
+    "events": [
+     {
+      "id": "battle-of-hill",
+      "kind": "battle",
+      "phase": "past",
+      "progress": 1,
+      "sinceEnd": 318211199,
+      "position": [
+       0.2,
+       0.1
+      ],
+      "importance": 1
+     },
+     {
+      "id": "siege-of-ruins",
+      "kind": "siege",
+      "phase": "past",
+      "progress": 1,
+      "sinceEnd": 315705599,
+      "position": [
+       0.4,
+       -0.1
+      ],
+      "importance": 3
+     },
+     {
+      "id": "peace-decree",
+      "kind": "decree",
+      "phase": "past",
+      "progress": 1,
+      "sinceEnd": 268271999,
+      "position": null,
+      "importance": 3
+     }
+    ]
+   }
+  },
+  {
+   "chapter": "ch-year-one",
+   "p": 0.75,
+   "t": -62143459201,
+   "frame": {
+    "t": -62143459201,
+    "iso": "0000-10-01T23:59:59",
+    "entities": [
+     {
+      "id": "red-fort",
+      "kind": "fortification",
+      "faction": "blue",
+      "status": "captured",
+      "position": [
+       0.4,
+       -0.1
+      ],
+      "strength": null
+     },
+     {
+      "id": "red-land",
+      "kind": "territory",
+      "faction": "blue",
+      "status": "active"
+     },
+     {
+      "id": "coast-road",
+      "kind": "route",
+      "faction": "red",
+      "status": "active"
+     },
+     {
+      "id": "lighthouse",
+      "kind": "x-lighthouse",
+      "faction": "blue",
+      "status": "active",
+      "position": [
+       0,
+       0
+      ],
+      "strength": null
+     }
+    ],
+    "events": [
+     {
+      "id": "battle-of-hill",
+      "kind": "battle",
+      "phase": "past",
+      "progress": 1,
+      "sinceEnd": 326159999,
+      "position": [
+       0.2,
+       0.1
+      ],
+      "importance": 1
+     },
+     {
+      "id": "siege-of-ruins",
+      "kind": "siege",
+      "phase": "past",
+      "progress": 1,
+      "sinceEnd": 323654399,
+      "position": [
+       0.4,
+       -0.1
+      ],
+      "importance": 3
+     },
+     {
+      "id": "peace-decree",
+      "kind": "decree",
+      "phase": "past",
+      "progress": 1,
+      "sinceEnd": 276220799,
+      "position": null,
+      "importance": 3
+     }
+    ]
+   }
+  },
+  {
+   "chapter": "ch-year-one",
+   "p": 1,
+   "t": -62135510401,
+   "frame": {
+    "t": -62135510401,
+    "iso": "0001-01-01T23:59:59",
+    "entities": [
+     {
+      "id": "red-fort",
+      "kind": "fortification",
+      "faction": "blue",
+      "status": "captured",
+      "position": [
+       0.4,
+       -0.1
+      ],
+      "strength": null
+     },
+     {
+      "id": "red-land",
+      "kind": "territory",
+      "faction": "blue",
+      "status": "active"
+     },
+     {
+      "id": "coast-road",
+      "kind": "route",
+      "faction": "red",
+      "status": "active"
+     },
+     {
+      "id": "lighthouse",
+      "kind": "x-lighthouse",
+      "faction": "blue",
+      "status": "active",
+      "position": [
+       0,
+       0
+      ],
+      "strength": null
+     }
+    ],
+    "events": [
+     {
+      "id": "battle-of-hill",
+      "kind": "battle",
+      "phase": "past",
+      "progress": 1,
+      "sinceEnd": 334108799,
+      "position": [
+       0.2,
+       0.1
+      ],
+      "importance": 1
+     },
+     {
+      "id": "siege-of-ruins",
+      "kind": "siege",
+      "phase": "past",
+      "progress": 1,
+      "sinceEnd": 331603199,
+      "position": [
+       0.4,
+       -0.1
+      ],
+      "importance": 3
+     },
+     {
+      "id": "peace-decree",
+      "kind": "decree",
+      "phase": "past",
+      "progress": 1,
+      "sinceEnd": 284169599,
+      "position": null,
+      "importance": 3
+     },
+     {
+      "id": "new-era",
+      "kind": "political",
+      "phase": "active",
+      "progress": 0.999988,
+      "sinceEnd": 0,
+      "position": [
+       0.05,
+       0.02
+      ],
+      "importance": 3
+     }
+    ]
+   }
+  }
+ ]
+}
