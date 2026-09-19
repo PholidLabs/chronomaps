@@ -1,0 +1,16 @@
+{
+  "name": "ChronoMap Engine",
+  "short_name": "ChronoMap",
+  "description": "Mesin lokal-dulu untuk peta sejarah bergulir dari satu berkas JSON.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#F2ECDF",
+  "theme_color": "#F2ECDF",
+  "icons": [
+    { "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml" },
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

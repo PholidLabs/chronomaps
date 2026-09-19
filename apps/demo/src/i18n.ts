@@ -11,6 +11,7 @@ export interface UIStrings {
   routeSea: string; uncertainty: string; basemap: string; terrain: string;
   week: string; month: string; year: string; fiveyear: string;
   exact: string; approximate: string; conjectural: string; legend: string; aboutPreview: string; aboutText: string; tagline: string;
+  theme: string; themeAuto: string; themeLight: string; themeDark: string; dropHere: string;
 }
 
 export const UI: Record<string, UIStrings> = {
@@ -33,6 +34,8 @@ export const UI: Record<string, UIStrings> = {
     aboutPreview: 'About this demo',
     aboutText: 'MapLibre GL renders the map; @chronomap/engine parses, validates and resolves every frame. Same code the Rust core must match, and the same JSON any other campaign would use.',
     tagline: 'engine demo · contract 1.0',
+    theme: 'Theme', themeAuto: 'Auto', themeLight: 'Light', themeDark: 'Dark',
+    dropHere: 'Drop to load campaign',
   },
   id: {
     campaign: 'Kampanye', story: 'Cerita', explore: 'Jelajah', load: 'Muat JSON…', chapter: 'Bab', of: 'dari',
@@ -53,6 +56,8 @@ export const UI: Record<string, UIStrings> = {
     aboutPreview: 'Tentang demo ini',
     aboutText: 'MapLibre GL menggambar peta; @chronomap/engine mengurai, memvalidasi, dan menghitung setiap frame. Kode yang sama yang harus disamai inti Rust, dan JSON yang sama untuk kampanye mana pun.',
     tagline: 'demo mesin · kontrak 1.0',
+    theme: 'Tema', themeAuto: 'Otomatis', themeLight: 'Terang', themeDark: 'Gelap',
+    dropHere: 'Jatuhkan berkas untuk memuat kampanye',
   },
 };
 

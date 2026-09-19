@@ -9,6 +9,10 @@ import {
 import { CameraController, ChronoMapRenderer, createBasemapStyle, factionColor, parchmentDark, parchmentLight } from '@chronomap/maplibre';
 import { KINDS, ROLES, STATUS, UI, type UIStrings } from './i18n.js';
 import { el, renderBody } from './dom.js';
+import {
+  applyThemeMode, buildLangSeg, buildThemeSeg, savedLang, savedThemeMode, storeLang, storeThemeMode,
+  type ThemeMode,
+} from './prefs.js';
 
 const DAY = 86400;
 const $ = <T extends HTMLElement = HTMLElement>(id: string) => document.getElementById(id) as T;
@@ -21,9 +25,10 @@ const CAMPAIGNS: Record<string, string> = {
   fixture: '/campaigns/fixtures/null-island.json',
 };
 
-const engine = new ChronoMapEngine({ language: 'en', includeTrail: false });
+const engine = new ChronoMapEngine({ language: 'id', includeTrail: false });
 const state = {
-  lang: 'en',
+  lang: 'id',
+  themeMode: savedThemeMode(),
   mode: 'story' as 'story' | 'explore',
   key: 'java',
   custom: null as CampaignFile | null,
@@ -43,6 +48,10 @@ const isDark = () => document.documentElement.dataset.theme === 'dark'
   || (document.documentElement.dataset.theme !== 'light' && matchMedia('(prefers-color-scheme: dark)').matches);
 const theme = () => (isDark() ? parchmentDark : parchmentLight);
 
+/* Applied before the map is constructed below, so the first paint is already the
+   right theme and no style reload is needed to correct it. */
+applyThemeMode(state.themeMode);
+
 /* ------------------------------------------------------------------ map */
 const map = new MapLibreMap({
   container: 'map',
@@ -59,7 +68,12 @@ const camera = new CameraController(map, { reduceMotion });
 let renderer = new ChronoMapRenderer(map, { theme: theme(), language: state.lang });
 const popup = new Popup({ closeButton: false, closeOnClick: true, maxWidth: '300px', offset: 12 });
 
+let appliedTheme = theme().name;
 function rebuildRenderer(): void {
+  /* Auto -> Light on a light machine changes the attribute but not the palette;
+     rebuilding there would flash the basemap for no visible gain. */
+  if (theme().name === appliedTheme) return;
+  appliedTheme = theme().name;
   renderer.destroy();
   map.setStyle(createBasemapStyle({ theme: theme(), basemapPath: '/basemap' }));
   map.once('styledata', () => {
@@ -538,11 +552,17 @@ function setMode(mode: 'story' | 'explore'): void {
   updateCartouche();
 }
 function buildLangButtons(): void {
-  const host = $('seg-lang');
-  host.replaceChildren();
-  for (const l of engine.campaign?.languages ?? ['en']) {
-    host.append(el('button', { 'aria-pressed': String(l === state.lang), onclick: () => setLang(l) }, l.toUpperCase()));
-  }
+  buildLangSeg($('seg-lang'), engine.campaign?.languages ?? ['en'], state.lang, setLang);
+}
+function buildThemeButtons(): void {
+  buildThemeSeg($('seg-theme'), ui(), state.themeMode, setThemeMode);
+}
+function setThemeMode(mode: ThemeMode): void {
+  if (mode === state.themeMode) return;
+  state.themeMode = mode;
+  storeThemeMode(mode);
+  applyThemeMode(mode);   // the data-theme observer repaints the map if the palette actually changed
+  buildThemeButtons();
 }
 function setLang(lang: string): void {
   if (lang === state.lang) return;
@@ -553,7 +573,7 @@ function setLang(lang: string): void {
   state.lang = lang;
   engine.setLanguage(lang);
   document.documentElement.lang = lang;
-  try { localStorage.setItem('cm-lang', lang); } catch { /* private mode */ }
+  storeLang(lang);
   renderer.setLanguage(lang);
   buildLangButtons(); buildStory(); buildLegend(); buildTimeline(); refreshChrome();
   if (state.mode === 'explore') { buildExplore(); updateExplorePanel(true); }
@@ -566,11 +586,13 @@ function setLang(lang: string): void {
   scrollDirty = true;
 }
 function refreshChrome(): void {
+  buildThemeButtons();
   $('tagline').textContent = ui().tagline;
   $('lbl-campaign').textContent = ui().campaign;
   $('load-btn').textContent = ui().load;
   $('mode-story').textContent = ui().story;
   $('mode-explore').textContent = ui().explore;
+  $('dropzone').textContent = ui().dropHere;
   const sel = $<HTMLSelectElement>('dataset');
   for (const o of sel.options) if (state.titles[o.value]) o.textContent = state.titles[o.value];
 }
@@ -644,6 +666,7 @@ function setupChrome(): void {
     if (sel.value === 'custom' && state.custom) await useCampaign(state.custom, 'custom');
     else await useCampaign(CAMPAIGNS[sel.value], sel.value);
   });
+  buildThemeButtons();
   $('mode-story').addEventListener('click', () => setMode('story'));
   $('mode-explore').addEventListener('click', () => setMode('explore'));
   $('load-btn').addEventListener('click', () => $('file').click());
@@ -701,7 +724,7 @@ declare global { interface Window { chronomap?: { map: MapLibreMap; engine: Chro
 map.on('error', (e) => console.error('[maplibre]', (e as unknown as { error?: Error }).error?.message ?? e));
 
 /* ------------------------------------------------------------------ boot */
-try { const saved = localStorage.getItem('cm-lang'); if (saved) state.lang = saved; } catch { /* private mode */ }
+state.lang = savedLang(state.lang);
 engine.setLanguage(state.lang);
 setupChrome();
 window.chronomap = { map, engine, renderer };

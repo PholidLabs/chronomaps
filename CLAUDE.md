@@ -29,7 +29,11 @@ fixture deliberately overlaps two chapters to exercise the check.
 packages/engine      time.ts · campaign.ts (loader + diagnostics) · resolve.ts · engine.ts (façade)
                      worker.ts + worker-client.ts — the seam the Rust/WASM core slots into
 packages/maplibre    style.ts (basemap) · camera.ts · renderer.ts · theme.ts · chronomap.css
-apps/demo            main.ts (wiring) · dom.ts (safe Markdown, popups) · i18n.ts
+apps/demo            index.html (landing) + app/index.html (the map app, served at /app/)
+                     icons/ — favicon.svg, apple-touch, PWA icons, og.png, manifest
+                     main.ts (app wiring) · landing.ts + landing-copy.ts (bilingual prose)
+                     prefs.ts (theme + language, shared by both pages) · icons.ts
+                     dom.ts (safe Markdown, popups, svgEl) · i18n.ts
 crates/chronomap-core  time.rs · campaign.rs · resolve.rs · model.rs · wasm.rs · spatial.rs
 ```
 
@@ -54,6 +58,19 @@ the demo picks up edits without a package rebuild. `npm run check` uses the buil
   `renderer.declutter()` does it: priority by kind (unit → event → fort → place), focus is
   only a tie-break *within* a kind, symbols displace place names only, and elements marked
   `data-cm-avoid` (legend, cartouche, timeline) are hard obstacles.
+- **Site icons are not in publicDir.** publicDir is the repo's `data/` folder, so the
+  favicon, apple-touch icon, manifest and social card live in `apps/demo/icons/` and are
+  put at the site root by the `siteIcons()` plugin — a dev middleware plus `emitFile` on
+  build, the same trick as the MapLibre worker assets. Drop a file in that folder and it
+  is served at `/<name>`; no other wiring needed.
+- **The favicon is hand-drawn, not the logo.** `logo.jpeg` scaled to 16px is a smudge —
+  its 5x5 graticule and terminal dot vanish. `icons/favicon.svg` redraws the same idea at
+  tab-legible weights (2x2 grid, heavier route). The raster icons *are* the real logo,
+  cropped to drop its dead margin. Change one and change the other to match.
+- **Two pages, two Vite inputs.** `apps/demo` is a multi-page build: the landing at `/`
+  and the map app at `/app/`. Both are declared in `build.rollupOptions.input` in
+  `apps/demo/vite.config.ts`. Add a page without adding it there and it will work in
+  `dev` but silently vanish from `dist`.
 - **Per-frame updates only.** Static geometry is installed once in `setCampaign`;
   `setFrame` touches only the small dynamic sources. Never stream GeoJSON every frame.
 

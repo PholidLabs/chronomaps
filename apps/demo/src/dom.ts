@@ -14,6 +14,18 @@ export function el<K extends keyof HTMLElementTagNameMap>(
   return node;
 }
 
+/** SVG sibling of el(). SVG nodes need createElementNS, and building them as real
+    nodes keeps icon markup out of innerHTML like everything else in this file. */
+export function svgEl(tag: string, attrs: Record<string, unknown> = {}, ...kids: Node[]): SVGElement {
+  const node = document.createElementNS('http://www.w3.org/2000/svg', tag);
+  for (const [k, v] of Object.entries(attrs)) {
+    if (v == null || v === false) continue;
+    node.setAttribute(k, v === true ? '' : String(v));
+  }
+  node.append(...kids);
+  return node;
+}
+
 export function renderInline(str: string, parent: Node): void {
   const re = /\[([^\]]+)\]\(([^)\s]+)\)|\*\*([\s\S]+?)\*\*|\*([^*\n]+)\*/g;
   let last = 0, m: RegExpExecArray | null;

@@ -5,15 +5,22 @@
   "description": "ChronoMap Engine — plug-and-play spatio-temporal storytelling maps",
   "license": "MIT",
   "type": "module",
-  "workspaces": ["packages/*", "apps/*"],
-  "engines": { "node": ">=20" },
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
   "scripts": {
-    "build": "npm run build -w @chronomap/engine && npm run build -w @chronomap/maplibre",
-    "build:demo": "npm run build && npm run build -w @chronomap/demo",
-    "dev": "npm run dev -w @chronomap/demo",
-    "test": "npm run build -w @chronomap/engine && npm run test -w @chronomap/engine",
+    "build": "tsc -p packages/engine/tsconfig.json && tsc -p packages/maplibre/tsconfig.json && node packages/maplibre/scripts/copy-css.mjs",
+    "build:demo": "npm run build && vite build apps/demo",
+    "dev": "vite apps/demo",
+    "test": "tsc -p packages/engine/tsconfig.json && node --test packages/engine/test/*.test.js",
     "check": "node packages/engine/dist/cli.js data/campaigns/*.json data/campaigns/fixtures/*.json",
     "vectors": "node packages/engine/dist/cli.js --vectors test-vectors data/campaigns/java-war-1825.json"
   },
-  "devDependencies": { "typescript": "^5.9.2" }
+  "devDependencies": {
+    "typescript": "^5.9.2"
+  }
 }

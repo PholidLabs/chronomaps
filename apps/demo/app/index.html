@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>ChronoMap Engine — Java War 1825–1830</title>
+    <meta name="description" content="Scrollytelling historical maps from one plug-and-play JSON file. Demo: the Java War (Perang Diponegoro), 1825–1830." />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/icon-192.png" type="image/png" sizes="192x192" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta name="theme-color" content="#F2ECDF" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="ChronoMap — Perang Jawa (Perang Diponegoro), 1825–1830" />
+    <meta property="og:description" content="Peta sejarah bergulir dari satu berkas JSON, lengkap dengan sumber dan ketidakpastian." />
+    <meta property="og:image" content="/og.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=IM+Fell+English+SC&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,600;1,7..72,400&family=IBM+Plex+Mono:wght@400;500&display=swap" />
+  </head>
+  <body>
+    <header class="bar">
+      <div class="brand"><a class="wordmark" href="/" id="home-link">ChronoMap</a><span class="tagline" id="tagline"></span></div>
+      <div class="ctl">
+        <label for="dataset" id="lbl-campaign">Kampanye</label>
+        <select id="dataset"></select>
+        <button class="btn" id="load-btn">Muat JSON…</button>
+        <input type="file" id="file" accept="application/json,.json" hidden />
+      </div>
+      <div class="ctl">
+        <span class="seg" role="group" aria-label="Mode" id="seg-mode">
+          <button id="mode-story" aria-pressed="true">Cerita</button>
+          <button id="mode-explore" aria-pressed="false">Jelajah</button>
+        </span>
+        <span class="seg" role="group" aria-label="Bahasa" id="seg-lang"></span>
+        <span class="seg" role="group" aria-label="Tema" id="seg-theme"></span>
+      </div>
+    </header>
+    <main class="layout">
+      <section class="column">
+        <div id="story"></div>
+        <div id="explore" class="explore" hidden></div>
+      </section>
+      <section class="stage" id="stage" aria-label="Campaign map">
+        <div id="map"></div>
+        <div class="cartouche" data-cm-avoid><div class="now" id="now-date"></div><div class="now-sub" id="now-sub"></div></div>
+        <details class="legend" id="legend" data-cm-avoid open></details>
+        <div class="timeline" id="timeline" data-cm-avoid>
+          <div class="tl-top" id="tl-top"></div>
+          <div class="tl-wrap">
+            <div class="tl-axis" id="tl-axis"></div>
+            <div class="tl-track"></div>
+            <div class="tl-band" id="tl-band" hidden></div>
+            <input type="range" id="scrub" min="0" max="10000" value="0" step="1" aria-label="Timeline" disabled />
+          </div>
+        </div>
+        <div class="dropzone" id="dropzone" hidden></div>
+        <div class="notice" id="notice" hidden role="alert"></div>
+      </section>
+    </main>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

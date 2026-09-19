@@ -17,7 +17,7 @@ npm install
 npm run build        # build the two packages
 npm test             # engine tests (golden vectors + diagnostics)
 npm run check        # validate every campaign in data/campaigns
-npm run dev          # open the demo at the URL Vite prints
+npm run dev          # landing page at the URL Vite prints; the map is at /app/
 ```
 
 ## What is in here
@@ -28,7 +28,7 @@ npm run dev          # open the demo at the URL Vite prints
 | `schema/campaign.schema.json` | JSON Schema for structural validation (shape only; the contract carries the rest). |
 | `packages/engine` | The engine in TypeScript: time parsing, loader + diagnostics, frame resolution. No DOM, no map. |
 | `packages/maplibre` | The MapLibre GL renderer: basemap style, camera, layers, DOM markers and label declutter. |
-| `apps/demo` | The scrollytelling app — story column, explore mode, timeline, EN/ID, drag-and-drop loading. |
+| `apps/demo` | The site: a landing page explaining the engine at `/`, and the scrollytelling app at `/app/` — story column, explore mode, timeline, EN/ID, drag-and-drop loading. |
 | `crates/chronomap-core` | The same engine in Rust, for the WASM core. Tested against the same golden vectors. |
 | `data/campaigns` | The campaigns. `java-war-1825.json`, `napoleon-russia-1812.json`, and a synthetic fixture. |
 | `data/basemap` | Natural Earth land, lakes and rivers, simplified. |
@@ -70,7 +70,7 @@ Zero errors means it will play. Warnings are worth reading: they catch the mista
 produce a map that renders but lies — a unit whose track jumps 400 km in a day, a chapter
 whose window runs backwards, an event outside the timeline extent.
 
-Then drag the file onto the running demo. No code changes, no rebuild.
+Then drag the file onto the running app at `/app/`. No code changes, no rebuild.
 
 ## The Rust core
 

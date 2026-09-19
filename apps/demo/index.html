@@ -1,54 +1,33 @@
 <!doctype html>
-<html lang="en">
+<html lang="id">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-    <title>ChronoMap Engine — Java War 1825–1830</title>
-    <meta name="description" content="Scrollytelling historical maps from one plug-and-play JSON file. Demo: the Java War (Perang Diponegoro), 1825–1830." />
-    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23ECE3CD'/%3E%3Cpath d='M4 22 L12 10 L20 18 L28 8' fill='none' stroke='%238B1E1E' stroke-width='2.5'/%3E%3Ccircle cx='12' cy='10' r='2.6' fill='%2328211A'/%3E%3C/svg%3E" />
+    <title>ChronoMap Engine</title>
+    <meta name="description" content="Mesin lokal-dulu untuk peta sejarah bergulir dari satu berkas JSON." />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/icon-192.png" type="image/png" sizes="192x192" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta name="theme-color" content="#F2ECDF" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="ChronoMap Engine" />
+    <meta property="og:description" content="Mesin lokal-dulu untuk peta sejarah bergulir dari satu berkas JSON." />
+    <meta property="og:image" content="/og.png" />
+    <meta name="twitter:card" content="summary_large_image" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=IM+Fell+English+SC&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,600;1,7..72,400&family=IBM+Plex+Mono:wght@400;500&display=swap" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=IM+Fell+English+SC&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,600;1,7..72,400&family=IBM+Plex+Mono:wght@400;500&family=UnifrakturMaguntia&display=swap" />
   </head>
   <body>
     <header class="bar">
-      <div class="brand"><span class="wordmark">ChronoMap</span><span class="tagline" id="tagline"></span></div>
+      <div class="brand"><span class="wordmark">ChronoMap</span></div>
       <div class="ctl">
-        <label for="dataset" id="lbl-campaign">Campaign</label>
-        <select id="dataset"></select>
-        <button class="btn" id="load-btn">Load JSON…</button>
-        <input type="file" id="file" accept="application/json,.json" hidden />
-      </div>
-      <div class="ctl">
-        <span class="seg" role="group" aria-label="Mode" id="seg-mode">
-          <button id="mode-story" aria-pressed="true">Story</button>
-          <button id="mode-explore" aria-pressed="false">Explore</button>
-        </span>
-        <span class="seg" role="group" aria-label="Language" id="seg-lang"></span>
+        <span class="seg" role="group" aria-label="Bahasa" id="seg-lang"></span>
+        <span class="seg" role="group" aria-label="Tema" id="seg-theme"></span>
       </div>
     </header>
-    <main class="layout">
-      <section class="column">
-        <div id="story"></div>
-        <div id="explore" class="explore" hidden></div>
-      </section>
-      <section class="stage" id="stage" aria-label="Campaign map">
-        <div id="map"></div>
-        <div class="cartouche" data-cm-avoid><div class="now" id="now-date"></div><div class="now-sub" id="now-sub"></div></div>
-        <details class="legend" id="legend" data-cm-avoid open></details>
-        <div class="timeline" id="timeline" data-cm-avoid>
-          <div class="tl-top" id="tl-top"></div>
-          <div class="tl-wrap">
-            <div class="tl-axis" id="tl-axis"></div>
-            <div class="tl-track"></div>
-            <div class="tl-band" id="tl-band" hidden></div>
-            <input type="range" id="scrub" min="0" max="10000" value="0" step="1" aria-label="Timeline" disabled />
-          </div>
-        </div>
-        <div class="dropzone" id="dropzone" hidden>Drop to load campaign</div>
-        <div class="notice" id="notice" hidden role="alert"></div>
-      </section>
-    </main>
-    <script type="module" src="/src/main.ts"></script>
+    <main class="landing" id="landing"></main>
+    <script type="module" src="/src/landing.ts"></script>
   </body>
 </html>
