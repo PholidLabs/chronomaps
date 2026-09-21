@@ -1,0 +1,691 @@
+<!DOCTYPE html><html class="light" lang="en" style=""><head><meta charset="utf-8"><meta content="width=device-width, initial-scale=1.0" name="viewport"><meta content="web_dashboard" name="shell-type"><link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&amp;family=JetBrains+Mono:wght@300;400;500;600&amp;family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&amp;display=swap" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"><style>@layer base { html, body { margin: 0; padding: 0; } body { overscroll-behavior: none; } main > :first-child { margin-top: 0 !important; } main > :last-child { margin-bottom: 0 !important; } } ::-webkit-scrollbar { display: none; }</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "tertiary-container": "#634500", "inverse-on-surface": "#f9efe8", "on-error": "#ffffff", "primary-fixed": "#ffdad5", "on-secondary-fixed-variant": "#2c4c48", "inverse-surface": "#34302b", "surface-tint": "#a6392f", "on-surface": "#1f1b17", "background": "#fff8f4", "surface-container-low": "#fcf2eb", "primary-container": "#8b251e", "on-tertiary-fixed-variant": "#5e4200", "on-primary-container": "#ffa296", "surface-container-lowest": "#ffffff", "on-surface-variant": "#57423f", "on-primary": "#ffffff", "outline-variant": "#dec0bc", "primary": "#6b0c0a", "on-error-container": "#93000a", "on-tertiary": "#ffffff", "tertiary-fixed-dim": "#edc06f", "on-tertiary-container": "#e0b464", "primary-fixed-dim": "#ffb4aa", "tertiary": "#463000", "secondary-fixed": "#c6eae4", "error": "#ba1a1a", "error-container": "#ffdad6", "on-secondary-fixed": "#00201d", "on-primary-fixed": "#410001", "on-secondary": "#ffffff", "on-primary-fixed-variant": "#86211b", "on-tertiary-fixed": "#271900", "surface-dim": "#e2d8d1", "surface-container": "#f6ece5", "surface": "#fff8f4", "secondary-fixed-dim": "#aacec8", "secondary": "#436460", "tertiary-fixed": "#ffdea8", "inverse-primary": "#ffb4aa", "surface-variant": "#eae1da", "surface-bright": "#fff8f4", "secondary-container": "#c3e7e1", "outline": "#8b716e", "on-background": "#1f1b17", "surface-container-highest": "#eae1da", "surface-container-high": "#f0e6df", "on-secondary-container": "#486964" }, "borderRadius": { "DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem" }, "spacing": { "space-xs": "0.25rem", "space-md": "1rem", "space-lg": "1.75rem", "space-sm": "0.5rem", "margin-mobile": "1.25rem", "gutter": "1.5rem", "margin": "3.5rem", "space-xl": "3rem", "gutter-mobile": "1rem" }, "fontFamily": { "body-sm": [ "Newsreader" ], "headline-sm": [ "EB Garamond" ], "body-md": [ "Newsreader" ], "label-md": [ "JetBrains Mono" ], "headline-lg": [ "EB Garamond" ], "label-sm": [ "JetBrains Mono" ], "body-lg": [ "Newsreader" ], "headline-xl-mobile": [ "EB Garamond" ], "headline-xl": [ "EB Garamond" ], "display-lg": [ "EB Garamond" ], "display-lg-mobile": [ "EB Garamond" ] }, "fontSize": { "body-sm": [ "14px", { "lineHeight": "22px", "fontWeight": "400" } ], "headline-sm": [ "19px", { "lineHeight": "26px", "letterSpacing": "0.02em", "fontWeight": "600" } ], "body-md": [ "16px", { "lineHeight": "26px", "fontWeight": "400" } ], "label-md": [ "12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500" } ], "headline-lg": [ "26px", { "lineHeight": "34px", "letterSpacing": "0.01em", "fontWeight": "600" } ], "label-sm": [ "11px", { "lineHeight": "14px", "letterSpacing": "0.08em", "fontWeight": "400" } ], "body-lg": [ "18px", { "lineHeight": "30px", "fontWeight": "400" } ], "headline-xl-mobile": [ "28px", { "lineHeight": "36px", "letterSpacing": "0em", "fontWeight": "500" } ], "headline-xl": [ "40px", { "lineHeight": "48px", "letterSpacing": "-0.015em", "fontWeight": "500" } ], "display-lg": [ "56px", { "lineHeight": "60px", "letterSpacing": "-0.02em", "fontWeight": "400" } ], "display-lg-mobile": [ "36px", { "lineHeight": "42px", "letterSpacing": "-0.01em", "fontWeight": "400" } ] } } } };</script></head><body class="bg-background font-body-md text-body-md text-on-surface antialiased"><header class="fixed top-0 left-0 right-0 z-50 bg-surface/90 backdrop-blur-md shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="h-20 w-full px-gutter flex items-center justify-between gap-space-md"><div class="flex items-center gap-space-md min-w-[280px]"><div class="w-11 h-11 rounded-lg bg-surface-container border border-tertiary-fixed-dim flex items-center justify-center text-primary shadow-[inset_0_1px_1px_rgba(255,255,255,0.4)]"><span class="material-symbols-outlined text-[26px]">explore</span></div><div class="flex flex-col"><div class="flex items-center gap-space-xs"><span class="font-headline-sm text-headline-sm uppercase tracking-widest text-primary font-bold">ChronoMap</span></div><span class="font-body-sm text-body-sm italic text-on-surface-variant tracking-wide">Machina Historica &amp; Tabula Geographica</span></div></div><nav class="hidden xl:flex items-center gap-space-xs bg-surface-container-low p-1 rounded-lg" data-active-classes="bg-surface-container-highest text-primary font-semibold"><a class="px-space-md py-space-xs rounded-DEFAULT font-label-md text-label-md text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors" data-path="beranda-and-pengenalan" href="#">Beranda &amp; Pengenalan</a><a class="px-space-md py-space-xs rounded-DEFAULT font-label-md text-label-md text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors" data-path="studio-peta-interaktif" href="#">Studio Peta Interaktif</a><a class="px-space-md py-space-xs rounded-DEFAULT font-label-md text-label-md text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors" data-path="arsitektur-pipeline" href="#">Arsitektur Pipeline</a><a class="px-space-md py-space-xs rounded-DEFAULT font-label-md text-label-md text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors" data-path="skema-json-and-spesifikasi" href="#">Skema JSON &amp; Spesifikasi</a></nav><div class="flex items-center gap-space-sm"><div class="hidden md:flex items-center gap-space-xs px-2.5 py-1 bg-surface-container-low rounded-lg"><span class="w-2 h-2 rounded-full bg-secondary animate-pulse"></span><span class="font-label-sm text-label-sm text-on-surface-variant">Engine: Ready (WASM/MapLibre)</span></div><div class="flex items-center p-0.5 bg-surface-container rounded-DEFAULT"><button class="px-2 py-0.5 font-label-sm text-label-sm text-on-surface-variant hover:text-on-surface" type="button">EN</button><button class="px-2 py-0.5 font-label-sm text-label-sm bg-secondary text-on-secondary rounded-DEFAULT" type="button">ID</button></div><button aria-label="Toggle Chronology Mode" class="w-8 h-8 rounded-lg bg-surface-container flex items-center justify-center text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors" type="button"><span class="material-symbols-outlined text-[18px]">wb_twilight</span></button><button class="flex items-center gap-1.5 px-space-md py-1.5 rounded-DEFAULT bg-primary text-on-primary font-label-md text-label-md shadow-[inset_0_1px_1px_rgba(255,255,255,0.2),0_1px_3px_rgba(26,22,18,0.2)] hover:bg-primary-container hover:text-on-primary-container transition-all" type="button"><span class="material-symbols-outlined text-[16px]">menu_book</span><span class="">Start</span></button><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center ml-1"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><div class=""><main class="relative pt-20 w-full min-h-screen bg-background px-gutter py-space-lg"><div class="flex flex-col w-full relative">
+<!-- Atmospheric Living Parchment Shader -->
+<!-- STITCH_SHADER_START:ANIMATION_3 class="absolute inset-0 w-full h-full pointer-events-none opacity-40 mix-blend-multiply z-0" -->
+<div class="absolute inset-0 w-full h-full pointer-events-none opacity-40 mix-blend-multiply z-0" style="display:block;">
+<canvas id="shader-canvas-ANIMATION_3" style="display:block;width:100%;height:100%" width="944" height="3806"></canvas>
+<script>
+(function() {
+  const canvas = document.getElementById('shader-canvas-ANIMATION_3');
+
+  // Sync the WebGL drawing-buffer size with the CSS-driven layout size.
+  // This fires on initial layout and whenever the element is resized.
+  function syncSize() {
+    const w = canvas.clientWidth  || 1280;
+    const h = canvas.clientHeight || 720;
+    if (canvas.width !== w || canvas.height !== h) {
+      canvas.width  = w;
+      canvas.height = h;
+    }
+  }
+  if (typeof ResizeObserver !== 'undefined') {
+    new ResizeObserver(syncSize).observe(canvas);
+  }
+  syncSize();
+
+  const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+  if (!gl) return;
+  const vs = `attribute vec2 a_position;
+varying vec2 v_texCoord;
+void main() {
+  v_texCoord = a_position * 0.5 + 0.5;
+  gl_Position = vec4(a_position, 0.0, 1.0);
+}`;
+  const fs = `precision highp float;
+uniform float u_time;
+uniform vec2 u_resolution;
+uniform vec2 u_mouse;
+varying vec2 v_texCoord;
+
+// Simplex/Perlin noise helper
+vec3 mod289(vec3 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
+vec2 mod289(vec2 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
+vec3 permute(vec3 x) { return mod289(((x*34.0)+1.0)*x); }
+
+float snoise(vec2 v) {
+    const vec4 C = vec4(0.211324865405187,  // (3.0-sqrt(3.0))/6.0
+                        0.366025403784439,  // 0.5*(sqrt(3.0)-1.0)
+                       -0.577350269189626,  // -1.0 + 2.0 * C.x
+                        0.024390243902439); // 1.0 / 41.0
+    vec2 i  = floor(v + dot(v, C.yy) );
+    vec2 x0 = v -   i + dot(i, C.xx);
+    vec2 i1 = (x0.x > x0.y) ? vec2(1.0, 0.0) : vec2(0.0, 1.0);
+    vec4 x12 = x0.xyxy + C.xxzz;
+    x12.xy -= i1;
+    i = mod289(i);
+    vec3 p = permute( permute( i.y + vec3(0.0, i1.y, 1.0 ))
+        + i.x + vec3(0.0, i1.x, 1.0 ));
+    vec3 m = max(0.5 - vec3(dot(x0,x0), dot(x12.xy,x12.xy), dot(x12.zw,x12.zw)), 0.0);
+    m = m*m ;
+    m = m*m ;
+    vec3 x = 2.0 * fract(p * C.www) - 1.0;
+    vec3 h = abs(x) - 0.5;
+    vec3 ox = floor(x + 0.5);
+    vec3 a0 = x - ox;
+    m *= 1.79284291400159 - 0.85373472095314 * ( a0*a0 + h*h );
+    vec3 g;
+    g.x  = a0.x  * x0.x  + h.x  * x0.y;
+    g.yz = a0.yz * x12.xz + h.yz * x12.yw;
+    return 130.0 * dot(m, g);
+}
+
+void main() {
+    vec2 st = gl_FragCoord.xy / u_resolution.xy;
+    st.x *= u_resolution.x / u_resolution.y;
+
+    float t = u_time * 0.06;
+
+    // Multi-layered ancient atmospheric paper grain & flowing wind vectors / rhumb lines energy
+    float n1 = snoise(st * 2.2 + vec2(t * 0.2, t * 0.15));
+    float n2 = snoise(st * 5.0 - vec2(t * 0.35, t * 0.2));
+    float n3 = snoise(st * 12.0 + vec2(n1 * 0.8, n2 * 0.8));
+
+    // Cartographic rhumb line subtle interference
+    vec2 center = vec2(0.5 * (u_resolution.x / u_resolution.y), 0.5);
+    float d = distance(st, center);
+    float rings = sin(d * 24.0 - u_time * 0.3) * 0.5 + 0.5;
+    rings *= smoothstep(1.5, 0.2, d) * 0.15;
+
+    // Palette: warm vellum and antique gold dust
+    vec3 parchmentBase = vec3(0.965, 0.941, 0.902); // #F6F0E6
+    vec3 parchmentShadow = vec3(0.914, 0.875, 0.812); // #E9DFCF
+    vec3 inkFaint = vec3(0.72, 0.65, 0.55);
+    vec3 goldDust = vec3(0.82, 0.68, 0.38);
+
+    float blend = n1 * 0.5 + n2 * 0.3 + n3 * 0.2;
+    vec3 col = mix(parchmentBase, parchmentShadow, smoothstep(-0.4, 0.6, blend));
+
+    // Add subtle gold particle luster & ancient cartography energy
+    col += goldDust * pow(max(0.0, n2 * rings * 3.0), 2.0) * 0.25;
+    col -= vec3(0.08, 0.06, 0.05) * (1.0 - smoothstep(0.0, 1.2, distance(gl_FragCoord.xy / u_resolution.xy, vec2(0.5)))) * 0.12;
+
+    gl_FragColor = vec4(col, 1.0);
+}`;
+  function cs(type, src) {
+    const s = gl.createShader(type);
+    gl.shaderSource(s, src);
+    gl.compileShader(s);
+    return s;
+  }
+  const prog = gl.createProgram();
+  gl.attachShader(prog, cs(gl.VERTEX_SHADER, vs));
+  gl.attachShader(prog, cs(gl.FRAGMENT_SHADER, fs));
+  gl.linkProgram(prog);
+  gl.useProgram(prog);
+  const buf = gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1, 1,-1, -1,1, 1,1]), gl.STATIC_DRAW);
+  const pos = gl.getAttribLocation(prog, 'a_position');
+  gl.enableVertexAttribArray(pos);
+  gl.vertexAttribPointer(pos, 2, gl.FLOAT, false, 0, 0);
+  const uTime = gl.getUniformLocation(prog, 'u_time');
+  const uRes = gl.getUniformLocation(prog, 'u_resolution');
+  const uMouse = gl.getUniformLocation(prog, 'u_mouse');
+
+  // u_mouse is in pixel coordinates matching u_resolution (ShaderToy convention).
+  // Shaders that need normalized coords should use: u_mouse / u_resolution.
+  let mouse = { x: canvas.width / 2, y: canvas.height / 2 };
+  window.addEventListener('mousemove', (event) => {
+    const rect = canvas.getBoundingClientRect();
+    if (rect.width && rect.height) {
+      const nx = (event.clientX - rect.left) / rect.width;
+      const ny = 1.0 - (event.clientY - rect.top) / rect.height;
+      mouse.x = nx * canvas.width;
+      mouse.y = ny * canvas.height;
+    }
+  });
+
+  function render(t) {
+    if (typeof ResizeObserver === 'undefined') syncSize();
+    gl.viewport(0, 0, canvas.width, canvas.height);
+    if (uTime) gl.uniform1f(uTime, t * 0.001);
+    if (uRes) gl.uniform2f(uRes, canvas.width, canvas.height);
+    if (uMouse) gl.uniform2f(uMouse, mouse.x, mouse.y);
+    gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+    requestAnimationFrame(render);
+  }
+  render(0);
+})();
+</script>
+</div>
+<!-- STITCH_SHADER_END:ANIMATION_3 -->
+<div class="relative z-10 max-w-7xl mx-auto w-full px-space-md sm:px-gutter lg:px-margin space-y-space-xl pb-24">
+<!-- ========================================== -->
+<!-- SECTION 1: HERO & SCHOLARLY MANIFESTO      -->
+<!-- ========================================== -->
+<section class="relative pt-6 sm:pt-10">
+<!-- Top Scholarly Overline Metadata -->
+<div class="flex flex-wrap items-center justify-between gap-space-sm pb-space-sm border-b border-outline-variant/30 text-on-surface-variant font-label-sm text-label-sm">
+<div class="flex items-center gap-space-xs">
+<span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+<span class="uppercase tracking-widest font-semibold text-primary">Codex Cartographicus</span>
+<span class="text-outline">/</span>
+<span class="">Archivum Historico-Mechanicum</span>
+</div>
+<div class="flex items-center gap-space-md font-label-sm">
+<span class="">Engine WASM Core: <strong class="text-secondary font-medium">v1.14-b42</strong></span>
+<span class="hidden md:inline">•</span>
+<span class="hidden md:inline">Memory Footprint: <strong class="text-secondary font-medium">12.4 MB</strong></span>
+<span class="">•</span>
+<span class="px-2 py-0.5 rounded bg-surface-container text-on-surface">Deterministic Clock: Synced</span>
+</div>
+</div>
+<div class="mt-8 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
+<!-- Left: Monumental Headline & Manuscript Proemium -->
+<div class="lg:col-span-7 space-y-6">
+<h1 class="font-headline-xl text-headline-xl sm:text-display-lg text-primary tracking-tight leading-[1.08]">
+            Satu berkas JSON.<br>
+<span class="italic text-on-surface">Peta yang menceritakan</span> kisahnya.
+          </h1>
+<!-- Manuscript drop cap paragraph -->
+<div class="relative pl-0 sm:pl-2">
+<p class="font-body-lg text-body-lg text-on-surface leading-relaxed text-justify">
+<span class="float-left font-display-lg text-primary leading-none pr-3 pt-1.5 font-bold select-none text-[64px] font-serif">C</span>hronoMap adalah mesin lokal-dulu untuk peta sejarah bergulir. Jelaskan sebuah kampanye — tempat, pasukan, peristiwa, bab — dan mesin ini memainkannya: pasukan bergerak di sepanjang rutenya, benteng berpindah tangan, kamera mengikuti cerita saat Anda menggulir, dan setiap klaim dapat membawa sumber serta ketidakpastiannya.
+            </p>
+</div>
+<!-- Primary Control Deck & Wax Seal Action Buttons -->
+<div class="pt-2 flex flex-wrap items-center gap-space-md">
+<button class="group relative inline-flex items-center gap-2.5 px-5 py-2.5 rounded bg-primary text-on-primary font-label-md text-label-md tracking-wider uppercase transition-all shadow-[inset_0_1px_1px_rgba(255,255,255,0.25),0_3px_8px_rgba(107,12,10,0.3)] hover:bg-primary-container hover:shadow-[0_4px_14px_rgba(107,12,10,0.4)]" id="btn-open-map" type="button">
+<span class="material-symbols-outlined text-[18px] transition-transform group-hover:rotate-45">explore</span>
+<span class="font-semibold">Buka Peta Interaktif</span>
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary-fixed animate-ping"></span>
+</button>
+<button class="inline-flex items-center gap-2 px-4 py-2.5 rounded bg-surface-container-high text-on-surface font-label-md text-label-md hover:bg-surface-variant transition-colors border border-outline-variant/50" id="btn-load-demo" type="button">
+<span class="material-symbols-outlined text-[17px] text-tertiary">folder_open</span>
+<span class="">Muat Berkas Contoh (<code class="text-primary font-mono text-[11px]">1241_mongol.json</code>)</span>
+</button>
+<div class="flex items-center gap-1.5 text-on-surface-variant font-label-sm text-label-sm py-1 px-2.5 rounded bg-surface-container">
+<span class="material-symbols-outlined text-[15px] text-secondary">verified</span>
+<span class="">Zero external server dependencies</span>
+</div>
+</div>
+</div>
+<!-- Right: Active Campaign Status Ledger & Quick Telemetry -->
+<div class="lg:col-span-5">
+<div class="relative bg-surface-container-lowest p-6 rounded-lg border border-outline-variant/60 shadow-sm space-y-4">
+<!-- Illuminated Card Corner Ticks -->
+<div class="absolute top-2 left-2 text-[10px] text-tertiary font-serif select-none">❧</div>
+<div class="absolute top-2 right-2 text-[10px] text-tertiary font-serif select-none">❦</div>
+<div class="flex items-center justify-between border-b border-outline-variant/40 pb-3">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[20px]">auto_stories</span>
+<span class="font-headline-sm text-headline-sm text-primary">Status Ledger</span>
+</div>
+<span class="px-2 py-0.5 rounded bg-secondary-container text-on-secondary-container font-label-sm text-label-sm uppercase font-semibold">Active Record</span>
+</div>
+<!-- Campaign Meta Key-Value Ledger -->
+<div class="space-y-2.5 font-label-sm text-label-sm">
+<div class="flex items-baseline justify-between py-1 border-b border-outline-variant/20">
+<span class="text-on-surface-variant">Titik Fokus</span>
+<span class="font-medium text-on-surface">Ekspedisi Mongol ke Eropa Tengah (1241)</span>
+</div>
+<div class="flex items-baseline justify-between py-1 border-b border-outline-variant/20">
+<span class="text-on-surface-variant">Panjang Lintasan (Rute)</span>
+<span class="font-mono text-primary font-bold">14.820 km <span class="text-on-surface-variant font-normal">(4 segmen tumpang tindih)</span></span>
+</div>
+<div class="flex items-baseline justify-between py-1 border-b border-outline-variant/20">
+<span class="text-on-surface-variant">Benteng &amp; Kota Terpantau</span>
+<span class="font-mono text-secondary font-bold">42 kubu <span class="text-on-surface-variant font-normal">(18 pengepungan tervalidasi)</span></span>
+</div>
+<div class="flex items-baseline justify-between py-1 border-b border-outline-variant/20">
+<span class="text-on-surface-variant">Kronik &amp; Naskah Primer</span>
+<span class="font-mono text-tertiary font-bold">128 entri peristiwa beranotasi</span>
+</div>
+<div class="flex items-baseline justify-between py-1">
+<span class="text-on-surface-variant">Interpolasi Koordinat</span>
+<span class="inline-flex items-center gap-1 text-secondary font-mono">
+<span class="inline-block w-1.5 h-1.5 rounded-full bg-secondary"></span>
+                  Haversine-Great-Circle Hermite
+                </span>
+</div>
+</div>
+<!-- Mini Live JSON Preview Tape -->
+<div class="p-3 bg-surface-container rounded border border-outline-variant/50 font-label-sm text-[11px] text-on-surface-variant overflow-x-auto">
+<div class="text-tertiary-container font-bold mb-1 flex items-center justify-between">
+<span class="">MANIFEST_PAYLOAD.JSON</span>
+<span class="font-normal text-outline">CRC32: 9FA87B11</span>
+</div>
+<pre class="font-mono text-on-surface leading-tight"><code>{
+  "id": "campaign_1241_mohi",
+  "temporalRange": ["1241-03-01", "1241-04-30"],
+  "actors": ["Subutai", "Batu Khan", "Béla IV"],
+  "interpolation": "spline_quaternion"
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Hairline Scriptorium Etching Divider -->
+<div class="relative py-2">
+<div class="w-full border-t border-outline-variant/50"></div>
+<div class="absolute left-1/2 -top-2.5 -translate-x-1/2 bg-background px-3 text-tertiary font-serif text-sm">✦ ✦ ✦</div>
+</div>
+<!-- =================================================== -->
+<!-- SECTION 2: THE 4-STAGE PIPELINE & DIAGNOSTICS DECK -->
+<!-- =================================================== -->
+<section class="space-y-8">
+<!-- Section Header with Illuminated Pilcrow -->
+<div class="space-y-3 max-w-4xl">
+<div class="flex items-center gap-2">
+<span class="text-primary-container font-headline-lg text-headline-lg font-serif select-none leading-none">¶</span>
+<h2 class="font-headline-lg text-headline-lg text-primary tracking-tight">Cara kerjanya: Arsitektur Empat Tahap</h2>
+</div>
+<p class="font-body-lg text-body-lg text-on-surface-variant leading-relaxed text-justify">
+          Empat tahap, dan hanya tahap terakhir yang tahu apa itu peta. Mesinnya sendiri tidak mengenal DOM maupun penggambar: beri ia sebuah kampanye dan satu titik waktu, ia mengembalikan satu frame.
+        </p>
+</div>
+<!-- INTERACTIVE 4-STAGE ANIMATED FLOWCHART -->
+<div class="relative bg-surface-container-low p-6 sm:p-8 rounded-lg border border-outline-variant/60 shadow-sm overflow-hidden">
+<!-- Stage Steps Grid -->
+<div class="grid grid-cols-1 md:grid-cols-4 gap-4 relative">
+<!-- Stage 1 -->
+<div class="pipeline-node group relative p-4 rounded bg-surface-container-lowest border border-outline-variant/80 hover:border-primary transition-all shadow-sm">
+<div class="flex items-center justify-between pb-2 border-b border-outline-variant/30">
+<span class="font-label-sm text-label-sm text-primary font-bold">STAGE 01</span>
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant">description</span>
+</div>
+<div class="mt-3 font-label-md text-label-md font-mono font-semibold text-on-surface">campaign.json</div>
+<p class="mt-1 font-body-sm text-body-sm text-on-surface-variant">Input kanonikal murni deklaratif; bebas atribut proyeksi peta.</p>
+<div class="mt-3 pt-2 border-t border-outline-variant/20 flex items-center justify-between text-[11px] font-mono text-outline">
+<span class="">Parser: JSON-WASM</span>
+<span class="text-secondary font-semibold">142 KB</span>
+</div>
+</div>
+<!-- Stage 2 -->
+<div class="pipeline-node group relative p-4 rounded bg-surface-container-lowest border border-outline-variant/80 hover:border-primary transition-all shadow-sm">
+<div class="flex items-center justify-between pb-2 border-b border-outline-variant/30">
+<span class="font-label-sm text-label-sm text-secondary font-bold">STAGE 02</span>
+<span class="material-symbols-outlined text-[16px] text-secondary">fact_check</span>
+</div>
+<div class="mt-3 font-label-md text-label-md font-mono font-semibold text-on-surface">loader + diagnostics</div>
+<p class="mt-1 font-body-sm text-body-sm text-on-surface-variant">Validasi semantik, deteksi jeda waktu mundur, linter rute tak wajar.</p>
+<div class="mt-3 pt-2 border-t border-outline-variant/20 flex items-center justify-between text-[11px] font-mono text-outline">
+<span class="">Rules: 32 tests</span>
+<span class="text-secondary font-semibold">0 Error</span>
+</div>
+</div>
+<!-- Stage 3 -->
+<div class="pipeline-node group relative p-4 rounded bg-surface-container-lowest border border-outline-variant/80 hover:border-primary transition-all shadow-sm">
+<div class="flex items-center justify-between pb-2 border-b border-outline-variant/30">
+<span class="font-label-sm text-label-sm text-tertiary font-bold">STAGE 03</span>
+<span class="material-symbols-outlined text-[16px] text-tertiary">precision_manufacturing</span>
+</div>
+<div class="mt-3 font-label-md text-label-md font-mono font-semibold text-on-surface">resolveFrame</div>
+<p class="mt-1 font-body-sm text-body-sm text-on-surface-variant">Aritmetika murni fungsi f(t). Mengembalikan snapshot posisi &amp; status.</p>
+<div class="mt-3 pt-2 border-t border-outline-variant/20 flex items-center justify-between text-[11px] font-mono text-outline">
+<span class="">Latency: 0.18ms</span>
+<span class="text-primary font-semibold">Deterministic</span>
+</div>
+</div>
+<!-- Stage 4 -->
+<div class="pipeline-node group relative p-4 rounded bg-surface-container-high border-2 border-secondary hover:border-primary transition-all shadow-sm">
+<div class="flex items-center justify-between pb-2 border-b border-outline-variant/30">
+<span class="font-label-sm text-label-sm text-on-surface font-bold">STAGE 04</span>
+<span class="material-symbols-outlined text-[16px] text-secondary">layers</span>
+</div>
+<div class="mt-3 font-label-md text-label-md font-mono font-semibold text-primary">MapLibre GL</div>
+<p class="mt-1 font-body-sm text-body-sm text-on-surface">Satu-satunya tahap yang tahu DOM, kanvas WebGL, serta proyeksi peta.</p>
+<div class="mt-3 pt-2 border-t border-outline-variant/20 flex items-center justify-between text-[11px] font-mono text-outline">
+<span class="">GPU Shaders: 60fps</span>
+<span class="text-secondary font-semibold">Render Ready</span>
+</div>
+</div>
+</div>
+<!-- Pipeline Data Packet Stream Indicator -->
+<div class="mt-4 pt-3 border-t border-outline-variant/30 flex flex-wrap items-center justify-between gap-2 text-on-surface-variant font-label-sm text-label-sm">
+<div class="flex items-center gap-2">
+<span class="inline-block w-2 h-2 rounded-full bg-secondary animate-pulse"></span>
+<span class="italic font-body-sm">"Hanya tahap terakhir yang tahu apa itu peta."</span>
+</div>
+<div class="flex items-center gap-3 font-mono text-[11px]">
+<span class="text-on-surface">Flow: JSON → Vector Buffer → Tick Resolution → WebGL GeoJSON Tile</span>
+</div>
+</div>
+</div>
+<!-- FOUR EXPANDED SCHOLARLY SUB-SECTIONS (I, II, III, IV) -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 pt-2">
+<!-- Item I -->
+<div class="space-y-2 p-5 rounded bg-surface-container-lowest border border-outline-variant/40 hover:border-outline-variant transition-colors">
+<div class="flex items-baseline gap-2">
+<span class="font-headline-sm text-headline-sm text-primary font-bold">I.</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold">Berkas kampanye</h3>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed text-justify">
+            Satu dokumen JSON memuat semuanya: faksi, tempat, entitas beserta jejaknya, peristiwa, bab, dan sumber. Tidak ada properti gambar, tidak ada koordinat yang harus ditebak kamera — berkas ini menjelaskan sejarah, bukan gambar.
+          </p>
+<div class="mt-3 pt-2 text-[12px] font-label-sm text-tertiary-container flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[15px]">code</span>
+<span class="">Schema: <code class="font-mono">chrono-spec-v1.schema.json</code></span>
+</div>
+</div>
+<!-- Item II -->
+<div class="space-y-2 p-5 rounded bg-surface-container-lowest border border-outline-variant/40 hover:border-outline-variant transition-colors">
+<div class="flex items-baseline gap-2">
+<span class="font-headline-sm text-headline-sm text-primary font-bold">II.</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold">Pemuat dan diagnostik</h3>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed text-justify">
+            Pemuat memvalidasi dan menormalkan, lalu mengeluarkan diagnostik bernomor. Galat berarti berkas tidak akan dimainkan. Peringatan menangkap hal yang tetap tergambar tetapi menyesatkan: jejak pasukan yang melompat 400 km dalam sehari, bab yang jendela waktunya mundur, peristiwa di luar rentang waktu.
+          </p>
+<div class="mt-3 pt-2 text-[12px] font-label-sm text-secondary flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[15px]">check_circle</span>
+<span class="">Diagnostic code analyzer: 0 Critical / 2 Archival Warnings</span>
+</div>
+</div>
+<!-- Item III -->
+<div class="space-y-2 p-5 rounded bg-surface-container-lowest border border-outline-variant/40 hover:border-outline-variant transition-colors">
+<div class="flex items-baseline gap-2">
+<span class="font-headline-sm text-headline-sm text-primary font-bold">III.</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold">Penghitungan frame</h3>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed text-justify">
+            Diberi satu tick — detik bertanda sejak 1970 — resolveFrame menginterpolasi posisi tiap pasukan di sepanjang jejaknya, menetapkan status tiap benteng, dan memilih peristiwa yang sedang tampak. Murni aritmetika: masukan sama, keluaran sama, di platform mana pun.
+          </p>
+<div class="mt-3 pt-2 text-[12px] font-label-sm text-outline flex items-center gap-1.5 font-mono">
+<span class="material-symbols-outlined text-[15px]">calculate</span>
+<span class="">Pure Function: resolveFrame(campaign, t_epoch) =&gt; MapSnapshot</span>
+</div>
+</div>
+<!-- Item IV -->
+<div class="space-y-2 p-5 rounded bg-surface-container-lowest border border-outline-variant/40 hover:border-outline-variant transition-colors">
+<div class="flex items-baseline gap-2">
+<span class="font-headline-sm text-headline-sm text-primary font-bold">IV.</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold">Penggambar</h3>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed text-justify">
+            MapLibre GL menggambar frame itu. Geometri statis dipasang sekali per kampanye; tiap frame hanya menyentuh sumber dinamis yang kecil. Label berupa DOM yang ditata menurut prioritas, sehingga tidak pernah bertabrakan dengan kartus atau garis waktu.
+          </p>
+<div class="mt-3 pt-2 text-[12px] font-label-sm text-primary flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[15px]">brush</span>
+<span class="">Spatial occlusion resolution &amp; non-colliding typography</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Hairline Scriptorium Etching Divider -->
+<div class="relative py-2">
+<div class="w-full border-t border-outline-variant/50"></div>
+<div class="absolute left-1/2 -top-2.5 -translate-x-1/2 bg-background px-3 text-tertiary font-serif text-sm">❧ ❦ ❧</div>
+</div>
+<!-- ========================================================= -->
+<!-- SECTION 3: MINI INTERACTIVE MAP PREVIEW & SCRUBBER WIDGET -->
+<!-- ========================================================= -->
+<section class="space-y-6">
+<div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+<div>
+<div class="flex items-center gap-2">
+<span class="text-primary font-headline-lg text-headline-lg font-serif">¶</span>
+<h2 class="font-headline-lg text-headline-lg text-primary tracking-tight">Simulasi Real-Time Tabula Cartographica</h2>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant">Pratinjau langsung interpolasi jejak militer dan evaluasi peristiwa per tick.</p>
+</div>
+<div class="flex items-center gap-2 font-label-sm text-label-sm">
+<span class="px-2.5 py-1 rounded bg-surface-container text-on-surface border border-outline-variant/40">Kamera: Proyeksi Mercator Vetus</span>
+<span class="px-2.5 py-1 rounded bg-tertiary-fixed text-on-tertiary-fixed font-semibold">EPSG:3857</span>
+</div>
+</div>
+<!-- Cartographic Viewport Frame -->
+<div class="relative rounded-lg bg-[#F5EFE6] border-2 border-outline-variant/80 shadow-md overflow-hidden">
+<!-- Top cartographic toolbar -->
+<div class="h-10 bg-surface-container px-4 flex items-center justify-between border-b border-outline-variant/50 font-label-sm text-label-sm">
+<div class="flex items-center gap-3">
+<span class="font-bold text-primary flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">navigation</span>
+<span class="">THEATRUM HUNGARIAE &amp; MORAVIAE</span>
+</span>
+<span class="text-outline">|</span>
+<span class="text-on-surface-variant font-mono">Epoch: <span id="clock-timestamp" class="">1241-04-09 06:14:00 UTC</span></span>
+</div>
+<div class="flex items-center gap-2">
+<span class="text-[11px] text-secondary font-semibold font-mono">Frame Rate: 60.1 FPS</span>
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+</div>
+</div>
+<!-- Simulated Medieval Vector Map Surface (SVG Graphics) -->
+<div class="relative w-full h-80 sm:h-96 bg-[#F2EAD8] overflow-hidden select-none">
+<!-- Compass Rose Inset in background -->
+<svg class="absolute top-4 right-4 w-28 h-28 opacity-25 text-tertiary pointer-events-none" fill="currentColor" viewBox="0 0 100 100">
+<circle cx="50" cy="50" fill="none" r="45" stroke="currentColor" stroke-width="1"></circle>
+<circle cx="50" cy="50" fill="none" r="30" stroke="currentColor" stroke-dasharray="2 2" stroke-width="0.5"></circle>
+<path d="M50 5 L55 45 L95 50 L55 55 L50 95 L45 55 L5 50 L45 45 Z" fill="currentColor"></path>
+<text font-family="serif" font-size="8" font-weight="bold" text-anchor="middle" x="50" y="14">SEPTENTRIO</text>
+<text font-family="serif" font-size="7" text-anchor="middle" x="50" y="92">MERIDIES</text>
+<text font-family="serif" font-size="7" text-anchor="middle" x="90" y="52">ORIENS</text>
+<text font-family="serif" font-size="7" text-anchor="middle" x="10" y="52">OCCIDENS</text>
+</svg>
+<!-- Topographic river and mountain etchings -->
+<svg class="absolute inset-0 w-full h-full text-outline-variant/60 pointer-events-none" preserveAspectRatio="none">
+<!-- River Danube & Tisza -->
+<path d="M 50,0 Q 120,90 280,120 T 520,200 T 840,240 T 1100,320" fill="none" stroke="#7A9A95" stroke-linecap="round" stroke-width="3"></path>
+<text fill="#436460" font-family="serif" font-size="11" font-style="italic" x="320" y="140">Fluvius Danubius</text>
+<path d="M 600,0 Q 580,110 640,190 T 720,380" fill="none" stroke="#8CAEA9" stroke-linecap="round" stroke-width="2"></path>
+<text fill="#436460" font-family="serif" font-size="10" font-style="italic" x="650" y="210">Fluvius Tibiscus (Tisza)</text>
+<!-- Mountains Hatching -->
+<path d="M 120,40 L 135,15 L 150,40 L 165,18 L 180,40 M 740,60 L 760,25 L 780,60 L 800,30 L 820,60" fill="none" stroke="currentColor" stroke-width="1.2"></path>
+<text fill="#8b716e" font-family="serif" font-size="9" x="130" y="55">Montes Carpathici</text>
+</svg>
+<!-- Dynamic March Tracks (Interpolated Geometries) -->
+<svg class="absolute inset-0 w-full h-full pointer-events-none">
+<!-- Mongol Vanguard March Path -->
+<path d="M 820,80 Q 700,110 540,170 T 360,220" fill="none" id="route-mongol" stroke="#6b0c0a" stroke-dasharray="4 4" stroke-width="2"></path>
+<!-- Hungarian Royal Host Path -->
+<path d="M 220,260 Q 290,240 360,220" fill="none" id="route-hungary" stroke="#436460" stroke-dasharray="3 3" stroke-width="2"></path>
+</svg>
+<!-- Interactive Entity Nodes & Armies On Map -->
+<!-- Entity: Subutai Vanguard -->
+<div class="absolute left-[54%] top-[45%] -translate-x-1/2 -translate-y-1/2 flex flex-col items-center group cursor-pointer transition-all duration-300" id="marker-subutai">
+<div class="px-2 py-0.5 rounded bg-primary text-on-primary font-label-sm text-[10px] shadow-sm flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary-fixed animate-ping"></span>
+<span class="">Sayap Kanan Subutai (Tümen)</span>
+</div>
+<div class="w-3 h-3 bg-primary rotate-45 border border-surface-container-lowest mt-0.5 shadow-sm"></div>
+</div>
+<!-- Entity: Bela IV Royal Camp (Pest) -->
+<div class="absolute left-[24%] top-[62%] -translate-x-1/2 -translate-y-1/2 flex flex-col items-center group cursor-pointer">
+<div class="px-2 py-0.5 rounded bg-secondary text-on-secondary font-label-sm text-[10px] shadow-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-[11px]">shield</span>
+<span class="">Pasukan Diraja Béla IV</span>
+</div>
+<div class="w-2.5 h-2.5 bg-secondary rotate-45 border border-surface-container-lowest mt-0.5"></div>
+</div>
+<!-- Siege Hotspot: Mohi / Jembatan Sajo -->
+<div class="absolute left-[36%] top-[56%] -translate-x-1/2 -translate-y-1/2 flex flex-col items-center">
+<div class="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center animate-ping"></div>
+<div class="absolute top-1 px-2 py-0.5 rounded bg-tertiary-container text-on-tertiary-container font-headline-sm text-[11px] font-bold shadow-md border border-tertiary-fixed-dim flex items-center gap-1">
+<span class="">⚔ Pertempuran Sungai Sajó (Mohi)</span>
+</div>
+</div>
+<!-- Castle Marker: Esztergom -->
+<div class="absolute left-[29%] top-[40%] flex items-center gap-1 text-[11px] font-headline-sm text-on-surface">
+<span class="material-symbols-outlined text-tertiary text-[15px]">castle</span>
+<span class="italic">Castrum Strigoniense (Esztergom)</span>
+</div>
+<!-- Castle Marker: Várad -->
+<div class="absolute left-[72%] top-[54%] flex items-center gap-1 text-[11px] font-headline-sm text-on-surface">
+<span class="material-symbols-outlined text-tertiary text-[15px]">fort</span>
+<span class="italic">Varadinum (Oradea)</span>
+</div>
+<!-- Live Event Card Callout Floating at bottom right -->
+<div class="absolute bottom-4 right-4 max-w-xs bg-surface-container-lowest/95 p-3 rounded border border-outline-variant/80 shadow-md font-body-sm text-body-sm text-on-surface">
+<div class="flex items-center justify-between text-label-sm text-primary font-bold border-b border-outline-variant/30 pb-1">
+<span class="">PERISTIWA AKTIF #042</span>
+<span class="font-mono text-tertiary">1241-04-09</span>
+</div>
+<p class="mt-1 text-xs leading-snug">
+              Batu Khan melancarkan serangan pengalihan di jembatan, sementara Subutai membangun jembatan darurat kayu di hilir untuk menjepit sayap tentara Hungaria.
+            </p>
+<div class="mt-2 text-[10px] font-label-sm text-outline flex items-center justify-between">
+<span class="">Sumber: Kronika Rogerius</span>
+<span class="text-secondary font-semibold">Tingkat Kepercayaan: 94%</span>
+</div>
+</div>
+</div>
+<!-- TIMELINE SCRUBBER DECK -->
+<div class="bg-surface-container-low p-4 border-t border-outline-variant/60 space-y-3">
+<div class="flex items-center justify-between text-label-sm text-label-sm">
+<div class="flex items-center gap-2">
+<button class="w-8 h-8 rounded bg-primary text-on-primary flex items-center justify-center hover:bg-primary-container transition-colors shadow-sm" id="play-pause-btn" type="button">
+<span class="material-symbols-outlined text-[18px]">play_arrow</span>
+</button>
+<span class="font-mono font-semibold text-on-surface">9 April 1241 — Jam 06:14 Pagi</span>
+<span class="text-outline">/</span>
+<span class="text-on-surface-variant font-mono">Tick: #1,842,100</span>
+</div>
+<!-- Playback Speed Multiplier Segmented Toggle -->
+<div class="flex items-center rounded border border-outline-variant/50 bg-surface-container-lowest p-0.5">
+<button class="px-2 py-0.5 rounded font-label-sm text-[11px] text-on-surface-variant hover:text-on-surface" type="button">0.5×</button>
+<button class="px-2 py-0.5 rounded font-label-sm text-[11px] bg-secondary text-on-secondary font-semibold" type="button">1.0×</button>
+<button class="px-2 py-0.5 rounded font-label-sm text-[11px] text-on-surface-variant hover:text-on-surface" type="button">2.0×</button>
+<button class="px-2 py-0.5 rounded font-label-sm text-[11px] text-on-surface-variant hover:text-on-surface" type="button">5.0×</button>
+</div>
+</div>
+<!-- Scrubber Range Track with Milestones -->
+<div class="relative w-full pt-1 pb-2">
+<input class="w-full h-1.5 bg-surface-container-highest rounded-lg appearance-none cursor-pointer accent-primary" id="time-slider" max="100" min="0" type="range" value="44">
+<div class="flex justify-between text-[10px] font-label-sm text-on-surface-variant mt-1.5 font-mono">
+<span class="">1241-03-12 (Celah Verecke ditembus)</span>
+<span class="text-primary font-bold">1241-04-09 (Pertempuran Mohi)</span>
+<span class="">1241-04-28 (Pengepungan Klis)</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Hairline Scriptorium Etching Divider -->
+<div class="relative py-2">
+<div class="w-full border-t border-outline-variant/50"></div>
+</div>
+<!-- ======================================================== -->
+<!-- SECTION 4: DIAGNOSTICS LOG MATRIX & CODEX SPECIFICATIONS -->
+<!-- ======================================================== -->
+<section class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+<!-- Left: Real Diagnostic Linter Output (Academic Rigor) -->
+<div class="lg:col-span-6 space-y-4">
+<div class="flex items-center gap-2">
+<span class="text-primary font-headline-sm text-headline-sm font-serif">¶</span>
+<h3 class="font-headline-sm text-headline-sm text-primary">Diagnostika &amp; Uji Integritas Berkas</h3>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant text-justify">
+          Pemuat menolak perkiraan visual sembrono. Semua diskontinuitas spasial ditangkap saat inisialisasi awal tanpa membebani GPU runtime.
+        </p>
+<!-- Terminal Diagnostic Ledger View -->
+<div class="bg-surface-container-lowest rounded-lg border border-outline-variant/60 p-4 font-mono text-[12px] space-y-2.5">
+<div class="flex items-center justify-between text-outline border-b border-outline-variant/30 pb-2">
+<span class="">CHRONO_DIAG_CHECKER v0.8.4</span>
+<span class="text-secondary font-bold">ALL VALIDATIONS PASSED</span>
+</div>
+<div class="flex items-start gap-2 text-on-surface">
+<span class="text-secondary font-bold">[PASS-001]</span>
+<span class="">Schema conformance RFC-7946 GeoJSON + ChronoMap temporal extensions verified.</span>
+</div>
+<div class="flex items-start gap-2 text-on-surface">
+<span class="text-secondary font-bold">[PASS-002]</span>
+<span class="">Entity velocity limits checked: max march rate 42.4 km/day (realistic horse archer column).</span>
+</div>
+<div class="flex items-start gap-2 text-tertiary-container">
+<span class="text-tertiary font-bold">[WARN-012]</span>
+<span class="">Ambiguous siege duration at Castrum Várad: chronicle says "aliquot diebus"; defaulted to 4 days ± 12h uncertainty margin.</span>
+</div>
+<div class="flex items-start gap-2 text-on-surface-variant">
+<span class="text-outline font-bold">[INFO-089]</span>
+<span class="">Precomputed 4,800 spline Hermite interpolation coefficients in 4.2ms.</span>
+</div>
+</div>
+</div>
+<!-- Right: Specification Architecture Code Snippet -->
+<div class="lg:col-span-6 space-y-4">
+<div class="flex items-center gap-2">
+<span class="text-primary font-headline-sm text-headline-sm font-serif">¶</span>
+<h3 class="font-headline-sm text-headline-sm text-primary">Spesifikasi Naskah (Schema Excerpt)</h3>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant text-justify">
+          Struktur data memisahkan fakta historis dari bagaimana peta menampilkan animasi, mempertahankan integritas akademis sitasi primer.
+        </p>
+<div class="bg-surface-container-lowest rounded-lg border border-outline-variant/60 p-4 font-mono text-[11px] leading-relaxed text-on-surface overflow-x-auto">
+<div class="flex items-center justify-between text-outline border-b border-outline-variant/30 pb-2 mb-2">
+<span class="">type TrackSegment = { ... }</span>
+<span class="text-primary font-semibold">TypeScript ABI</span>
+</div>
+<pre><code><span class="text-primary">interface</span> <span class="text-secondary font-semibold">HistoricalTroopTrack</span> {
+  <span class="text-on-surface-variant">entityId</span>: <span class="text-tertiary">string</span>;            <span class="text-outline">// eg. "subutai_tumen_1"</span>
+  <span class="text-on-surface-variant">path</span>: [number, number][];     <span class="text-outline">// [[lon, lat], ...]</span>
+  <span class="text-on-surface-variant">timestamps</span>: <span class="text-tertiary">number</span>[];       <span class="text-outline">// Epoch seconds strictly monotonic</span>
+  <span class="text-on-surface-variant">uncertaintyRadiusKm</span>?: <span class="text-tertiary">number</span>;
+  <span class="text-on-surface-variant">primaryChronicleRef</span>: <span class="text-tertiary">string</span>;  <span class="text-outline">// eg. "Historia Mongalorum §IX"</span>
+}</code></pre>
+</div>
+</div>
+</section>
+<!-- Bottom Scholarly Call to Action Banner -->
+<div class="p-6 rounded-lg bg-surface-container border border-outline-variant/60 flex flex-col md:flex-row items-center justify-between gap-4">
+<div class="space-y-1">
+<div class="font-headline-sm text-headline-sm text-primary font-bold">Mulai Menulis Peta Kronologis Anda Sendiri</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Gunakan editor JSON berkas atau hubungkan pipeline ke arsip institusi universitas Anda.</p>
+</div>
+<div class="flex items-center gap-3">
+<button class="px-4 py-2 rounded bg-secondary text-on-secondary font-label-md text-label-md hover:bg-on-secondary-fixed-variant transition-colors shadow-sm flex items-center gap-1.5" type="button">
+<span class="material-symbols-outlined text-[16px]">terminal</span>
+<span class="">Unduh CLI Kompiler</span>
+</button>
+<button class="px-4 py-2 rounded bg-surface-container-high text-on-surface font-label-md text-label-md hover:bg-surface-variant transition-colors border border-outline-variant/60" type="button">
+          Dokumentasi Skema
+        </button>
+</div>
+</div>
+</div>
+<!-- Micro-interactions Script -->
+<script>
+    (function initChronoMapPlayground() {
+      const playBtn = document.getElementById('play-pause-btn');
+      const timeSlider = document.getElementById('time-slider');
+      const clockTimestamp = document.getElementById('clock-timestamp');
+      const subutaiMarker = document.getElementById('marker-subutai');
+      let isPlaying = false;
+      let animInterval = null;
+
+      if (!playBtn || !timeSlider) return;
+
+      playBtn.addEventListener('click', () => {
+        isPlaying = !isPlaying;
+        const icon = playBtn.querySelector('.material-symbols-outlined');
+        if (isPlaying) {
+          if (icon) icon.textContent = 'pause';
+          animInterval = setInterval(() => {
+            let cur = parseInt(timeSlider.value, 10);
+            cur = (cur + 1) % 100;
+            timeSlider.value = cur;
+            updateMapState(cur);
+          }, 120);
+        } else {
+          if (icon) icon.textContent = 'play_arrow';
+          clearInterval(animInterval);
+        }
+      });
+
+      timeSlider.addEventListener('input', (e) => {
+        updateMapState(parseInt(e.target.value, 10));
+      });
+
+      function updateMapState(val) {
+        // Interpolate position visually across sample range
+        if (subutaiMarker) {
+          const posX = 40 + (val * 0.35);
+          const posY = 58 - (val * 0.22);
+          subutaiMarker.style.left = posX + '%';
+          subutaiMarker.style.top = posY + '%';
+        }
+
+        if (clockTimestamp) {
+          const hour = Math.floor((val / 100) * 18) + 4;
+          const min = (val * 7) % 60;
+          const padH = hour < 10 ? '0' + hour : hour;
+          const padM = min < 10 ? '0' + min : min;
+          clockTimestamp.textContent = `1241-04-09 ${padH}:${padM}:00 UTC`;
+        }
+      }
+    })();
+  </script>
+</div></main><footer class="w-full bg-surface-container-low py-space-lg px-gutter"><div class="w-full flex flex-col md:flex-row items-center justify-between gap-space-md"><div class="flex items-center gap-space-md"><div class="w-6 h-6 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container font-label-sm text-label-sm font-bold">¶</div><div><p class="font-headline-sm text-headline-sm text-primary">ChronoMap: Compilatio Cartographica Digitalis</p><p class="font-body-sm text-body-sm text-on-surface-variant">Officina Historica &amp; Geographica • Local-first WASM Telemetry Architecture</p></div></div><div class="flex flex-wrap items-center gap-space-md font-label-sm text-label-sm text-on-surface-variant"></div></div></footer></div>
+
+</body></html>

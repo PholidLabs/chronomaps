@@ -1,28 +1,138 @@
 /* ChronoMap Player — prototype styles.
    Palette: hand-coloured lithograph — paper, sea wash, iron-gall ink, campaign colours from the data. */
 :root {
-  --ground: #F2ECDF; --land: #ECE3CD; --sea: #C5D1CB; --coast: #7E6F58; --river: #7C9A98;
-  --ink: #28211A; --ink-2: #5E5140; --ink-3: #8C7D67; --rule: #D5C8AE; --surface: #E7DFCC;
-  --teal: #2C625D; --on-teal: #F6F1E6; --shadow: rgba(40,33,26,.20); --is-dark: 0;
-  --rubric: #8B1E1E; --gold: #A67C2E;
+  --ground: #F2EBD9; --land: #ECE1C3; --sea: #C5D1CB; --coast: #7E6F58; --river: #7C9A98;
+  --ink: #211C15; --ink-2: #5C503E; --ink-3: #8C7D67; --rule: #D2C4AA; --surface: #E4DAC3;
+  --teal: #2C625D; --on-teal: #F6F1E6; --shadow: rgba(40,33,26,.15); --is-dark: 0;
+  --rubric: #8A662D; --gold: #A67C2E;
   --bar-h: 56px; --ff-display: "IM Fell English", "Iowan Old Style", Georgia, serif;
   --ff-sc: "IM Fell English SC", "IM Fell English", Georgia, serif;
   --ff-body: Literata, Georgia, "Times New Roman", serif;
   --ff-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  /* Stitch Design Tokens — Yellow Sand Parchment (matched to logo.jpeg) */
+  --color-background: #F2EBD9;
+  --color-surface: #F2EBD9;
+  --color-surface-container: #E4DAC3;
+  --color-surface-container-low: #EBE3D0;
+  --color-surface-container-high: #DDD1B6;
+  --color-surface-container-highest: #D5C7A9;
+  --color-surface-container-lowest: #F9F5EA;
+  --color-on-surface: #211C15;
+  --color-on-surface-variant: #5C503E;
+  --color-primary: #8A662D;
+  --color-primary-container: #C9A25A;
+  --color-on-primary: #ffffff;
+  --color-on-primary-container: #141210;
+  --color-secondary: #3E5F5A;
+  --color-on-secondary: #ffffff;
+  --color-secondary-container: #D3E4DF;
+  --color-on-secondary-container: #23423E;
+  --color-tertiary: #6E5119;
+  --color-tertiary-container: #F0DFB8;
+  --color-on-tertiary: #ffffff;
+  --color-on-tertiary-container: #453006;
+  --color-tertiary-fixed: #ffdea8;
+  --color-tertiary-fixed-dim: #edc06f;
+  --color-on-tertiary-fixed: #271900;
+  --color-outline: #8C7D67;
+  --color-outline-variant: #D2C4AA;
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --ground: #171A19; --land: #262520; --sea: #101617; --coast: #8F826C; --river: #4F6F6C;
-    --ink: #ECE3CF; --ink-2: #BDB09A; --ink-3: #847866; --rule: #34332C; --surface: #21231F;
-    --teal: #86C0B7; --on-teal: #0F1413; --shadow: rgba(0,0,0,.55); --is-dark: 1;
-    --rubric: #C86F62; --gold: #C9A25A;
+    --ground: #141210; --land: #1E1A17; --sea: #141210; --coast: #5A4E40; --river: #38312A;
+    --ink: #EDE4D8; --ink-2: #B8AC9D; --ink-3: #8C8071; --rule: #332B24; --surface: #1C1815;
+    --teal: #C9A25A; --on-teal: #141210; --shadow: rgba(0,0,0,.65); --is-dark: 1;
+    --rubric: #C9A25A; --gold: #C9A25A;
+
+    --color-background: #141210;
+    --color-surface: #141210;
+    --color-surface-container: #1C1815;
+    --color-surface-container-low: #171412;
+    --color-surface-container-high: #241F1C;
+    --color-surface-container-highest: #2E2824;
+    --color-surface-container-lowest: #0F0D0C;
+    --color-on-surface: #EDE4D8;
+    --color-on-surface-variant: #B3A696;
+    --color-primary: #c9a25a;
+    --color-primary-container: #2c2214;
+    --color-on-primary: #141210;
+    --color-on-primary-container: #ead2a8;
+    --color-secondary: #c9a25a;
+    --color-on-secondary: #141210;
+    --color-secondary-container: #2c2214;
+    --color-on-secondary-container: #ead2a8;
+    --color-tertiary: #c9a25a;
+    --color-tertiary-container: #33250a;
+    --color-on-tertiary: #141210;
+    --color-on-tertiary-container: #f3d99e;
+    --color-tertiary-fixed: #5e4200;
+    --color-tertiary-fixed-dim: #c9a25a;
+    --color-on-tertiary-fixed: #f3d99e;
+    --color-outline: #5c5043;
+    --color-outline-variant: #332b24;
   }
 }
-:root[data-theme="dark"] {
-  --ground: #171A19; --land: #262520; --sea: #101617; --coast: #8F826C; --river: #4F6F6C;
-  --ink: #ECE3CF; --ink-2: #BDB09A; --ink-3: #847866; --rule: #34332C; --surface: #21231F;
-  --teal: #86C0B7; --on-teal: #0F1413; --shadow: rgba(0,0,0,.55); --is-dark: 1;
-  --rubric: #C86F62; --gold: #C9A25A;
+:root[data-theme="dark"], html.dark {
+  --ground: #141210; --land: #1E1A17; --sea: #141210; --coast: #5A4E40; --river: #38312A;
+  --ink: #EDE4D8; --ink-2: #B8AC9D; --ink-3: #8C8071; --rule: #332B24; --surface: #1C1815;
+  --teal: #C9A25A; --on-teal: #141210; --shadow: rgba(0,0,0,.65); --is-dark: 1;
+  --rubric: #C9A25A; --gold: #C9A25A;
+
+  --color-background: #141210;
+  --color-surface: #141210;
+  --color-surface-container: #1C1815;
+  --color-surface-container-low: #171412;
+  --color-surface-container-high: #241F1C;
+  --color-surface-container-highest: #2E2824;
+  --color-surface-container-lowest: #0F0D0C;
+  --color-on-surface: #EDE4D8;
+  --color-on-surface-variant: #B3A696;
+  --color-primary: #c9a25a;
+  --color-primary-container: #2c2214;
+  --color-on-primary: #141210;
+  --color-on-primary-container: #ead2a8;
+  --color-secondary: #c9a25a;
+  --color-on-secondary: #141210;
+  --color-secondary-container: #2c2214;
+  --color-on-secondary-container: #ead2a8;
+  --color-tertiary: #c9a25a;
+  --color-tertiary-container: #33250a;
+  --color-on-tertiary: #141210;
+  --color-on-tertiary-container: #f3d99e;
+  --color-tertiary-fixed: #5e4200;
+  --color-tertiary-fixed-dim: #c9a25a;
+  --color-on-tertiary-fixed: #f3d99e;
+  --color-outline: #5c5043;
+  --color-outline-variant: #332b24;
+}
+
+/* Explicit Dark Mode Overrides: Antique Gold (#C9A25A) and Warm Parchment (#EDE4D8) */
+:root[data-theme="dark"] .bg-primary,
+html.dark .bg-primary {
+  background-color: #c9a25a !important;
+  color: #141210 !important;
+}
+:root[data-theme="dark"] .text-primary,
+html.dark .text-primary {
+  color: #c9a25a !important;
+}
+:root[data-theme="dark"] .text-primary-container,
+html.dark .text-primary-container {
+  color: #ead2a8 !important;
+}
+:root[data-theme="dark"] .border-primary,
+html.dark .border-primary {
+  border-color: #c9a25a !important;
+}
+:root[data-theme="dark"] .hover\:bg-primary-container:hover,
+html.dark .hover\:bg-primary-container:hover {
+  background-color: #dbb368 !important;
+  color: #141210 !important;
+}
+:root[data-theme="dark"] .text-secondary,
+html.dark .text-secondary {
+  color: #c9a25a !important;
 }
 * { box-sizing: border-box; }
 html { overflow-x: clip; }
@@ -98,6 +208,11 @@ select { padding-right: 24px; min-width: 0; max-width: 46vw; text-overflow: elli
 .legend .sw { width: 14px; height: 10px; border-radius: 2px; flex: none; }
 .legend .ln { width: 22px; flex: none; border-top-width: 2.5px; border-top-color: var(--ink-2); }
 .legend .ln.solid { border-top-style: solid; } .legend .ln.dash { border-top-style: dashed; } .legend .ln.dot { border-top-style: dotted; }
+.legend .ln.flow { border-top: 2.5px dashed var(--rubric); }
+.legend .ln.river { border-top: 2.5px solid var(--river); }
+.legend .pt { width: 14px; height: 14px; display: inline-flex; align-items: center; justify-content: center; font-size: 10px; flex: none; }
+.legend .pt.peak { color: var(--ink-2); }
+.legend .pt.city { width: 8px; height: 8px; border-radius: 50%; border: 1.6px solid var(--rubric); background: var(--land); margin: 0 3px; }
 .legend .halo { width: 14px; height: 14px; border-radius: 50%; flex: none; background: color-mix(in srgb, var(--ink) 12%, transparent); border: 1px dashed var(--ink-3); }
 .legend .foot { margin-top: 7px; color: var(--ink-3); font-size: 11px; }
 
@@ -131,7 +246,7 @@ select { padding-right: 24px; min-width: 0; max-width: 46vw; text-overflow: elli
 .dropzone { position: absolute; inset: 0; z-index: 8; display: grid; place-items: center; background: color-mix(in srgb, var(--ground) 82%, transparent);
   font: 400 24px/1.2 var(--ff-display); border: 2px dashed var(--teal); }
 .notice { position: absolute; z-index: 9; left: 16px; right: 16px; top: 16px; padding: 12px 14px; background: var(--ground);
-  border: 1px solid var(--ink-3); border-left: 3px solid #A3341F; border-radius: 4px; box-shadow: 0 8px 24px var(--shadow); max-height: 60%; overflow: auto; }
+  border: 1px solid var(--ink-3); border-left: 3px solid var(--rubric); border-radius: 4px; box-shadow: 0 8px 24px var(--shadow); max-height: 60%; overflow: auto; }
 .notice h3 { margin: 0 0 6px; font: 400 18px/1.2 var(--ff-display); }
 .notice ul { margin: 6px 0 0; padding-left: 18px; font: 400 12px/1.5 var(--ff-mono); }
 .notice .btn { margin-top: 10px; }

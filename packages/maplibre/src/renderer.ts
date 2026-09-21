@@ -20,6 +20,8 @@ export interface RendererOptions {
   theme?: ChronoTheme; language?: string; maxStrengthBandMeters?: number;
   /** Elements labels must not sit under — the legend, the cartouche, the timeline. */
   avoidSelector?: string;
+  basemapPath?: string;
+  reduceMotion?: boolean;
 }
 
 interface LabelMarker { marker: Marker; el: HTMLElement }
@@ -37,24 +39,87 @@ export class ChronoMapRenderer {
   private language: string;
   private bandMeters: number;
   private avoidSelector: string;
+  private basemapPath: string;
+  private reduceMotion: boolean;
   private maxStrength = 0;
   private unitMarkers = new Map<string, LabelMarker>();
   private fortMarkers = new Map<string, LabelMarker>();
   private placeLabels = new Map<string, LabelMarker>();
   private eventLabels = new Map<string, LabelMarker>();
+  private peakLabels = new Map<string, LabelMarker>();
+  private basemapPlaceLabels = new Map<string, LabelMarker>();
   private focus = new Set<string>();
   private lastTerritoryKey = '';
   private ready = false;
+  private hasActiveMarch = false;
+  private animFrameId: number | null = null;
+  private dashPhase = 0;
+  private lastAnimTime = 0;
 
   constructor(private map: MapLibreMap, opts: RendererOptions = {}) {
     this.theme = opts.theme ?? parchmentLight;
     this.language = opts.language ?? 'en';
     this.bandMeters = opts.maxStrengthBandMeters ?? 18000;
     this.avoidSelector = opts.avoidSelector ?? '[data-cm-avoid]';
-    const install = () => { this.installLayers(); this.ready = true; this.refreshGraticule(); };
+    this.basemapPath = opts.basemapPath ?? '/basemap';
+    this.reduceMotion = opts.reduceMotion ?? false;
+    const install = () => {
+      this.installLayers();
+      this.ready = true;
+      this.refreshGraticule();
+      this.loadBasemapLabels();
+    };
     if (this.map.isStyleLoaded()) install(); else this.map.once('load', install);
     this.map.on('zoom', () => this.applyLabelVisibility());
     this.map.on('move', () => this.scheduleDeclutter());
+  }
+
+  private async loadBasemapLabels(): Promise<void> {
+    if (typeof fetch === 'undefined') return;
+    try {
+      const [peaksRes, placesRes] = await Promise.all([
+        fetch(`${this.basemapPath}/peaks.geojson`).catch(() => null),
+        fetch(`${this.basemapPath}/places.geojson`).catch(() => null),
+      ]);
+      if (peaksRes && peaksRes.ok) {
+        const fc = await peaksRes.json() as FeatureCollection;
+        this.initPeakLabels(fc);
+      }
+      if (placesRes && placesRes.ok) {
+        const fc = await placesRes.json() as FeatureCollection;
+        this.initBasemapPlaceLabels(fc);
+      }
+    } catch {
+      // Graceful offline fallback
+    }
+  }
+
+  private initPeakLabels(fc: FeatureCollection): void {
+    for (const f of fc.features) {
+      const p = f.properties as Record<string, any>;
+      if (!p || !p.id || f.geometry.type !== 'Point') continue;
+      const coord = f.geometry.coordinates as [number, number];
+      const el = document.createElement('div');
+      el.className = `cm-peak-label rank-${p.rank ?? 2}`;
+      el.innerHTML = `<span class="cm-peak-icon">▲</span><span class="cm-peak-name">${p.name}</span><span class="cm-peak-elev">${p.elevation} m</span>`;
+      const marker = new Marker({ element: el, anchor: 'left', offset: [8, 0] }).setLngLat(coord).addTo(this.map);
+      this.peakLabels.set(p.id, { marker, el });
+    }
+    this.applyLabelVisibility();
+  }
+
+  private initBasemapPlaceLabels(fc: FeatureCollection): void {
+    for (const f of fc.features) {
+      const p = f.properties as Record<string, any>;
+      if (!p || !p.id || f.geometry.type !== 'Point') continue;
+      const coord = f.geometry.coordinates as [number, number];
+      const el = document.createElement('div');
+      el.className = `cm-basemap-place-label rank-${p.rank ?? 3} kind-${p.kind ?? 'town'}`;
+      el.textContent = p.label ?? p.name;
+      const marker = new Marker({ element: el, anchor: 'left', offset: [7, 0] }).setLngLat(coord).addTo(this.map);
+      this.basemapPlaceLabels.set(p.id, { marker, el });
+    }
+    this.applyLabelVisibility();
   }
 
   /* ---------------------------------------------------------------- layers */
@@ -63,7 +128,7 @@ export class ChronoMapRenderer {
     const add = (id: string, data: FeatureCollection = EMPTY) => {
       if (!m.getSource(id)) m.addSource(id, { type: 'geojson', data });
     };
-    for (const id of ['cm-halos', 'cm-territories', 'cm-routes', 'cm-trails', 'cm-places', 'cm-events']) add(id);
+    for (const id of ['cm-halos', 'cm-territories', 'cm-routes', 'cm-trails', 'cm-active-march', 'cm-places', 'cm-events']) add(id);
 
     m.addLayer({ id: 'cm-territory-fill', type: 'fill', source: 'cm-territories', paint: { 'fill-color': ['get', 'color'], 'fill-opacity': 0.14 } });
     m.addLayer({ id: 'cm-territory-line', type: 'line', source: 'cm-territories', paint: { 'line-color': ['get', 'color'], 'line-opacity': 0.5, 'line-width': 1.2, 'line-dasharray': [4, 3] } });
@@ -94,6 +159,16 @@ export class ChronoMapRenderer {
       layout: { 'line-cap': 'butt', 'line-join': 'round' }, paint: { 'line-color': ['get', 'color'], 'line-width': 2.4, 'line-dasharray': [3, 2] } });
     m.addLayer({ id: 'cm-trail-sea', type: 'line', source: 'cm-trails', filter: ['==', ['get', 'dash'], 'sea'],
       layout: { 'line-cap': 'round', 'line-join': 'round' }, paint: { 'line-color': ['get', 'color'], 'line-width': 2.2, 'line-dasharray': [0.6, 2.4] } });
+    m.addLayer({
+      id: 'cm-march-flow', type: 'line', source: 'cm-active-march',
+      layout: { 'line-cap': 'round', 'line-join': 'round' },
+      paint: {
+        'line-color': ['get', 'color'],
+        'line-width': 3.2,
+        'line-dasharray': [0.5, 1.5, 2.5, 1.5],
+        'line-opacity': 0.88,
+      },
+    });
 
     m.addLayer({
       id: 'cm-place-dot', type: 'circle', source: 'cm-places',
@@ -222,6 +297,7 @@ export class ChronoMapRenderer {
     const byId = new Map(c.entities.map((e) => [e.id, e]));
 
     const trails: Feature[] = [];
+    const activeMarches: Feature[] = [];
     const territories: Feature[] = [];
     const liveUnits = new Set<string>(), liveForts = new Set<string>();
 
@@ -235,7 +311,9 @@ export class ChronoMapRenderer {
         }
       }
       if (ne.track) {
-        trails.push(...this.trailFeatures(ne, fe.strength ?? null, t, color));
+        const { features, activeMarch } = this.trailFeatures(ne, fe.strength ?? null, t, color);
+        trails.push(...features);
+        if (activeMarch && fe.moving) activeMarches.push(activeMarch);
         liveUnits.add(fe.id);
         this.updateUnitMarker(ne, fe, color);
       } else if (ne.coord) {
@@ -249,6 +327,11 @@ export class ChronoMapRenderer {
     const territoryKey = territories.map((f) => `${f.properties!.id}:${f.properties!.color}`).join('|');
     if (territoryKey !== this.lastTerritoryKey) { this.setSource('cm-territories', { type: 'FeatureCollection', features: territories }); this.lastTerritoryKey = territoryKey; }
     this.setSource('cm-trails', { type: 'FeatureCollection', features: trails });
+    this.setSource('cm-active-march', { type: 'FeatureCollection', features: activeMarches });
+    this.hasActiveMarch = activeMarches.length > 0;
+    if (this.hasActiveMarch && !this.animFrameId && !this.reduceMotion) {
+      this.startMarchAnimation();
+    }
 
     const events: Feature[] = [];
     const liveEventLabels = new Set<string>();
@@ -273,11 +356,14 @@ export class ChronoMapRenderer {
   }
 
   /** Legs travelled so far, with Minard-style width where the data asks for it. */
-  private trailFeatures(ne: NormEntity, strength: number | null, t: Ticks, color: string): Feature[] {
+  private trailFeatures(
+    ne: NormEntity, strength: number | null, t: Ticks, color: string
+  ): { features: Feature[]; activeMarch: Feature | null } {
     const mode = ne.style?.trail ?? 'full';
-    if (mode === 'none') return [];
+    if (mode === 'none') return { features: [], activeMarch: null };
     const track = ne.track!;
     const segs: { coords: [number, number][]; dash: string; strength: number | null; lat: number }[] = [];
+    let activeMarchCoords: [number, number][] | null = null;
     for (let k = 1; k < track.length; k++) {
       const node = track[k], prev = track[k - 1];
       if (t < prev.depart) break;
@@ -287,6 +373,7 @@ export class ChronoMapRenderer {
         const f = Math.min(1, Math.max(0, (t - prev.depart) / Math.max(1, node.arrive - prev.depart)));
         coords = alongPath(node.leg!, f).travelled;
         partial = true;
+        if (coords.length >= 2) activeMarchCoords = coords;
       }
       segs.push({
         coords,
@@ -298,7 +385,7 @@ export class ChronoMapRenderer {
     }
     const drawn = mode === 'leg' ? segs.slice(-1) : segs;
     const useWidth = ne.style?.widthBy === 'strength' && this.maxStrength > 0;
-    return drawn.map((seg, i) => {
+    const features = drawn.map((seg, i) => {
       const age = drawn.length > 1 ? 0.45 + 0.55 * ((i + 1) / drawn.length) : 1;
       const props: Record<string, unknown> = { color: withAlpha(color, age), dash: seg.dash };
       if (useWidth && seg.strength) {
@@ -307,6 +394,33 @@ export class ChronoMapRenderer {
       }
       return { type: 'Feature', properties: props, geometry: { type: 'LineString', coordinates: seg.coords } } as Feature;
     });
+    const activeMarch = activeMarchCoords ? ({
+      type: 'Feature',
+      properties: { color },
+      geometry: { type: 'LineString', coordinates: activeMarchCoords }
+    } as Feature) : null;
+
+    return { features, activeMarch };
+  }
+
+  private startMarchAnimation(): void {
+    if (this.animFrameId || this.reduceMotion) return;
+    const tick = (now: number) => {
+      if (!this.hasActiveMarch || !this.ready) {
+        this.animFrameId = null;
+        return;
+      }
+      if (now - this.lastAnimTime > 50) {
+        this.lastAnimTime = now;
+        this.dashPhase = (this.dashPhase + 0.3) % 3;
+        if (this.map.getLayer('cm-march-flow')) {
+          const p = Number(this.dashPhase.toFixed(2));
+          this.map.setPaintProperty('cm-march-flow', 'line-dasharray', [0.1 + p, 1.4, 3 - p, 1.4]);
+        }
+      }
+      this.animFrameId = requestAnimationFrame(tick);
+    };
+    this.animFrameId = requestAnimationFrame(tick);
   }
 
   /* ---------------------------------------------------------------- markers */
@@ -377,15 +491,34 @@ export class ChronoMapRenderer {
   /** Label density by zoom and rank; focused items always show (contract §7.4). */
   private applyLabelVisibility(): void {
     const c = this.campaign;
-    if (!c) return;
     const z = this.map.getZoom();
-    for (const [id, entry] of this.placeLabels) {
-      const rank = c.places.get(id)?.raw.rank ?? 4;
-      const show = this.focus.has(id) || (rank <= 1 ? z >= 3.6 : rank === 2 ? z >= 7.2 : rank === 3 ? z >= 8.6 : z >= 10.2);
-      entry.el.classList.toggle('is-hidden', !show);
-      entry.el.classList.toggle('is-focus', this.focus.has(id));
+    if (c) {
+      for (const [id, entry] of this.placeLabels) {
+        const rank = c.places.get(id)?.raw.rank ?? 4;
+        const show = this.focus.has(id) || (rank <= 1 ? z >= 3.6 : rank === 2 ? z >= 7.2 : rank === 3 ? z >= 8.6 : z >= 10.2);
+        entry.el.classList.toggle('is-hidden', !show);
+        entry.el.classList.toggle('is-focus', this.focus.has(id));
+      }
+      for (const [id, entry] of this.fortMarkers) entry.el.classList.toggle('show-label', this.focus.has(id) || z >= 9.5);
     }
-    for (const [id, entry] of this.fortMarkers) entry.el.classList.toggle('show-label', this.focus.has(id) || z >= 9.5);
+
+    // Basemap places: show based on rank, hide if superseded by campaign place
+    for (const [id, entry] of this.basemapPlaceLabels) {
+      const isOverridden = !!c?.places.has(id);
+      const cls = entry.el.className;
+      const isRank1 = cls.includes('rank-1');
+      const isRank2 = cls.includes('rank-2');
+      const show = !isOverridden && (isRank1 ? z >= 5.5 : isRank2 ? z >= 7.5 : z >= 9.0);
+      entry.el.classList.toggle('is-hidden', !show);
+    }
+
+    // Mountain peaks: show based on rank
+    for (const [, entry] of this.peakLabels) {
+      const isRank1 = entry.el.className.includes('rank-1');
+      const show = isRank1 ? z >= 6.5 : z >= 8.0;
+      entry.el.classList.toggle('is-hidden', !show);
+    }
+
     this.scheduleDeclutter();
   }
 
@@ -404,7 +537,6 @@ export class ChronoMapRenderer {
 
   private declutter(): void {
     const c = this.campaign;
-    if (!c) return;
     type Cand = { el: HTMLElement; pri: number; owner: Element | null };
     const cands: Cand[] = [];
     // Priority is by kind first — the moving protagonist outranks a fort, a fort
@@ -426,7 +558,15 @@ export class ChronoMapRenderer {
     }
     for (const [id, e] of this.placeLabels) {
       if (e.el.classList.contains('is-hidden')) { clear(e.el); continue; }
-      push(e.el, 40 + (c.places.get(id)?.raw.rank ?? 4), this.focus.has(id), e.el);
+      push(e.el, 40 + (c?.places.get(id)?.raw.rank ?? 4), this.focus.has(id), e.el);
+    }
+    for (const [, e] of this.basemapPlaceLabels) {
+      if (e.el.classList.contains('is-hidden')) { clear(e.el); continue; }
+      push(e.el, 50, false, e.el);
+    }
+    for (const [, e] of this.peakLabels) {
+      if (e.el.classList.contains('is-hidden')) { clear(e.el); continue; }
+      push(e.el, 60, false, e.el);
     }
     if (cands.length === 0) return;
     // One read pass after the one write pass above, so the browser lays out once.
@@ -473,9 +613,13 @@ export class ChronoMapRenderer {
     if (src) src.setData(data);
   }
   private clearMarkers(): void {
-    for (const map of [this.unitMarkers, this.fortMarkers, this.placeLabels, this.eventLabels]) {
+    for (const map of [this.unitMarkers, this.fortMarkers, this.placeLabels, this.eventLabels, this.peakLabels, this.basemapPlaceLabels]) {
       for (const entry of map.values()) entry.marker.remove();
       map.clear();
+    }
+    if (this.animFrameId) {
+      cancelAnimationFrame(this.animFrameId);
+      this.animFrameId = null;
     }
   }
   destroy(): void { this.clearMarkers(); }

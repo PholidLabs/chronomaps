@@ -1,97 +1,388 @@
 # ChronoMap Engine
 
-An open-source, local-first engine for scrollytelling historical maps. You write one JSON
-file describing a campaign — places, forces, events, chapters — and the engine plays it:
-units move along their routes, forts change hands, the camera follows the story as you
-scroll, and every claim can carry its source and its uncertainty.
+<p align="center">
+  <img src="logo.jpeg" alt="ChronoMap Engine Logo" width="160" />
+</p>
 
-The format is the product. The Java War (Perang Diponegoro, 1825–1830) is the flagship
-dataset; Napoleon's Russian campaign of 1812 is in the same repository, in the same
-format, loaded by the same code with nothing changed but the file.
+<p align="center">
+  <strong>An open-source, local-first engine for interactive spatio-temporal maps and historical scrollytelling.</strong>
+</p>
 
-No API keys. No tile server. No account. The basemap is Natural Earth GeoJSON served
-from `data/basemap/`, so the whole thing runs offline.
+<p align="center">
+  <img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License: MIT" />
+  <img src="https://img.shields.io/badge/node-%3E%3D20-brightgreen.svg" alt="Node >= 20" />
+  <img src="https://img.shields.io/badge/local--first-offline%20ready-success.svg" alt="Offline Ready" />
+  <img src="https://img.shields.io/badge/dependencies-0%20API%20keys-orange.svg" alt="0 API Keys" />
+  <img src="https://img.shields.io/badge/parity-TS%20%2B%20Rust%2FWASM-purple.svg" alt="Dual Core Parity" />
+</p>
 
-```
+---
+
+Write a single declarative JSON file describing a historical campaign — places, forces, routes, events, and narrative chapters — and the engine brings it to life:
+- **Units march** along interpolated routes with realistic bearings and speed diagnostics.
+- **Fortresses and territories** change hands and track historical lines of control.
+- **The camera choreographs** smoothly across geography as you scroll through the narrative.
+- **Historical uncertainty is first-class**: conjectural locations display transparent uncertainty halos, and approximate dates are formally qualified.
+
+**The format is the product.** Shipped with the repository are two complete historical campaigns loaded by the exact same engine without changing a single line of code:
+1. **The Java War (Perang Diponegoro, 1825–1830)** — our flagship bilingual dataset featuring guerrilla troop maneuvers, shifting frontlines, and the Dutch *Benteng Stelsel* fort network.
+2. **Napoleon's 1812 Russian Campaign** — Minard-style visualization tracking troop attrition and movement during the march on and retreat from Moscow.
+
+---
+
+## Table of Contents
+
+1. [Key Features](#-key-features)
+2. [Quickstart in 30 Seconds](#-quickstart-in-30-seconds)
+3. [Showcase Campaigns](#-showcase-campaigns)
+4. [Repository Architecture](#-repository-architecture)
+5. [The Campaign File Format](#-the-campaign-file-format)
+6. [Creating Your Own Campaign](#-creating-your-own-campaign)
+7. [Programmatic API](#-programmatic-api)
+8. [The Rust & WASM Core](#-the-rust--wasm-core)
+9. [CLI & Scripts Reference](#-cli--scripts-reference)
+10. [License & Attribution](#-license--attribution)
+
+---
+
+## 🌟 Key Features
+
+- 🔒 **Local-First & Offline**: Built on local Natural Earth GeoJSON layers (`data/basemap/`). No Mapbox token, no external tile server, no telemetry, and no accounts. Runs completely disconnected.
+- 📜 **Single Declarative JSON Contract**: One file encapsulates gazetteer data, temporal tracks, narrative chapters, citations, and multilingual copy.
+- ⏳ **Honest Historical Time**: Built on an EDTF (ISO 8601-2) subset supporting date qualifiers (`?` uncertain, `~` approximate), date intervals, negative astronomical years (BCE), and sub-day precision.
+- 🎯 **Rigorous Spatial Certainty**: Locations carry explicit certainty markers (`exact`, `approximate`, `conjectural`). Conjectural points render with grounded visual uncertainty circles.
+- ⚡ **Deterministic Playback**: Identical inputs always produce identical output frames down to $10^{-6}$ float precision across both TypeScript and Rust cores.
+- 🌐 **Multilingual Out of the Box**: All human-facing text supports language maps (e.g. English and Indonesian: `{ "en": "...", "id": "..." }`).
+- 🎨 **Cartographic Elegance**: Custom parchment light and dark cartography, smooth camera flights, and dynamic DOM label decluttering.
+
+---
+
+## 🚀 Quickstart in 30 Seconds
+
+### Prerequisites
+- **Node.js** >= 20.0.0
+- **npm** (included with Node)
+
+### Installation & Launch
+
+```bash
+# 1. Clone and install dependencies
+git clone https://github.com/PholidLabs/ChronoMaps-Engine.git
+cd ChronoMaps-Engine
 npm install
-npm run build        # build the two packages
-npm test             # engine tests (golden vectors + diagnostics)
-npm run check        # validate every campaign in data/campaigns
-npm run dev          # landing page at the URL Vite prints; the map is at /app/
+
+# 2. Build the TypeScript packages
+npm run build
+
+# 3. Start the local development server
+npm run dev
 ```
 
-## What is in here
+Open the Vite URL printed in your terminal (typically `http://localhost:5173/`):
+- **Landing Page (`/`)**: Explains the engine architecture, features, and historical context.
+- **Interactive Scrollytelling App (`/app/`)**: Full-screen interactive map with chapter narrative, time slider, explore mode, language toggle (EN/ID), and theme selector.
 
-| Path | What it is |
-|---|---|
-| `docs/DATA-CONTRACT.md` | **The normative spec.** Time model, diagnostics, frame semantics. Read this first. |
-| `schema/campaign.schema.json` | JSON Schema for structural validation (shape only; the contract carries the rest). |
-| `packages/engine` | The engine in TypeScript: time parsing, loader + diagnostics, frame resolution. No DOM, no map. |
-| `packages/maplibre` | The MapLibre GL renderer: basemap style, camera, layers, DOM markers and label declutter. |
-| `apps/demo` | The site: a landing page explaining the engine at `/`, and the scrollytelling app at `/app/` — story column, explore mode, timeline, EN/ID, drag-and-drop loading. |
-| `crates/chronomap-core` | The same engine in Rust, for the WASM core. Tested against the same golden vectors. |
-| `data/campaigns` | The campaigns. `java-war-1825.json`, `napoleon-russia-1812.json`, and a synthetic fixture. |
-| `data/basemap` | Natural Earth land, lakes and rivers, simplified. |
-| `test-vectors` | Golden output. Both engines must reproduce it exactly (floats to 1e-6). |
+### Run Tests & Validation
 
-## The shape of a campaign file
+```bash
+# Run engine unit tests and golden vector assertions (8 tests)
+npm test
+
+# Validate all shipped campaign JSON files against the schema and contract
+npm run check
+```
+
+---
+
+## 🗺️ Showcase Campaigns
+
+| Campaign | File | Key Highlights |
+|---|---|---|
+| **The Java War** *(1825–1830)* | [`data/campaigns/java-war-1825.json`](file:///Users/mac/Pholid/ChronoMaps-Engine/data/campaigns/java-war-1825.json) | 5 factions, 34 places, 9 dynamic entities, 43 events, 38 chapters. Bilingual Indonesian/English narrative based on Peter Carey's research. Demonstrates guerrilla warfare, ambushes, negotiations, and the colonial Dutch *Benteng Stelsel* fort lines. |
+| **Napoleon's Invasion of Russia** *(1812)* | [`data/campaigns/napoleon-russia-1812.json`](file:///Users/mac/Pholid/ChronoMaps-Engine/data/campaigns/napoleon-russia-1812.json) | Classic campaign showing the Grande Armée's advance to Moscow and grueling winter retreat with Minard-style force strength counters. |
+| **Null Island Fixture** | [`data/campaigns/fixtures/null-island.json`](file:///Users/mac/Pholid/ChronoMaps-Engine/data/campaigns/fixtures/null-island.json) | Synthetic test dataset designed to exercise edge cases, track interpolation, and diagnostic warnings (`W115`). |
+
+---
+
+## 📂 Repository Architecture
+
+This repository is organized as an npm workspace with accompanying Rust crates:
+
+```
+ChronoMaps-Engine/
+├── packages/
+│   ├── engine/              # Headless TypeScript engine (pure logic, 0 DOM/map dependencies)
+│   │   ├── src/time.ts      # EDTF parser, civil calendars, Gregorian tick conversions
+│   │   ├── src/campaign.ts  # Loader, validator, structural & semantic diagnostics
+│   │   ├── src/resolve.ts   # Frame resolution: entity tracks, bearing, event phases
+│   │   ├── src/engine.ts    # State machine façade for interactive playback
+│   │   └── src/cli.ts       # CLI tool for campaign linting and headless playback
+│   └── maplibre/            # MapLibre GL visualization layer
+│       ├── src/renderer.ts  # Map layers, SVG unit markers, dynamic label declutter
+│       ├── src/camera.ts    # Smooth scroll-driven camera choreography
+│       ├── src/style.ts     # Offline vector basemap generator (Natural Earth)
+│       └── src/theme.ts     # Parchment Light and Dark historical map themes
+├── apps/
+│   └── demo/                # Multi-page Vite web application
+│       ├── index.html       # Landing page (served at /)
+│       └── app/index.html   # Full scrollytelling application (served at /app/)
+├── crates/
+│   └── chronomap-core/      # Port of the engine in pure Rust (compiled to WASM)
+├── data/
+│   ├── basemap/             # Simplified Natural Earth GeoJSON (land, lakes, rivers)
+│   └── campaigns/           # Sample historical campaign JSON files
+├── schema/
+│   └── campaign.schema.json # JSON Schema (Draft 2020-12) for validation and IDE autocomplete
+├── test-vectors/            # Golden output vectors enforcing TS/Rust parity
+└── docs/
+    └── DATA-CONTRACT.md     # Normative specification of the ChronoMap data contract
+```
+
+---
+
+## 📜 The Campaign File Format
+
+A campaign file is a single JSON document. Every object shares a single flat kebab-case ID namespace.
+
+### Top-Level Anatomy
 
 ```jsonc
 {
+  "$schema": "../schema/campaign.schema.json",
   "chronomap": "1.0",
-  "meta":     { "id": "…", "timeline": { "extent": "1825-07/1830-03" }, "map": { … } },
-  "factions": [ { "id": "diponegoro", "name": { "en": "…", "id": "…" }, "color": "#8B1E1E" } ],
-  "places":   [ { "id": "tegalrejo", "coordinates": [110.35, -7.78], "certainty": "exact" } ],
-  "entities": [ { "id": "diponegoro-hq", "kind": "unit", "track": [ … ] } ],
-  "events":   [ { "id": "battle-of-gawok", "when": "1826-10-15", "at": "gawok" } ],
-  "chapters": [ { "id": "ch-06", "when": "1825-07-20", "body": { … }, "camera": { … } } ],
-  "sources":  [ … ],
-  "media":    [ … ]
+  "meta": {
+    "id": "java-war-1825",
+    "title": { "en": "The Java War", "id": "Perang Diponegoro" },
+    "defaultLanguage": "en",
+    "timeline": { "extent": "1825-07-20/1830-03-28" },
+    "map": { "bounds": [[108.5, -8.5], [111.5, -6.5]], "initial": { "center": [110.35, -7.78], "zoom": 8.5 } }
+  },
+  "factions": [
+    { "id": "diponegoro", "name": { "en": "Diponegoro Forces" }, "color": "#8B1E1E" }
+  ],
+  "places": [
+    { "id": "tegalrejo", "name": { "en": "Tegalrejo" }, "coordinates": [110.358, -7.784], "certainty": "exact" }
+  ],
+  "entities": [ ... ],
+  "events": [ ... ],
+  "chapters": [ ... ],
+  "sources": [ ... ],
+  "media": [ ... ]
 }
 ```
 
-Everything shares one ID namespace. `x-` prefixed keys and `x-` entity kinds are yours to
-use; the engine carries them through untouched.
+### The 4 Core Primitives
 
-Time is an EDTF (ISO 8601-2) subset: `1825`, `1825-07`, `1825-07-20`, `1826-10-12~`
-(approximate), `1830-02?` (uncertain), `1825-07/1830-03` (interval), `1825-07/..` (open
-end), and negative years for BCE. Internally a tick is **signed** seconds since
-1970-01-01 in the proleptic Gregorian calendar — every campaign here is negative.
+| Concept | Has Time? | Has Geometry? | Purpose |
+|---|---|---|---|
+| **Place** | No | Point (`[lng, lat]`) | Named geographic reference. Places carry a `certainty` flag (`exact`, `approximate`, `conjectural`). Entities and events reference places by ID rather than duplicating coordinates. |
+| **Entity** | Temporal Track | Track / Point / Polygon | Things that exist and evolve over time: armies (`unit`), forts (`fortification`), control zones (`territory`), or supply lines (`route`). Position, strength, status, and faction change across waypoints. |
+| **Event** | Point / Interval | Optional Point | Discrete historical occurrences (e.g. `battle`, `skirmish`, `siege`, `treaty`, `arrest`). Events evaluate to `upcoming`, `active` (pulsing marker), or `past` (faded marker). |
+| **Chapter** | Interval / Point | Camera Target & Focus | Story units that drive the user experience. As the user scrolls through a chapter, scroll progress $p \in [0, 1]$ drives the timeline clock and camera transitions. |
 
-## Dropping in your own history
+### The Time Model
 
-Write a file, then:
+Time is expressed as an EDTF (ISO 8601-2) string:
+- `1825` — Year precision.
+- `1825-07` — Month precision.
+- `1825-07-20` — Day precision.
+- `1830-03-28T10:00` — Minute precision.
+- `1826-10-12~` — Approximate date.
+- `1828-11-12?` — Uncertain date.
+- `1825-07/1830-03` — Date interval.
+- `1827/..` — Open-ended interval (active until the end of the campaign timeline).
+- `-0043-03-15` — BCE astronomical year (44 BCE).
 
+> [!NOTE]
+> Internally, the engine operates on **signed 64-bit integer ticks** (seconds since `1970-01-01T00:00:00Z` in the proleptic Gregorian calendar). Historical dates before 1970 evaluate to negative integers.
+
+---
+
+## 🛠️ Creating Your Own Campaign
+
+Creating a new interactive map requires **zero programming** — just a JSON file.
+
+### Step 1: Initialize Your Campaign File
+
+Create `my-campaign.json` and reference the JSON Schema for instant autocomplete in VS Code and other editors:
+
+```json
+{
+  "$schema": "https://raw.githubusercontent.com/PholidLabs/ChronoMaps-Engine/main/schema/campaign.schema.json",
+  "chronomap": "1.0",
+  "meta": {
+    "id": "my-campaign",
+    "title": "My Historical Campaign",
+    "defaultLanguage": "en",
+    "timeline": { "extent": "1860-01/1865-12" },
+    "map": { "initial": { "center": [0, 20], "zoom": 4 } }
+  },
+  "factions": [
+    { "id": "allies", "name": "Allied Forces", "color": "#1F4E79" }
+  ],
+  "places": [
+    { "id": "capital", "name": "Capital City", "coordinates": [0.12, 51.5], "certainty": "exact" }
+  ],
+  "entities": [],
+  "events": [],
+  "chapters": [
+    {
+      "id": "ch-01",
+      "when": "1860-05-01",
+      "title": "The Outbreak",
+      "body": "Hostilities began in the early summer of 1860...",
+      "camera": { "center": [0.12, 51.5], "zoom": 6 }
+    }
+  ]
+}
 ```
+
+### Step 2: Validate with the CLI
+
+Run the campaign validator:
+
+```bash
 node packages/engine/dist/cli.js my-campaign.json
 ```
 
-Zero errors means it will play. Warnings are worth reading: they catch the mistakes that
-produce a map that renders but lies — a unit whose track jumps 400 km in a day, a chapter
-whose window runs backwards, an event outside the timeline extent.
+The validator detects both syntax violations and deep semantic errors:
+- **Errors** (e.g. invalid date formats, broken place references, duplicate IDs).
+- **Warnings** (e.g. impossible troop movement exceeding realistic speeds, backwards chapter chronology, missing translations).
 
-Then drag the file onto the running app at `/app/`. No code changes, no rebuild.
+To preview unit movements and active events across each chapter in your terminal:
 
-## The Rust core
-
-`crates/chronomap-core` is a faithful port of `packages/engine`, verified against the same
-golden vectors — diagnostics compared code-by-code and path-by-path, every frame field to
-1e-6.
-
+```bash
+node packages/engine/dist/cli.js my-campaign.json --frames
 ```
+
+### Step 3: Instant Live Preview
+
+Start the development server (`npm run dev`) and navigate to `http://localhost:5173/app/`.
+
+**Simply drag and drop `my-campaign.json` onto the map.** The engine loads and plays your campaign instantly in your browser — no server restart or rebuild needed!
+
+---
+
+## 💻 Programmatic API
+
+You can embed `@chronomap/engine` and `@chronomap/maplibre` into your own web applications.
+
+### 1. Headless Engine (`@chronomap/engine`)
+
+```typescript
+import { loadCampaign, resolveFrame, ChronoMapEngine } from '@chronomap/engine';
+
+// Load and validate campaign data
+const rawData = await fetch('/campaigns/my-campaign.json').then(r => r.json());
+const { campaign, diagnostics } = loadCampaign(rawData);
+
+if (!campaign) {
+  console.error('Validation errors:', diagnostics);
+  return;
+}
+
+// Option A: Direct stateless frame resolution at a specific timestamp (ticks)
+const tick = -4545036000; // Signed seconds relative to 1970
+const frame = resolveFrame(campaign, tick);
+console.log('Active units:', frame.entities);
+console.log('Active events:', frame.events);
+
+// Option B: State machine playback controller
+const engine = new ChronoMapEngine({ language: 'en' });
+engine.setCampaign(rawData);
+engine.on('frame', (f) => {
+  console.log(`Current date: ${f.iso}, visible units: ${f.entities.length}`);
+});
+
+// Jump to chapter or step time
+engine.setChapter('ch-01', 0.5); // 50% scroll progress through chapter 1
+```
+
+### 2. MapLibre Renderer (`@chronomap/maplibre`)
+
+```typescript
+import { Map } from 'maplibre-gl';
+import { createBasemapStyle, ChronoMapRenderer, CameraController, parchmentLight } from '@chronomap/maplibre';
+import '@chronomap/maplibre/style.css';
+
+const map = new Map({
+  container: 'map-container',
+  style: createBasemapStyle({ theme: parchmentLight, basemapPath: '/basemap' }),
+  center: [110.3, -7.65],
+  zoom: 7,
+});
+
+map.on('load', () => {
+  const renderer = new ChronoMapRenderer(map, { theme: parchmentLight });
+  const camera = new CameraController(map);
+
+  renderer.setCampaign(campaign);
+
+  // Wire frame updates to the map
+  engine.on('frame', (frame) => {
+    renderer.setFrame(frame);
+  });
+});
+```
+
+---
+
+## 🦀 The Rust & WASM Core
+
+The repository includes an exact Rust implementation of the engine logic in `crates/chronomap-core`.
+
+- **Strict Parity**: Every frame field and diagnostic code matches the TypeScript reference down to $10^{-6}$ float precision, enforced by golden test vectors in `test-vectors/`.
+- **WASM Support**: Compiles to WebAssembly via `wasm-bindgen`.
+
+### Rust Commands
+
+```bash
 cd crates/chronomap-core
-cargo test                      # native, no wasm toolchain needed
-cargo build --features wasm     # the wasm-bindgen surface
+
+# Run native test suite against golden vectors
+cargo test
+
+# Build for WebAssembly
+cargo build --features wasm
 wasm-pack build --features wasm --target web
 ```
 
-A word of honesty about the WASM plan: on the datasets here, `resolveFrame` costs about
-0.02 ms per frame against roughly 8 ms of draw time. The bottleneck is the renderer, not
-the engine. Compile the core to WASM because you want one implementation of the semantics
-in a memory-safe language, or because a much larger dataset changes the arithmetic — not
-because it will make the current demo faster. Measure first.
+> [!TIP]
+> **Performance Reality**: In our benchmarks, resolving a frame in TypeScript takes approximately **0.02 ms**, while map rendering takes ~**8 ms**. The rendering pipeline is the real performance boundary, not frame resolution. Compile to WASM when integrating with native/Rust runtimes or if scaling to exceptionally large datasets.
 
-## Licence
+---
 
-Code MIT. The Java War dataset is CC-BY-4.0; its sources are listed in the file itself.
-Basemap from [Natural Earth](https://www.naturalearthdata.com/) (public domain).
+## ⌨️ CLI & Scripts Reference
+
+### CLI Usage
+
+```bash
+node packages/engine/dist/cli.js <campaign.json>... [options]
+```
+
+| Flag | Description |
+|---|---|
+| `--frames` | Performs a dry-run playback through all chapters, printing active events and unit coordinates at scroll points $p \in \{0.0, 0.5, 1.0\}$. |
+| `--strict` | Treats validation warnings as errors (exits with code 1). |
+| `--quiet` | Suppresses non-error output. |
+| `--json` | Outputs machine-readable JSON diagnostic reports. |
+| `--vectors <dir>` | Exports golden test vectors to the specified directory. |
+
+### NPM Scripts
+
+| Command | Action |
+|---|---|
+| `npm run build` | Builds `packages/engine` and `packages/maplibre` and copies CSS assets. |
+| `npm run build:demo` | Runs full package build and builds the production web app in `apps/demo/dist`. |
+| `npm run dev` | Launches the local Vite dev server with hot module reloading. |
+| `npm test` | Runs the automated test suite across packages. |
+| `npm run check` | Validates all campaigns in `data/campaigns/` using the CLI. |
+| `npm run vectors` | Regenerates golden vectors from the Java War campaign. |
+
+---
+
+## 📄 License & Attribution
+
+- **Code**: Licensed under the [MIT License](file:///Users/mac/Pholid/ChronoMaps-Engine/LICENSE).
+- **The Java War Dataset**: Licensed under [Creative Commons Attribution 4.0 International (CC-BY-4.0)](https://creativecommons.org/licenses/by/4.0/). Historical research based on the work of Peter Carey (*The Power of Prophecy: Prince Diponegoro and the End of an Old Order in Java, 1785–1855*).
+- **Basemap Data**: Derived from [Natural Earth](https://www.naturalearthdata.com/) vector datasets (Public Domain).

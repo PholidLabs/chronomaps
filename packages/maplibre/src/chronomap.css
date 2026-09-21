@@ -25,8 +25,30 @@
 .cm-place-label.is-hidden { display: none; }
 .cm-event-label { font: 14px/1.2 var(--cm-font-sc, "IM Fell English SC", Georgia, serif); color: var(--cm-ink, #28211A); pointer-events: none; text-shadow: 0 0 4px var(--cm-land, #ECE3CD), 0 0 9px var(--cm-land, #ECE3CD); white-space: nowrap; }
 
+/* Mountain Peaks */
+.cm-peak-label { display: flex; align-items: center; gap: 4px; font: italic 11px/1.2 var(--cm-font-display, "IM Fell English", Georgia, serif); color: var(--cm-ink-soft, #5E5140); pointer-events: none; text-shadow: 0 0 3px var(--cm-land, #ECE3CD), 0 0 6px var(--cm-land, #ECE3CD); white-space: nowrap; }
+.cm-peak-icon { font-size: 8px; color: var(--cm-ink-soft, #5E5140); opacity: 0.85; }
+.cm-peak-elev { font: 400 9.5px/1.1 var(--cm-font-mono, "IBM Plex Mono", monospace); color: var(--cm-ink-faint, #8C7D67); margin-left: 2px; }
+.cm-peak-label.is-hidden { display: none; }
+
+/* Basemap background settlements */
+.cm-basemap-place-label { font: 400 11px/1.2 var(--cm-font-body, Literata, Georgia, serif); color: var(--cm-ink-soft, #5E5140); pointer-events: none; text-shadow: 0 0 3px var(--cm-land, #ECE3CD), 0 0 7px var(--cm-land, #ECE3CD); white-space: nowrap; }
+.cm-basemap-place-label.rank-1 { font: 600 12.5px/1.2 var(--cm-font-sc, "IM Fell English SC", Georgia, serif); letter-spacing: 0.04em; color: var(--cm-ink, #28211A); }
+.cm-basemap-place-label.rank-2 { font: 500 11.5px/1.2 var(--cm-font-body, Literata, Georgia, serif); }
+.cm-basemap-place-label.is-hidden { display: none; }
+
 @keyframes cm-pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.18); } }
-@media (prefers-reduced-motion: reduce) { .cm-fort.is-besieged svg { animation: none; } }
+@keyframes cm-march-pulse {
+  0% { filter: drop-shadow(0 0 0px var(--cm-colour, #8B1E1E)); }
+  50% { filter: drop-shadow(0 0 4px var(--cm-colour, #8B1E1E)); }
+  100% { filter: drop-shadow(0 0 0px var(--cm-colour, #8B1E1E)); }
+}
+.cm-unit-icon.is-moving { animation: cm-march-pulse 1.8s ease-in-out infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  .cm-fort.is-besieged svg { animation: none; }
+  .cm-unit-icon.is-moving { animation: none; }
+}
 
 /* Declutter: a label the renderer could not fit is removed, symbols stay.
    Written to out-specify .cm-fort.show-label .cm-fort-label. */
@@ -34,4 +56,7 @@
 .cm-fort.show-label .cm-fort-label.is-crowded,
 .cm-fort-label.is-crowded,
 .cm-place-label.is-crowded,
-.cm-event-label.is-crowded { display: none; }
+.cm-event-label.is-crowded,
+.cm-peak-label.is-crowded,
+.cm-basemap-place-label.is-crowded { display: none; }
+

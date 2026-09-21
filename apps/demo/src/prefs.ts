@@ -14,7 +14,7 @@ export function savedThemeMode(): ThemeMode {
     const v = localStorage.getItem(THEME_KEY);
     if (v === 'auto' || v === 'light' || v === 'dark') return v;
   } catch { /* private mode */ }
-  return 'auto';
+  return 'dark';
 }
 export function storeThemeMode(mode: ThemeMode): void {
   try { localStorage.setItem(THEME_KEY, mode); } catch { /* private mode */ }
@@ -22,8 +22,11 @@ export function storeThemeMode(mode: ThemeMode): void {
 /** 'auto' leaves data-theme off the root so the OS preference decides; the others pin it.
  *  Call before the first paint so nothing has to be repainted to correct it. */
 export function applyThemeMode(mode: ThemeMode): void {
+  const isDark = mode === 'dark' || (mode === 'auto' && typeof window !== 'undefined' && window.matchMedia?.('(prefers-color-scheme: dark)').matches);
   if (mode === 'auto') delete document.documentElement.dataset.theme;
   else document.documentElement.dataset.theme = mode;
+  document.documentElement.classList.toggle('dark', Boolean(isDark));
+  document.documentElement.classList.toggle('light', !isDark);
 }
 
 export function savedLang(fallback: string): string {

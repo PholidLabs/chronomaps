@@ -12,6 +12,7 @@ export interface UIStrings {
   week: string; month: string; year: string; fiveyear: string;
   exact: string; approximate: string; conjectural: string; legend: string; aboutPreview: string; aboutText: string; tagline: string;
   theme: string; themeAuto: string; themeLight: string; themeDark: string; dropHere: string;
+  mountains: string; rivers: string; cities: string; marchActive: string;
 }
 
 export const UI: Record<string, UIStrings> = {
@@ -36,6 +37,7 @@ export const UI: Record<string, UIStrings> = {
     tagline: 'engine demo · contract 1.0',
     theme: 'Theme', themeAuto: 'Auto', themeLight: 'Light', themeDark: 'Dark',
     dropHere: 'Drop to load campaign',
+    mountains: 'Mountains & Volcanoes', rivers: 'Rivers & Waterways', cities: 'Historic Settlements', marchActive: 'Troops on the march',
   },
   id: {
     campaign: 'Kampanye', story: 'Cerita', explore: 'Jelajah', load: 'Muat JSON…', chapter: 'Bab', of: 'dari',
@@ -58,6 +60,7 @@ export const UI: Record<string, UIStrings> = {
     tagline: 'demo mesin · kontrak 1.0',
     theme: 'Tema', themeAuto: 'Otomatis', themeLight: 'Terang', themeDark: 'Gelap',
     dropHere: 'Jatuhkan berkas untuk memuat kampanye',
+    mountains: 'Gunung & Gunung Api', rivers: 'Sungai & Saluran Air', cities: 'Permukiman Sejarah', marchActive: 'Pergerakan pasukan',
   },
 };
 

@@ -65,7 +65,7 @@ const map = new MapLibreMap({
 map.addControl(new NavigationControl({ visualizePitch: true }), 'bottom-right');
 map.addControl(new ScaleControl({ maxWidth: 120, unit: 'metric' }), 'bottom-right');
 const camera = new CameraController(map, { reduceMotion });
-let renderer = new ChronoMapRenderer(map, { theme: theme(), language: state.lang });
+let renderer = new ChronoMapRenderer(map, { theme: theme(), language: state.lang, basemapPath: '/basemap', reduceMotion });
 const popup = new Popup({ closeButton: false, closeOnClick: true, maxWidth: '300px', offset: 12 });
 
 let appliedTheme = theme().name;
@@ -77,7 +77,7 @@ function rebuildRenderer(): void {
   renderer.destroy();
   map.setStyle(createBasemapStyle({ theme: theme(), basemapPath: '/basemap' }));
   map.once('styledata', () => {
-    renderer = new ChronoMapRenderer(map, { theme: theme(), language: state.lang });
+    renderer = new ChronoMapRenderer(map, { theme: theme(), language: state.lang, basemapPath: '/basemap', reduceMotion });
     if (engine.campaign) {
       renderer.setCampaign(engine.campaign);
       if (state.frame) renderer.setFrame(state.frame, focusIds());
@@ -98,17 +98,45 @@ engine.on('frame', (frame) => {
 
 /* ------------------------------------------------------------------ popups */
 function attachMapInteractions(): void {
-  for (const layer of ['cm-place-dot', 'cm-event-active', 'cm-event-past']) {
+  const layers = ['cm-place-dot', 'cm-event-active', 'cm-event-past', 'basemap-peaks-dot', 'basemap-places-dot', 'rivers'];
+  for (const layer of layers) {
+    if (!map.getLayer(layer)) continue;
     map.on('mouseenter', layer, () => { map.getCanvas().style.cursor = 'pointer'; });
     map.on('mouseleave', layer, () => { map.getCanvas().style.cursor = ''; });
     map.on('click', layer, (e) => {
       const f = e.features?.[0];
       if (!f) return;
       const id = String(f.properties?.id ?? '');
-      const html = layer === 'cm-place-dot' ? placePopup(id) : eventPopup(id);
+      let html: HTMLElement | null = null;
+      if (layer === 'cm-place-dot') html = placePopup(id);
+      else if (layer === 'cm-event-active' || layer === 'cm-event-past') html = eventPopup(id);
+      else if (layer === 'basemap-peaks-dot') html = peakPopup(f.properties ?? {});
+      else if (layer === 'basemap-places-dot') html = basemapPlacePopup(f.properties ?? {});
+      else if (layer === 'rivers') html = riverPopup(f.properties ?? {});
       if (html) popup.setLngLat(e.lngLat).setDOMContent(html).addTo(map);
     });
   }
+}
+function peakPopup(p: Record<string, any>): HTMLElement {
+  const box = el('div');
+  box.append(el('span', { class: 'kind', text: ui().mountains }));
+  box.append(el('h4', { text: p.name ?? 'Puncak' }));
+  if (p.elevation) box.append(el('div', { class: 'muted', text: `${p.elevation} m` }));
+  if (p.note) box.append(el('div', { class: 'note', text: p.note }));
+  return box;
+}
+function basemapPlacePopup(p: Record<string, any>): HTMLElement {
+  const box = el('div');
+  const kind = p.kind ? p.kind.replace(/-/g, ' ') : ui().cities;
+  box.append(el('span', { class: 'kind', text: kind }));
+  box.append(el('h4', { text: p.label ?? p.name }));
+  return box;
+}
+function riverPopup(p: Record<string, any>): HTMLElement {
+  const box = el('div');
+  box.append(el('span', { class: 'kind', text: ui().rivers }));
+  box.append(el('h4', { text: p.name ?? 'Sungai' }));
+  return box;
 }
 function placePopup(id: string): HTMLElement | null {
   const p = campaign().places.get(id);
@@ -335,13 +363,31 @@ function updateExplorePanel(force: boolean): void {
 }
 function toggleTerrain(): void {
   const on = !!map.getTerrain();
-  if (on) { map.setTerrain(null); return; }
+  if (on) {
+    map.setTerrain(null);
+    if (map.getLayer('hillshade')) map.setLayoutProperty('hillshade', 'visibility', 'none');
+    return;
+  }
   if (!map.getSource('terrain')) {
     map.addSource('terrain', {
       type: 'raster-dem', tiles: ['https://s3.amazonaws.com/elevation-tiles-prod/terrarium/{z}/{x}/{y}.png'],
       encoding: 'terrarium', tileSize: 256, maxzoom: 14,
       attribution: 'Terrain: AWS Terrain Tiles (Mapzen/Tilezen)',
     });
+  }
+  if (!map.getLayer('hillshade')) {
+    map.addLayer({
+      id: 'hillshade', type: 'hillshade', source: 'terrain',
+      paint: {
+        'hillshade-illumination-direction': 315,
+        'hillshade-exaggeration': 0.45,
+        'hillshade-shadow-color': theme().hillshadeShadow,
+        'hillshade-highlight-color': theme().hillshadeHighlight,
+        'hillshade-accent-color': theme().inkFaint,
+      },
+    }, 'lakes');
+  } else {
+    map.setLayoutProperty('hillshade', 'visibility', 'visible');
   }
   map.setTerrain({ source: 'terrain', exaggeration: campaign().meta.map.terrain?.exaggeration ?? 1.4 });
 }
@@ -366,7 +412,12 @@ function buildLegend(): void {
   host.append(el('div', { class: 'row' }, el('span', { class: 'ln solid' }), ui().routeDoc));
   host.append(el('div', { class: 'row' }, el('span', { class: 'ln dash' }), ui().routeConj));
   host.append(el('div', { class: 'row' }, el('span', { class: 'ln dot' }), ui().routeSea));
+  host.append(el('div', { class: 'row' }, el('span', { class: 'ln flow' }), ui().marchActive));
   host.append(el('div', { class: 'row' }, el('span', { class: 'halo' }), ui().uncertainty));
+  host.append(el('div', { class: 'eyebrow', style: 'margin:8px 0 4px', text: ui().places }));
+  host.append(el('div', { class: 'row' }, el('span', { class: 'pt peak' }, '▲'), ui().mountains));
+  host.append(el('div', { class: 'row' }, el('span', { class: 'pt city' }), ui().cities));
+  host.append(el('div', { class: 'row' }, el('span', { class: 'ln river' }), ui().rivers));
   host.append(el('div', { class: 'foot', text: ui().basemap }));
 }
 

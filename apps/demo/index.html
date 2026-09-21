@@ -1,33 +1,736 @@
 <!doctype html>
-<html lang="id">
+<html class="dark" data-theme="dark" lang="id">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-    <title>ChronoMap Engine</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>ChronoMap — Peta Sejarah Bergulir dari Satu Berkas JSON</title>
     <meta name="description" content="Mesin lokal-dulu untuk peta sejarah bergulir dari satu berkas JSON." />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="icon" href="/icon-192.png" type="image/png" sizes="192x192" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
-    <meta name="theme-color" content="#F2ECDF" />
+    <meta name="theme-color" content="#141210" />
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="ChronoMap Engine" />
+    <meta property="og:title" content="ChronoMap — Peta Sejarah Bergulir" />
     <meta property="og:description" content="Mesin lokal-dulu untuk peta sejarah bergulir dari satu berkas JSON." />
     <meta property="og:image" content="/og.png" />
     <meta name="twitter:card" content="summary_large_image" />
+
+    <!-- Google Fonts & Material Symbols -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=IM+Fell+English+SC&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,600;1,7..72,400&family=IBM+Plex+Mono:wght@400;500&family=UnifrakturMaguntia&display=swap" />
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=JetBrains+Mono:wght@300;400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet" />
+
+    <style>
+      @layer base {
+        html, body { margin: 0; padding: 0; }
+        body { overscroll-behavior: none; }
+        main > :first-child { margin-top: 0 !important; }
+        main > :last-child { margin-bottom: 0 !important; }
+      }
+      ::-webkit-scrollbar { display: none; }
+    </style>
+
+    <!-- Tailwind CDN with Stitch Material Design 3 tokens mapped to CSS variables -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "background": "var(--color-background)",
+              "surface": "var(--color-surface)",
+              "surface-container": "var(--color-surface-container)",
+              "surface-container-low": "var(--color-surface-container-low)",
+              "surface-container-high": "var(--color-surface-container-high)",
+              "surface-container-highest": "var(--color-surface-container-highest)",
+              "surface-container-lowest": "var(--color-surface-container-lowest)",
+              "on-surface": "var(--color-on-surface)",
+              "on-surface-variant": "var(--color-on-surface-variant)",
+              "primary": "var(--color-primary)",
+              "primary-container": "var(--color-primary-container)",
+              "on-primary": "var(--color-on-primary)",
+              "on-primary-container": "var(--color-on-primary-container)",
+              "secondary": "var(--color-secondary)",
+              "on-secondary": "var(--color-on-secondary)",
+              "secondary-container": "var(--color-secondary-container)",
+              "on-secondary-container": "var(--color-on-secondary-container)",
+              "tertiary": "var(--color-tertiary)",
+              "tertiary-container": "var(--color-tertiary-container)",
+              "on-tertiary": "var(--color-on-tertiary)",
+              "on-tertiary-container": "var(--color-on-tertiary-container)",
+              "tertiary-fixed": "var(--color-tertiary-fixed)",
+              "tertiary-fixed-dim": "var(--color-tertiary-fixed-dim)",
+              "on-tertiary-fixed": "var(--color-on-tertiary-fixed)",
+              "outline": "var(--color-outline)",
+              "outline-variant": "var(--color-outline-variant)",
+              "error": "#c9a25a",
+              "error-container": "#2c2214",
+              "on-error": "#141210",
+              "on-error-container": "#ead2a8",
+              "inverse-surface": "#EDE4D8",
+              "inverse-on-surface": "#141210",
+              "inverse-primary": "#c9a25a",
+              "surface-dim": "var(--color-surface-container-high)",
+              "surface-variant": "var(--color-surface-container-highest)",
+              "surface-bright": "var(--color-surface)",
+              "on-background": "var(--color-on-surface)",
+              "primary-fixed": "#c9a25a",
+              "primary-fixed-dim": "#a67c2e",
+              "secondary-fixed": "#c9a25a",
+              "secondary-fixed-dim": "#a67c2e",
+              "on-secondary-fixed": "#141210",
+              "on-primary-fixed": "#141210",
+              "on-primary-fixed-variant": "#2c2214",
+              "on-secondary-fixed-variant": "#2c2214",
+              "on-tertiary-fixed-variant": "#f3d99e"
+            },
+            borderRadius: {
+              "DEFAULT": "0.125rem",
+              "lg": "0.25rem",
+              "xl": "0.5rem",
+              "full": "0.75rem"
+            },
+            spacing: {
+              "space-xs": "0.25rem",
+              "space-md": "1rem",
+              "space-lg": "1.75rem",
+              "space-sm": "0.5rem",
+              "margin-mobile": "1.25rem",
+              "gutter": "1.5rem",
+              "margin": "3.5rem",
+              "space-xl": "3rem",
+              "gutter-mobile": "1rem"
+            },
+            fontFamily: {
+              "body-sm": [ "Newsreader", "Georgia", "serif" ],
+              "headline-sm": [ "EB Garamond", "Georgia", "serif" ],
+              "body-md": [ "Newsreader", "Georgia", "serif" ],
+              "label-md": [ "JetBrains Mono", "monospace" ],
+              "headline-lg": [ "EB Garamond", "Georgia", "serif" ],
+              "label-sm": [ "JetBrains Mono", "monospace" ],
+              "body-lg": [ "Newsreader", "Georgia", "serif" ],
+              "headline-xl-mobile": [ "EB Garamond", "Georgia", "serif" ],
+              "headline-xl": [ "EB Garamond", "Georgia", "serif" ],
+              "display-lg": [ "EB Garamond", "Georgia", "serif" ],
+              "display-lg-mobile": [ "EB Garamond", "Georgia", "serif" ]
+            },
+            fontSize: {
+              "body-sm": [ "14px", { "lineHeight": "22px", "fontWeight": "400" } ],
+              "headline-sm": [ "19px", { "lineHeight": "26px", "letterSpacing": "0.02em", "fontWeight": "600" } ],
+              "body-md": [ "16px", { "lineHeight": "26px", "fontWeight": "400" } ],
+              "label-md": [ "12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500" } ],
+              "headline-lg": [ "26px", { "lineHeight": "34px", "letterSpacing": "0.01em", "fontWeight": "600" } ],
+              "label-sm": [ "11px", { "lineHeight": "14px", "letterSpacing": "0.08em", "fontWeight": "400" } ],
+              "body-lg": [ "18px", { "lineHeight": "30px", "fontWeight": "400" } ],
+              "headline-xl-mobile": [ "28px", { "lineHeight": "36px", "letterSpacing": "0em", "fontWeight": "500" } ],
+              "headline-xl": [ "40px", { "lineHeight": "48px", "letterSpacing": "-0.015em", "fontWeight": "500" } ],
+              "display-lg": [ "56px", { "lineHeight": "60px", "letterSpacing": "-0.02em", "fontWeight": "400" } ],
+              "display-lg-mobile": [ "36px", { "lineHeight": "42px", "letterSpacing": "-0.01em", "fontWeight": "400" } ]
+            }
+          }
+        }
+      };
+    </script>
   </head>
-  <body>
-    <header class="bar">
-      <div class="brand"><span class="wordmark">ChronoMap</span></div>
-      <div class="ctl">
-        <span class="seg" role="group" aria-label="Bahasa" id="seg-lang"></span>
-        <span class="seg" role="group" aria-label="Tema" id="seg-theme"></span>
+  <body class="bg-background font-body-md text-body-md text-on-surface antialiased transition-colors duration-200">
+    <!-- Top Fixed Navigation Bar -->
+    <header class="fixed top-0 left-0 right-0 z-50 bg-surface/90 backdrop-blur-md shadow-[0_1px_8px_rgba(0,0,0,0.04)] border-b border-outline-variant/30">
+      <div class="h-20 w-full px-gutter flex items-center justify-between gap-space-md">
+        <!-- Brand & Scriptorium Crest -->
+        <a href="#hero" class="flex items-center gap-space-md min-w-[280px] no-underline">
+          <div class="w-11 h-11 rounded-lg overflow-hidden border border-outline-variant/60 flex items-center justify-center shadow-sm bg-surface-container-high dark:bg-[#1C1815]">
+            <img src="/logo.jpeg" alt="ChronoMap" class="w-full h-full object-cover" />
+          </div>
+          <div class="flex flex-col">
+            <div class="flex items-center gap-space-xs">
+              <span class="font-headline-sm text-headline-sm uppercase tracking-widest text-primary font-bold" data-i18n="brandTitle">ChronoMap</span>
+            </div>
+            <span class="font-body-sm text-body-sm italic text-on-surface-variant tracking-wide" data-i18n="brandSub">Machina Historica &amp; Tabula Geographica</span>
+          </div>
+        </a>
+
+        <!-- Middle Navigation Links -->
+        <nav class="hidden xl:flex items-center gap-space-xs bg-surface-container-low p-1 rounded-lg">
+          <a class="px-space-md py-space-xs rounded-DEFAULT font-label-md text-label-md text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors no-underline" href="#hero" data-i18n="navHome">Beranda &amp; Pengenalan</a>
+          <a class="px-space-md py-space-xs rounded-DEFAULT font-label-md text-label-md text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors no-underline" href="/app/" data-i18n="navStudio">Studio Peta Interaktif</a>
+          <a class="px-space-md py-space-xs rounded-DEFAULT font-label-md text-label-md text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors no-underline" href="#pipeline" data-i18n="navPipeline">Arsitektur Pipeline</a>
+          <a class="px-space-md py-space-xs rounded-DEFAULT font-label-md text-label-md text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors no-underline" href="#schema" data-i18n="navSchema">Skema JSON &amp; Spesifikasi</a>
+        </nav>
+
+        <!-- Right Control Panel: Status, Lang, Theme, Start CTA -->
+        <div class="flex items-center gap-space-sm">
+          <div class="hidden md:flex items-center gap-space-xs px-2.5 py-1 bg-surface-container-low rounded-lg">
+            <span class="w-2 h-2 rounded-full bg-secondary animate-pulse"></span>
+            <span class="font-label-sm text-label-sm text-on-surface-variant" data-i18n="engineStatus">Engine: Siap (WASM/MapLibre)</span>
+          </div>
+
+          <!-- Bilingual Toggle (EN / ID) -->
+          <div class="flex items-center p-0.5 bg-surface-container rounded-DEFAULT border border-outline-variant/40">
+            <button id="lang-en" class="px-2 py-0.5 font-label-sm text-label-sm text-on-surface-variant hover:text-on-surface transition-colors" type="button">EN</button>
+            <button id="lang-id" class="px-2 py-0.5 font-label-sm text-label-sm bg-secondary text-on-secondary rounded-DEFAULT font-semibold transition-colors" type="button">ID</button>
+          </div>
+
+          <!-- Theme Mode Switcher -->
+          <button id="theme-toggle-btn" aria-label="Toggle Theme Mode" class="w-8 h-8 rounded-lg bg-surface-container flex items-center justify-center text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors border border-outline-variant/40" type="button">
+            <span id="theme-toggle-icon" class="material-symbols-outlined text-[18px]">light_mode</span>
+          </button>
+
+          <!-- Primary Start App Button -->
+          <a id="btn-start-nav" href="/app/" class="flex items-center gap-1.5 px-space-md py-1.5 rounded-DEFAULT bg-primary text-on-primary font-label-md text-label-md shadow-[inset_0_1px_1px_rgba(255,255,255,0.2),0_1px_3px_rgba(26,22,18,0.2)] hover:bg-primary-container transition-all no-underline">
+            <span class="material-symbols-outlined text-[16px]">menu_book</span>
+            <span data-i18n="startBtn">Mulai</span>
+          </a>
+        </div>
       </div>
     </header>
-    <main class="landing" id="landing"></main>
+
+    <!-- Main Container -->
+    <main class="relative pt-20 w-full min-h-screen bg-background px-gutter py-space-lg overflow-x-clip">
+      <div class="flex flex-col w-full relative">
+        <!-- Atmospheric Living Parchment Shader Canvas -->
+        <div class="absolute inset-0 w-full h-full pointer-events-none opacity-40 mix-blend-multiply dark:opacity-30 dark:mix-blend-overlay z-0" style="display:block;">
+          <canvas id="shader-canvas-ANIMATION_3" style="display:block;width:100%;height:100%"></canvas>
+        </div>
+
+        <div class="relative z-10 max-w-7xl mx-auto w-full px-space-md sm:px-gutter lg:px-margin space-y-space-xl pb-24">
+          <!-- ========================================== -->
+          <!-- SECTION 1: HERO & SCHOLARLY MANIFESTO      -->
+          <!-- ========================================== -->
+          <section id="hero" class="relative pt-6 sm:pt-10 scroll-mt-24">
+            <!-- Top Scholarly Overline Metadata -->
+            <div class="flex flex-wrap items-center justify-between gap-space-sm pb-space-sm border-b border-outline-variant/30 text-on-surface-variant font-label-sm text-label-sm">
+              <div class="flex items-center gap-space-xs">
+                <span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+                <span class="uppercase tracking-widest font-semibold text-on-surface-variant" data-i18n="codexOverline">Codex Cartographicus / Archivum Historico-Mechanicum</span>
+              </div>
+              <div class="flex items-center gap-space-md font-label-sm">
+                <span>Engine WASM Core: <strong class="text-secondary font-medium">v1.14-b42</strong></span>
+                <span class="hidden md:inline">•</span>
+                <span class="hidden md:inline">Memory Footprint: <strong class="text-secondary font-medium">12.4 MB</strong></span>
+                <span>•</span>
+                <span class="px-2 py-0.5 rounded bg-surface-container text-on-surface" data-i18n="deterministicClock">Jam Deterministik: Sinkron</span>
+              </div>
+            </div>
+
+            <div class="mt-8 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
+              <!-- Left: Monumental Headline & Manuscript Proemium -->
+              <div class="lg:col-span-7 space-y-6">
+                <h1 class="font-headline-xl text-headline-xl sm:text-display-lg text-primary tracking-tight leading-[1.08]" data-i18n-html="heroTitle">
+                  Satu berkas JSON.<br />
+                  <span class="italic text-on-surface">Peta yang menceritakan</span> kisahnya.
+                </h1>
+
+                <!-- Manuscript drop cap paragraph -->
+                <div class="relative pl-0 sm:pl-2">
+                  <p class="font-body-lg text-body-lg text-on-surface leading-relaxed text-justify" data-i18n="heroLede">
+                    ChronoMap adalah mesin lokal-dulu untuk peta sejarah bergulir. Jelaskan sebuah kampanye — tempat, pasukan, peristiwa, bab — dan mesin ini memainkannya: pasukan bergerak di sepanjang rutenya, benteng berpindah tangan, kamera mengikuti cerita saat Anda menggulir, dan setiap klaim dapat membawa sumber serta ketidakpastiannya.
+                  </p>
+                </div>
+
+                <!-- Primary Control Deck & Action Buttons -->
+                <div class="pt-2 flex flex-wrap items-center gap-space-md">
+                  <button id="btn-open-map" class="group relative inline-flex items-center gap-2.5 px-5 py-2.5 rounded bg-primary text-on-primary font-label-md text-label-md tracking-wider uppercase transition-all shadow-[inset_0_1px_1px_rgba(255,255,255,0.25),0_3px_8px_rgba(0,0,0,0.35)] hover:bg-primary-container hover:shadow-[0_4px_14px_rgba(201,162,90,0.35)] cursor-pointer" type="button">
+                    <span class="material-symbols-outlined text-[18px] transition-transform group-hover:rotate-45">explore</span>
+                    <span class="font-semibold" data-i18n="ctaOpenMap">Buka Peta Interaktif</span>
+                    <span class="w-1.5 h-1.5 rounded-full bg-tertiary-fixed animate-ping"></span>
+                  </button>
+                  <button id="btn-load-demo" class="inline-flex items-center gap-2 px-4 py-2.5 rounded bg-surface-container-high text-on-surface font-label-md text-label-md hover:bg-surface-variant transition-colors border border-outline-variant/50 cursor-pointer" type="button">
+                    <span class="material-symbols-outlined text-[17px] text-tertiary">folder_open</span>
+                    <span><span data-i18n="ctaLoadDemo">Muat Berkas Contoh</span> (<code class="text-tertiary font-mono text-[11px]" data-i18n="ctaLoadDemoFile">1825_perang_jawa.json</code>)</span>
+                  </button>
+                  <div class="flex items-center gap-1.5 text-on-surface-variant font-label-sm text-label-sm py-1 px-2.5 rounded bg-surface-container">
+                    <span class="material-symbols-outlined text-[15px] text-secondary">verified</span>
+                    <span data-i18n="zeroDeps">Tanpa ketergantungan server eksternal</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Right: Active Campaign Status Ledger & Quick Telemetry -->
+              <div class="lg:col-span-5">
+                <div class="relative bg-surface-container-lowest p-6 rounded-lg border border-outline-variant/60 shadow-sm space-y-4">
+                  <!-- Illuminated Card Corner Ticks -->
+                  <div class="absolute top-2 left-2 text-[10px] text-tertiary font-serif select-none">❧</div>
+                  <div class="absolute top-2 right-2 text-[10px] text-tertiary font-serif select-none">❦</div>
+                  <div class="flex items-center justify-between border-b border-outline-variant/40 pb-3">
+                    <div class="flex items-center gap-2">
+                      <span class="material-symbols-outlined text-primary text-[20px]">auto_stories</span>
+                      <span class="font-headline-sm text-headline-sm text-on-surface font-semibold" data-i18n="statusLedgerTitle">Status Ledger</span>
+                    </div>
+                    <span class="px-2 py-0.5 rounded bg-secondary-container text-on-secondary-container font-label-sm text-label-sm uppercase font-semibold" data-i18n="activeRecordBadge">Catatan Aktif</span>
+                  </div>
+
+                  <!-- Campaign Meta Key-Value Ledger -->
+                  <div class="space-y-2.5 font-label-sm text-label-sm">
+                    <div class="flex items-baseline justify-between py-1 border-b border-outline-variant/20">
+                      <span class="text-on-surface-variant" data-i18n="focalPointLabel">Titik Fokus</span>
+                      <span class="font-medium text-on-surface" data-i18n="focalPointVal">Perang Jawa (1825–1830) / Ekspedisi 1241</span>
+                    </div>
+                    <div class="flex items-baseline justify-between py-1 border-b border-outline-variant/20">
+                      <span class="text-on-surface-variant" data-i18n="routeLengthLabel">Panjang Lintasan (Rute)</span>
+                      <span class="font-mono text-on-surface font-bold"><span data-i18n="routeLengthVal">14.820 km</span> <span class="text-on-surface-variant font-normal" data-i18n="routeLengthSub">(4 segmen tervalidasi)</span></span>
+                    </div>
+                    <div class="flex items-baseline justify-between py-1 border-b border-outline-variant/20">
+                      <span class="text-on-surface-variant" data-i18n="fortsLabel">Benteng &amp; Kota Terpantau</span>
+                      <span class="font-mono text-secondary font-bold"><span data-i18n="fortsVal">42 kubu</span> <span class="text-on-surface-variant font-normal" data-i18n="fortsSub">(18 pengepungan tervalidasi)</span></span>
+                    </div>
+                    <div class="flex items-baseline justify-between py-1 border-b border-outline-variant/20">
+                      <span class="text-on-surface-variant" data-i18n="chroniclesLabel">Kronik &amp; Naskah Primer</span>
+                      <span class="font-mono text-tertiary font-bold" data-i18n="chroniclesVal">128 entri peristiwa beranotasi</span>
+                    </div>
+                    <div class="flex items-baseline justify-between py-1">
+                      <span class="text-on-surface-variant" data-i18n="interpolationLabel">Interpolasi Koordinat</span>
+                      <span class="inline-flex items-center gap-1 text-secondary font-mono">
+                        <span class="inline-block w-1.5 h-1.5 rounded-full bg-secondary"></span>
+                        <span data-i18n="interpolationVal">Haversine-Great-Circle Hermite</span>
+                      </span>
+                    </div>
+                  </div>
+
+                  <!-- Mini Live JSON Preview Tape -->
+                  <div class="p-3 bg-surface-container rounded border border-outline-variant/50 font-label-sm text-[11px] text-on-surface-variant overflow-x-auto">
+                    <div class="text-tertiary-container font-bold mb-1 flex items-center justify-between">
+                      <span>CAMPAIGN_MANIFEST.JSON</span>
+                      <span class="font-normal text-outline">CRC32: 9FA87B11</span>
+                    </div>
+                    <pre class="font-mono text-on-surface leading-tight"><code>{
+  "id": "java-war-1825",
+  "timeline": { "extent": "1825-07/1830-03" },
+  "factions": [{ "id": "diponegoro", "color": "#C9A25A" }],
+  "interpolation": "spline_quaternion"
+}</code></pre>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Hairline Scriptorium Etching Divider -->
+          <div class="relative py-2">
+            <div class="w-full border-t border-outline-variant/50"></div>
+            <div class="absolute left-1/2 -top-2.5 -translate-x-1/2 bg-background px-3 text-tertiary font-serif text-sm">✦ ✦ ✦</div>
+          </div>
+
+          <!-- =================================================== -->
+          <!-- SECTION 2: THE 4-STAGE PIPELINE & DIAGNOSTICS DECK -->
+          <!-- =================================================== -->
+          <section id="pipeline" class="space-y-8 scroll-mt-24">
+            <!-- Section Header with Illuminated Pilcrow -->
+            <div class="space-y-3 max-w-4xl">
+              <div class="flex items-center gap-2">
+                <span class="text-primary-container font-headline-lg text-headline-lg font-serif select-none leading-none">¶</span>
+                <h2 class="font-headline-lg text-headline-lg text-primary tracking-tight" data-i18n="pipelineTitle">Cara kerjanya: Arsitektur Empat Tahap</h2>
+              </div>
+              <p class="font-body-lg text-body-lg text-on-surface-variant leading-relaxed text-justify" data-i18n="pipelineLede">
+                Empat tahap, dan hanya tahap terakhir yang tahu apa itu peta. Mesinnya sendiri tidak mengenal DOM maupun penggambar: beri ia sebuah kampanye dan satu titik waktu, ia mengembalikan satu frame.
+              </p>
+            </div>
+
+            <!-- INTERACTIVE 4-STAGE FLOWCHART -->
+            <div class="relative bg-surface-container-low p-6 sm:p-8 rounded-lg border border-outline-variant/60 shadow-sm overflow-hidden">
+              <div class="grid grid-cols-1 md:grid-cols-4 gap-4 relative">
+                <!-- Stage 1 -->
+                <div data-stage-idx="0" class="pipeline-node group relative p-4 rounded bg-surface-container-lowest border border-outline-variant/80 hover:border-primary transition-all shadow-sm">
+                  <div class="flex items-center justify-between pb-2 border-b border-outline-variant/30">
+                    <span class="font-label-sm text-label-sm text-primary font-bold">STAGE 01</span>
+                    <span class="material-symbols-outlined text-[16px] text-on-surface-variant">description</span>
+                  </div>
+                  <div class="stage-title mt-3 font-label-md text-label-md font-mono font-semibold text-on-surface">campaign.json</div>
+                  <p class="stage-desc mt-1 font-body-sm text-body-sm text-on-surface-variant">Input kanonikal murni deklaratif; bebas atribut proyeksi peta.</p>
+                  <div class="mt-3 pt-2 border-t border-outline-variant/20 flex items-center justify-between text-[11px] font-mono text-outline">
+                    <span class="stage-meta">Parser: JSON-WASM</span>
+                    <span class="stage-metric text-secondary font-semibold">142 KB</span>
+                  </div>
+                </div>
+
+                <!-- Stage 2 -->
+                <div data-stage-idx="1" class="pipeline-node group relative p-4 rounded bg-surface-container-lowest border border-outline-variant/80 hover:border-primary transition-all shadow-sm">
+                  <div class="flex items-center justify-between pb-2 border-b border-outline-variant/30">
+                    <span class="font-label-sm text-label-sm text-secondary font-bold">STAGE 02</span>
+                    <span class="material-symbols-outlined text-[16px] text-secondary">fact_check</span>
+                  </div>
+                  <div class="stage-title mt-3 font-label-md text-label-md font-mono font-semibold text-on-surface">loader + diagnostics</div>
+                  <p class="stage-desc mt-1 font-body-sm text-body-sm text-on-surface-variant">Validasi semantik, deteksi jeda waktu mundur, linter rute tak wajar.</p>
+                  <div class="mt-3 pt-2 border-t border-outline-variant/20 flex items-center justify-between text-[11px] font-mono text-outline">
+                    <span class="stage-meta">Rules: 32 tests</span>
+                    <span class="stage-metric text-secondary font-semibold">0 Galat</span>
+                  </div>
+                </div>
+
+                <!-- Stage 3 -->
+                <div data-stage-idx="2" class="pipeline-node group relative p-4 rounded bg-surface-container-lowest border border-outline-variant/80 hover:border-primary transition-all shadow-sm">
+                  <div class="flex items-center justify-between pb-2 border-b border-outline-variant/30">
+                    <span class="font-label-sm text-label-sm text-tertiary font-bold">STAGE 03</span>
+                    <span class="material-symbols-outlined text-[16px] text-tertiary">precision_manufacturing</span>
+                  </div>
+                  <div class="stage-title mt-3 font-label-md text-label-md font-mono font-semibold text-on-surface">resolveFrame</div>
+                  <p class="stage-desc mt-1 font-body-sm text-body-sm text-on-surface-variant">Aritmetika murni fungsi f(t). Mengembalikan snapshot posisi &amp; status.</p>
+                  <div class="mt-3 pt-2 border-t border-outline-variant/20 flex items-center justify-between text-[11px] font-mono text-outline">
+                    <span class="stage-meta">Latency: 0.18ms</span>
+                    <span class="stage-metric text-primary font-semibold">Deterministik</span>
+                  </div>
+                </div>
+
+                <!-- Stage 4 -->
+                <div data-stage-idx="3" class="pipeline-node group relative p-4 rounded bg-surface-container-high border-2 border-secondary hover:border-primary transition-all shadow-sm">
+                  <div class="flex items-center justify-between pb-2 border-b border-outline-variant/30">
+                    <span class="font-label-sm text-label-sm text-on-surface font-bold">STAGE 04</span>
+                    <span class="material-symbols-outlined text-[16px] text-secondary">layers</span>
+                  </div>
+                  <div class="stage-title mt-3 font-label-md text-label-md font-mono font-semibold text-primary">MapLibre GL</div>
+                  <p class="stage-desc mt-1 font-body-sm text-body-sm text-on-surface">Satu-satunya tahap yang tahu DOM, kanvas WebGL, serta proyeksi peta.</p>
+                  <div class="mt-3 pt-2 border-t border-outline-variant/20 flex items-center justify-between text-[11px] font-mono text-outline">
+                    <span class="stage-meta">GPU Shaders: 60fps</span>
+                    <span class="stage-metric text-secondary font-semibold">Siap Gambar</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Pipeline Data Packet Stream Indicator -->
+              <div class="mt-4 pt-3 border-t border-outline-variant/30 flex flex-wrap items-center justify-between gap-2 text-on-surface-variant font-label-sm text-label-sm">
+                <div class="flex items-center gap-2">
+                  <span class="inline-block w-2 h-2 rounded-full bg-secondary animate-pulse"></span>
+                  <span class="italic font-body-sm" data-i18n="pipelineQuote">"Hanya tahap terakhir yang tahu apa itu peta."</span>
+                </div>
+                <div class="flex items-center gap-3 font-mono text-[11px]">
+                  <span class="text-on-surface" data-i18n="pipelineFlow">Alur: JSON → Buffer Vektor → Resolusi Tick → Tile WebGL GeoJSON</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- FOUR SCHOLARLY SUB-SECTIONS (I, II, III, IV) -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 pt-2">
+              <!-- Item I -->
+              <div data-step-idx="0" class="space-y-2 p-5 rounded bg-surface-container-lowest border border-outline-variant/40 hover:border-outline-variant transition-colors">
+                <div class="flex items-baseline gap-2">
+                  <span class="step-num font-headline-sm text-headline-sm text-primary font-bold">I.</span>
+                  <h3 class="step-title font-headline-sm text-headline-sm text-on-surface font-semibold">Berkas kampanye</h3>
+                </div>
+                <p class="step-body font-body-md text-body-md text-on-surface-variant leading-relaxed text-justify">
+                  Satu dokumen JSON memuat semuanya: faksi, tempat, entitas beserta jejaknya, peristiwa, bab, dan sumber. Tidak ada properti gambar, tidak ada koordinat yang harus ditebak kamera — berkas ini menjelaskan sejarah, bukan gambar.
+                </p>
+                <div class="mt-3 pt-2 text-[12px] font-label-sm text-tertiary-container flex items-center gap-1.5">
+                  <span class="material-symbols-outlined text-[15px]">code</span>
+                  <span class="step-note">Skema: campaign.schema.json</span>
+                </div>
+              </div>
+
+              <!-- Item II -->
+              <div data-step-idx="1" class="space-y-2 p-5 rounded bg-surface-container-lowest border border-outline-variant/40 hover:border-outline-variant transition-colors">
+                <div class="flex items-baseline gap-2">
+                  <span class="step-num font-headline-sm text-headline-sm text-primary font-bold">II.</span>
+                  <h3 class="step-title font-headline-sm text-headline-sm text-on-surface font-semibold">Pemuat dan diagnostik</h3>
+                </div>
+                <p class="step-body font-body-md text-body-md text-on-surface-variant leading-relaxed text-justify">
+                  Pemuat memvalidasi dan menormalkan, lalu mengeluarkan diagnostik bernomor. Galat berarti berkas tidak akan dimainkan. Peringatan menangkap hal yang tetap tergambar tetapi menyesatkan: jejak pasukan yang melompat 400 km dalam sehari, bab yang jendela waktunya mundur, peristiwa di luar rentang waktu.
+                </p>
+                <div class="mt-3 pt-2 text-[12px] font-label-sm text-secondary flex items-center gap-1.5">
+                  <span class="material-symbols-outlined text-[15px]">check_circle</span>
+                  <span class="step-note">Diagnostic code analyzer: 0 Kritis / 2 Peringatan Arsip</span>
+                </div>
+              </div>
+
+              <!-- Item III -->
+              <div data-step-idx="2" class="space-y-2 p-5 rounded bg-surface-container-lowest border border-outline-variant/40 hover:border-outline-variant transition-colors">
+                <div class="flex items-baseline gap-2">
+                  <span class="step-num font-headline-sm text-headline-sm text-primary font-bold">III.</span>
+                  <h3 class="step-title font-headline-sm text-headline-sm text-on-surface font-semibold">Penghitungan frame</h3>
+                </div>
+                <p class="step-body font-body-md text-body-md text-on-surface-variant leading-relaxed text-justify">
+                  Diberi satu tick — detik bertanda sejak 1970 — resolveFrame menginterpolasi posisi tiap pasukan di sepanjang jejaknya, menetapkan status tiap benteng, dan memilih peristiwa yang sedang tampak. Murni aritmetika: masukan sama, keluaran sama, di platform mana pun.
+                </p>
+                <div class="mt-3 pt-2 text-[12px] font-label-sm text-outline flex items-center gap-1.5 font-mono">
+                  <span class="material-symbols-outlined text-[15px]">calculate</span>
+                  <span class="step-note">Fungsi Murni: resolveFrame(campaign, t_epoch) => MapSnapshot</span>
+                </div>
+              </div>
+
+              <!-- Item IV -->
+              <div data-step-idx="3" class="space-y-2 p-5 rounded bg-surface-container-lowest border border-outline-variant/40 hover:border-outline-variant transition-colors">
+                <div class="flex items-baseline gap-2">
+                  <span class="step-num font-headline-sm text-headline-sm text-primary font-bold">IV.</span>
+                  <h3 class="step-title font-headline-sm text-headline-sm text-on-surface font-semibold">Penggambar</h3>
+                </div>
+                <p class="step-body font-body-md text-body-md text-on-surface-variant leading-relaxed text-justify">
+                  MapLibre GL menggambar frame itu. Geometri statis dipasang sekali per kampanye; tiap frame hanya menyentuh sumber dinamis yang kecil. Label berupa DOM yang ditata menurut prioritas, sehingga tidak pernah bertabrakan dengan kartus atau garis waktu.
+                </p>
+                <div class="mt-3 pt-2 text-[12px] font-label-sm text-primary flex items-center gap-1.5">
+                  <span class="material-symbols-outlined text-[15px]">brush</span>
+                  <span class="step-note">Resolusi oklusi spasial &amp; tipografi non-tabrakan</span>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Hairline Scriptorium Etching Divider -->
+          <div class="relative py-2">
+            <div class="w-full border-t border-outline-variant/50"></div>
+            <div class="absolute left-1/2 -top-2.5 -translate-x-1/2 bg-background px-3 text-tertiary font-serif text-sm">❧ ❦ ❧</div>
+          </div>
+
+          <!-- ========================================================= -->
+          <!-- SECTION 3: MINI INTERACTIVE MAP PREVIEW & SCRUBBER WIDGET -->
+          <!-- ========================================================= -->
+          <section id="simulation" class="space-y-6 scroll-mt-24">
+            <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+              <div>
+                <div class="flex items-center gap-2">
+                  <span class="text-primary font-headline-lg text-headline-lg font-serif">¶</span>
+                  <h2 class="font-headline-lg text-headline-lg text-primary tracking-tight" data-i18n="simTitle">Simulasi Real-Time Tabula Cartographica</h2>
+                </div>
+                <p class="font-body-md text-body-md text-on-surface-variant" data-i18n="simDesc">Pratinjau langsung interpolasi jejak militer dan evaluasi peristiwa per tick.</p>
+              </div>
+              <div class="flex items-center gap-2 font-label-sm text-label-sm">
+                <span class="px-2.5 py-1 rounded bg-surface-container text-on-surface border border-outline-variant/40" data-i18n="simCamera">Kamera: Proyeksi Mercator Vetus</span>
+                <span class="px-2.5 py-1 rounded bg-tertiary-fixed text-on-tertiary-fixed font-semibold">EPSG:3857</span>
+              </div>
+            </div>
+
+            <!-- Cartographic Viewport Frame -->
+            <div class="relative rounded-lg bg-[#ECE1C3] dark:bg-[#1C1815] border-2 border-outline-variant/80 shadow-md overflow-hidden">
+              <!-- Top cartographic toolbar -->
+              <div class="h-10 bg-surface-container px-4 flex items-center justify-between border-b border-outline-variant/50 font-label-sm text-label-sm">
+                <div class="flex items-center gap-3">
+                  <span class="font-bold text-primary flex items-center gap-1">
+                    <span class="material-symbols-outlined text-[16px]">navigation</span>
+                    <span>THEATRUM HUNGARIAE &amp; MORAVIAE</span>
+                  </span>
+                  <span class="text-outline">|</span>
+                  <span class="text-on-surface-variant font-mono">Epoch: <span id="clock-timestamp">1241-04-09 06:14:00 UTC</span></span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <span class="text-[11px] text-secondary font-semibold font-mono">Frame Rate: 60.1 FPS</span>
+                  <span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+                </div>
+              </div>
+
+              <!-- Simulated Medieval Vector Map Surface (SVG Graphics) -->
+              <div class="relative w-full h-80 sm:h-96 bg-[#E5DCBE] dark:bg-[#141210] overflow-hidden select-none">
+                <!-- Compass Rose Inset in background -->
+                <svg class="absolute top-4 right-4 w-28 h-28 opacity-25 text-tertiary pointer-events-none" fill="currentColor" viewBox="0 0 100 100">
+                  <circle cx="50" cy="50" fill="none" r="45" stroke="currentColor" stroke-width="1"></circle>
+                  <circle cx="50" cy="50" fill="none" r="30" stroke="currentColor" stroke-dasharray="2 2" stroke-width="0.5"></circle>
+                  <path d="M50 5 L55 45 L95 50 L55 55 L50 95 L45 55 L5 50 L45 45 Z" fill="currentColor"></path>
+                  <text font-family="serif" font-size="8" font-weight="bold" text-anchor="middle" x="50" y="14">SEPTENTRIO</text>
+                  <text font-family="serif" font-size="7" text-anchor="middle" x="50" y="92">MERIDIES</text>
+                  <text font-family="serif" font-size="7" text-anchor="middle" x="90" y="52">ORIENS</text>
+                  <text font-family="serif" font-size="7" text-anchor="middle" x="10" y="52">OCCIDENS</text>
+                </svg>
+
+                <!-- Topographic river and mountain etchings -->
+                <svg class="absolute inset-0 w-full h-full text-outline-variant/60 pointer-events-none" preserveAspectRatio="none">
+                  <!-- River Danube & Tisza -->
+                  <path d="M 50,0 Q 120,90 280,120 T 520,200 T 840,240 T 1100,320" fill="none" stroke="#7A9A95" class="dark:stroke-[#3E3832]" stroke-linecap="round" stroke-width="3"></path>
+                  <text fill="#436460" class="dark:fill-[#C9A25A]" font-family="serif" font-size="11" font-style="italic" x="320" y="140">Fluvius Danubius</text>
+                  <path d="M 600,0 Q 580,110 640,190 T 720,380" fill="none" stroke="#8CAEA9" class="dark:stroke-[#4A433B]" stroke-linecap="round" stroke-width="2"></path>
+                  <text fill="#436460" class="dark:fill-[#C9A25A]" font-family="serif" font-size="10" font-style="italic" x="650" y="210">Fluvius Tibiscus (Tisza)</text>
+                  <!-- Mountains Hatching -->
+                  <path d="M 120,40 L 135,15 L 150,40 L 165,18 L 180,40 M 740,60 L 760,25 L 780,60 L 800,30 L 820,60" fill="none" stroke="currentColor" stroke-width="1.2"></path>
+                  <text fill="#8C8071" class="dark:fill-[#8C8071]" font-family="serif" font-size="9" x="130" y="55">Montes Carpathici</text>
+                </svg>
+
+                <!-- Dynamic March Tracks -->
+                <svg class="absolute inset-0 w-full h-full pointer-events-none">
+                  <!-- Mongol Vanguard March Path -->
+                  <path d="M 820,80 Q 700,110 540,170 T 360,220" fill="none" stroke="#A67C2E" class="dark:stroke-[#C9A25A]" stroke-dasharray="4 4" stroke-width="2"></path>
+                  <!-- Hungarian Royal Host Path -->
+                  <path d="M 220,260 Q 290,240 360,220" fill="none" stroke="#436460" class="dark:stroke-[#C9A25A]" stroke-dasharray="3 3" stroke-width="2"></path>
+                </svg>
+
+                <!-- Entity: Subutai Vanguard -->
+                <div id="marker-subutai" class="absolute left-[54%] top-[45%] -translate-x-1/2 -translate-y-1/2 flex flex-col items-center group cursor-pointer transition-all duration-300">
+                  <div class="px-2 py-0.5 rounded bg-primary text-on-primary font-label-sm text-[10px] shadow-sm flex items-center gap-1">
+                    <span class="w-1.5 h-1.5 rounded-full bg-tertiary-fixed animate-ping"></span>
+                    <span data-i18n="simArmy1">Sayap Kanan Subutai (Tümen)</span>
+                  </div>
+                  <div class="w-3 h-3 bg-primary rotate-45 border border-surface-container-lowest mt-0.5 shadow-sm"></div>
+                </div>
+
+                <!-- Entity: Bela IV Royal Camp -->
+                <div class="absolute left-[24%] top-[62%] -translate-x-1/2 -translate-y-1/2 flex flex-col items-center group cursor-pointer">
+                  <div class="px-2 py-0.5 rounded bg-secondary text-on-secondary font-label-sm text-[10px] shadow-sm flex items-center gap-1">
+                    <span class="material-symbols-outlined text-[11px]">shield</span>
+                    <span data-i18n="simArmy2">Pasukan Diraja Béla IV</span>
+                  </div>
+                  <div class="w-2.5 h-2.5 bg-secondary rotate-45 border border-surface-container-lowest mt-0.5"></div>
+                </div>
+
+                <!-- Siege Hotspot: Mohi / Sajo Bridge -->
+                <div class="absolute left-[36%] top-[56%] -translate-x-1/2 -translate-y-1/2 flex flex-col items-center">
+                  <div class="w-8 h-8 rounded-full bg-[#C9A25A]/25 flex items-center justify-center animate-ping"></div>
+                  <div class="absolute top-1 px-2 py-0.5 rounded bg-tertiary-container text-on-tertiary-container font-headline-sm text-[11px] font-bold shadow-md border border-tertiary-fixed-dim flex items-center gap-1">
+                    <span data-i18n="simSiege">⚔ Pertempuran Sungai Sajó (Mohi)</span>
+                  </div>
+                </div>
+
+                <!-- Castles -->
+                <div class="absolute left-[29%] top-[40%] flex items-center gap-1 text-[11px] font-headline-sm text-on-surface">
+                  <span class="material-symbols-outlined text-tertiary text-[15px]">castle</span>
+                  <span class="italic">Castrum Strigoniense (Esztergom)</span>
+                </div>
+                <div class="absolute left-[72%] top-[54%] flex items-center gap-1 text-[11px] font-headline-sm text-on-surface">
+                  <span class="material-symbols-outlined text-tertiary text-[15px]">fort</span>
+                  <span class="italic">Varadinum (Oradea)</span>
+                </div>
+
+                <!-- Live Event Card Callout Floating at bottom right -->
+                <div class="absolute bottom-4 right-4 max-w-xs bg-surface-container-lowest/95 p-3 rounded border border-outline-variant/80 shadow-md font-body-sm text-body-sm text-on-surface">
+                  <div class="flex items-center justify-between text-label-sm text-primary font-bold border-b border-outline-variant/30 pb-1">
+                    <span data-i18n="simEventBadge">PERISTIWA AKTIF #042</span>
+                    <span class="font-mono text-tertiary">1241-04-09</span>
+                  </div>
+                  <p class="mt-1 text-xs leading-snug" data-i18n="simEventBody">
+                    Batu Khan melancarkan serangan pengalihan di jembatan, sementara Subutai membangun jembatan darurat kayu di hilir untuk menjepit sayap tentara Hungaria.
+                  </p>
+                  <div class="mt-2 text-[10px] font-label-sm text-outline flex items-center justify-between">
+                    <span data-i18n="simEventSource">Sumber: Kronika Rogerius</span>
+                    <span class="text-secondary font-semibold" data-i18n="simEventConfidence">Tingkat Kepercayaan: 94%</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- TIMELINE SCRUBBER DECK -->
+              <div class="bg-surface-container-low p-4 border-t border-outline-variant/60 space-y-3">
+                <div class="flex items-center justify-between text-label-sm text-label-sm">
+                  <div class="flex items-center gap-2">
+                    <button id="play-pause-btn" class="w-8 h-8 rounded bg-primary text-on-primary flex items-center justify-center hover:bg-primary-container transition-colors shadow-sm cursor-pointer" type="button">
+                      <span class="material-symbols-outlined text-[18px]">play_arrow</span>
+                    </button>
+                    <span class="font-mono font-semibold text-on-surface" data-i18n="simDateFormatted">9 April 1241 — Jam 06:14 Pagi</span>
+                    <span class="text-outline">/</span>
+                    <span class="text-on-surface-variant font-mono">Tick: <span id="tick-counter">#1,842,100</span></span>
+                  </div>
+
+                  <!-- Playback Speed Multiplier Segmented Toggle -->
+                  <div class="flex items-center rounded border border-outline-variant/50 bg-surface-container-lowest p-0.5">
+                    <button data-speed="0.5" class="px-2 py-0.5 rounded font-label-sm text-[11px] text-on-surface-variant hover:text-on-surface cursor-pointer" type="button">0.5×</button>
+                    <button data-speed="1.0" class="px-2 py-0.5 rounded font-label-sm text-[11px] bg-secondary text-on-secondary font-semibold cursor-pointer" type="button">1.0×</button>
+                    <button data-speed="2.0" class="px-2 py-0.5 rounded font-label-sm text-[11px] text-on-surface-variant hover:text-on-surface cursor-pointer" type="button">2.0×</button>
+                    <button data-speed="5.0" class="px-2 py-0.5 rounded font-label-sm text-[11px] text-on-surface-variant hover:text-on-surface cursor-pointer" type="button">5.0×</button>
+                  </div>
+                </div>
+
+                <!-- Scrubber Range Track with Milestones -->
+                <div class="relative w-full pt-1 pb-2">
+                  <input id="time-slider" class="w-full h-1.5 bg-surface-container-highest rounded-lg appearance-none cursor-pointer accent-primary" max="100" min="0" type="range" value="44" />
+                  <div class="flex justify-between text-[10px] font-label-sm text-on-surface-variant mt-1.5 font-mono">
+                    <span data-i18n="simM1">1241-03-12 (Celah Verecke ditembus)</span>
+                    <span class="text-primary font-bold" data-i18n="simM2">1241-04-09 (Pertempuran Mohi)</span>
+                    <span data-i18n="simM3">1241-04-28 (Pengepungan Klis)</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Hairline Scriptorium Etching Divider -->
+          <div class="relative py-2">
+            <div class="w-full border-t border-outline-variant/50"></div>
+          </div>
+
+          <!-- ======================================================== -->
+          <!-- SECTION 4: DIAGNOSTICS LOG MATRIX & CODEX SPECIFICATIONS -->
+          <!-- ======================================================== -->
+          <section id="schema" class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start scroll-mt-24">
+            <!-- Left: Diagnostic Linter Output -->
+            <div class="lg:col-span-6 space-y-4">
+              <div class="flex items-center gap-2">
+                <span class="text-primary font-headline-sm text-headline-sm font-serif">¶</span>
+                <h3 class="font-headline-sm text-headline-sm text-primary" data-i18n="diagTitle">Diagnostika &amp; Uji Integritas Berkas</h3>
+              </div>
+              <p class="font-body-md text-body-md text-on-surface-variant text-justify" data-i18n="diagDesc">
+                Pemuat menolak perkiraan visual sembrono. Semua diskontinuitas spasial ditangkap saat inisialisasi awal tanpa membebani GPU runtime.
+              </p>
+              <!-- Terminal Diagnostic Ledger View -->
+              <div class="bg-surface-container-lowest rounded-lg border border-outline-variant/60 p-4 font-mono text-[12px] space-y-2.5 shadow-sm">
+                <div class="flex items-center justify-between text-outline border-b border-outline-variant/30 pb-2">
+                  <span>CHRONO_DIAG_CHECKER v0.8.4</span>
+                  <span class="text-secondary font-bold">ALL VALIDATIONS PASSED</span>
+                </div>
+                <div class="flex items-start gap-2 text-on-surface">
+                  <span class="text-secondary font-bold">[PASS-001]</span>
+                  <span>Schema conformance RFC-7946 GeoJSON + ChronoMap temporal extensions verified.</span>
+                </div>
+                <div class="flex items-start gap-2 text-on-surface">
+                  <span class="text-secondary font-bold">[PASS-002]</span>
+                  <span>Entity velocity limits checked: max march rate 42.4 km/day (realistic cavalry column).</span>
+                </div>
+                <div class="flex items-start gap-2 text-tertiary-container">
+                  <span class="text-tertiary font-bold">[WARN-012]</span>
+                  <span>Ambiguous siege duration at Castrum Várad: chronicle says "aliquot diebus"; defaulted to 4 days ± 12h uncertainty margin.</span>
+                </div>
+                <div class="flex items-start gap-2 text-on-surface-variant">
+                  <span class="text-outline font-bold">[INFO-089]</span>
+                  <span>Precomputed 4,800 spline Hermite interpolation coefficients in 4.2ms.</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Right: Specification Architecture Code Snippet -->
+            <div class="lg:col-span-6 space-y-4">
+              <div class="flex items-center gap-2">
+                <span class="text-primary font-headline-sm text-headline-sm font-serif">¶</span>
+                <h3 class="font-headline-sm text-headline-sm text-primary" data-i18n="specTitle">Spesifikasi Naskah (Schema Excerpt)</h3>
+              </div>
+              <p class="font-body-md text-body-md text-on-surface-variant text-justify" data-i18n="specDesc">
+                Struktur data memisahkan fakta historis dari bagaimana peta menampilkan animasi, mempertahankan integritas akademis sitasi primer.
+              </p>
+              <div class="bg-surface-container-lowest rounded-lg border border-outline-variant/60 p-4 font-mono text-[11px] leading-relaxed text-on-surface overflow-x-auto shadow-sm">
+                <div class="flex items-center justify-between text-outline border-b border-outline-variant/30 pb-2 mb-2">
+                  <span>type TrackSegment = { ... }</span>
+                  <span class="text-primary font-semibold">TypeScript ABI</span>
+                </div>
+                <pre><code><span class="text-primary">interface</span> <span class="text-secondary font-semibold">HistoricalTroopTrack</span> {
+  <span class="text-on-surface-variant">entityId</span>: <span class="text-tertiary">string</span>;            <span class="text-outline">// eg. "diponegoro_squadron"</span>
+  <span class="text-on-surface-variant">path</span>: [number, number][];     <span class="text-outline">// [[lon, lat], ...]</span>
+  <span class="text-on-surface-variant">timestamps</span>: <span class="text-tertiary">number</span>[];       <span class="text-outline">// Epoch seconds strictly monotonic</span>
+  <span class="text-on-surface-variant">uncertaintyRadiusKm</span>?: <span class="text-tertiary">number</span>;
+  <span class="text-on-surface-variant">primaryChronicleRef</span>: <span class="text-tertiary">string</span>;  <span class="text-outline">// eg. "Babad Diponegoro §IV"</span>
+}</code></pre>
+              </div>
+            </div>
+          </section>
+
+          <!-- Bottom Scholarly Call to Action Banner -->
+          <div class="p-6 rounded-lg bg-surface-container border border-outline-variant/60 flex flex-col md:flex-row items-center justify-between gap-4">
+            <div class="space-y-1">
+              <div class="font-headline-sm text-headline-sm text-primary font-bold" data-i18n="ctaBannerTitle">Mulai Menulis Peta Kronologis Anda Sendiri</div>
+              <p class="font-body-sm text-body-sm text-on-surface-variant" data-i18n="ctaBannerDesc">Gunakan editor JSON berkas atau hubungkan pipeline ke arsip institusi universitas Anda. Tanpa pendaftaran, luring-pertama.</p>
+            </div>
+            <div class="flex items-center gap-3">
+              <button id="btn-schema-doc" class="px-4 py-2 rounded bg-surface-container-high text-on-surface font-label-md text-label-md hover:bg-surface-variant transition-colors border border-outline-variant/60 cursor-pointer" type="button" data-i18n="ctaBannerDoc">
+                Dokumentasi Skema
+              </button>
+              <button id="btn-studio-cta" class="px-4 py-2 rounded bg-primary text-on-primary font-label-md text-label-md hover:bg-primary-container transition-colors shadow-sm cursor-pointer" type="button" data-i18n="ctaBannerStudio">
+                Coba di Studio Peta
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="w-full bg-surface-container-low py-space-lg px-gutter border-t border-outline-variant/40">
+      <div class="max-w-7xl mx-auto w-full flex flex-col md:flex-row items-center justify-between gap-space-md">
+        <div class="flex items-center gap-space-md">
+          <div class="w-7 h-7 rounded-md overflow-hidden border border-outline-variant/60 flex items-center justify-center shadow-sm bg-surface-container-high dark:bg-[#1C1815]">
+            <img src="/logo.jpeg" alt="ChronoMap" class="w-full h-full object-cover" />
+          </div>
+          <div>
+            <p class="font-headline-sm text-headline-sm text-primary" data-i18n="footerTitle">ChronoMap: Compilatio Cartographica Digitalis</p>
+            <p class="font-body-sm text-body-sm text-on-surface-variant" data-i18n="footerSub">Officina Historica &amp; Geographica • Local-first WASM Telemetry Architecture</p>
+          </div>
+        </div>
+        <div class="flex flex-wrap items-center gap-space-md font-label-sm text-label-sm text-on-surface-variant">
+          <span data-i18n="footerLicence">Kode MIT • Data CC-BY-4.0 • Peta Dasar Natural Earth (Domain Publik)</span>
+        </div>
+      </div>
+    </footer>
+
+    <!-- App Scripts -->
     <script type="module" src="/src/landing.ts"></script>
   </body>
 </html>
