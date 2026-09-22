@@ -21,7 +21,7 @@
   </head>
   <body>
     <header class="bar">
-      <div class="brand"><a class="wordmark" href="/" id="home-link">ChronoMap</a><span class="tagline" id="tagline"></span></div>
+      <div class="brand"><a class="wordmark" href="/" id="home-link">ChronoMap</a></div>
       <div class="ctl">
         <label for="dataset" id="lbl-campaign">Kampanye</label>
         <select id="dataset"></select>
@@ -35,6 +35,7 @@
         </span>
         <span class="seg" role="group" aria-label="Bahasa" id="seg-lang"></span>
         <span class="seg" role="group" aria-label="Tema" id="seg-theme"></span>
+        <button class="btn icon-btn" id="help-btn" aria-label="Panduan & Bantuan" title="Panduan & Bantuan">?</button>
       </div>
     </header>
     <main class="layout">
@@ -48,11 +49,17 @@
         <details class="legend" id="legend" data-cm-avoid open></details>
         <div class="timeline" id="timeline" data-cm-avoid>
           <div class="tl-top" id="tl-top"></div>
-          <div class="tl-wrap">
-            <div class="tl-axis" id="tl-axis"></div>
-            <div class="tl-track"></div>
-            <div class="tl-band" id="tl-band" hidden></div>
-            <input type="range" id="scrub" min="0" max="10000" value="0" step="1" aria-label="Timeline" disabled />
+          <div class="tl-controls">
+            <button class="tl-play-btn" id="tl-play" aria-label="Putar" title="Putar">
+              <span class="tl-play-icon" id="tl-play-icon"></span>
+              <span class="tl-play-label" id="tl-play-label">Putar</span>
+            </button>
+            <div class="tl-wrap">
+              <div class="tl-axis" id="tl-axis"></div>
+              <div class="tl-track"></div>
+              <div class="tl-band" id="tl-band" hidden></div>
+              <input type="range" id="scrub" min="0" max="10000" value="0" step="1" aria-label="Timeline" disabled />
+            </div>
           </div>
         </div>
         <div class="dropzone" id="dropzone" hidden></div>

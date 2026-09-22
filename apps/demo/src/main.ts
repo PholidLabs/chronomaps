@@ -13,6 +13,8 @@ import {
   applyThemeMode, buildLangSeg, buildThemeSeg, savedLang, savedThemeMode, storeLang, storeThemeMode,
   type ThemeMode,
 } from './prefs.js';
+import { CoachmarkTour } from './coachmark.js';
+import { pauseIcon, playIcon } from './icons.js';
 
 const DAY = 86400;
 const $ = <T extends HTMLElement = HTMLElement>(id: string) => document.getElementById(id) as T;
@@ -22,7 +24,6 @@ const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const CAMPAIGNS: Record<string, string> = {
   java: '/campaigns/java-war-1825.json',
   napoleon: '/campaigns/napoleon-russia-1812.json',
-  fixture: '/campaigns/fixtures/null-island.json',
 };
 
 const engine = new ChronoMapEngine({ language: 'id', includeTrail: false });
@@ -38,8 +39,10 @@ const state = {
   savedScroll: 0,
   frame: null as FrameState | null,
   titles: {} as Record<string, string>,
+  terrain: true,
 };
 const ui = (): UIStrings => (UI[state.lang as keyof typeof UI] ?? UI.en);
+const tour = new CoachmarkTour(() => ui());
 const campaign = (): NormalizedCampaign => engine.campaign!;
 const tx = (t: unknown): string => pickText(t as never, state.lang, engine.campaign?.defaultLanguage);
 const nf = () => new Intl.NumberFormat(state.lang);
@@ -83,6 +86,7 @@ function rebuildRenderer(): void {
       if (state.frame) renderer.setFrame(state.frame, focusIds());
     }
     attachMapInteractions();
+    if (state.terrain) setTerrainEnabled(true);
   });
 }
 const focusIds = (): string[] => (state.activeIndex != null && state.activeIndex >= 0 ? campaign().chapters[state.activeIndex]?.focus ?? [] : []);
@@ -293,6 +297,38 @@ function buildStory(): void {
   host.append(outro);
 }
 
+function updatePlayButtons(): void {
+  const isP = state.playing;
+  const label = isP ? ui().pause : ui().play;
+  const iconFn = isP ? pauseIcon : playIcon;
+
+  const tlPlay = document.getElementById('tl-play');
+  const tlIcon = document.getElementById('tl-play-icon');
+  const tlLabel = document.getElementById('tl-play-label');
+  if (tlPlay && tlIcon && tlLabel) {
+    tlIcon.replaceChildren(iconFn());
+    tlLabel.textContent = label;
+    tlPlay.classList.toggle('is-playing', isP);
+    tlPlay.setAttribute('aria-label', label);
+    tlPlay.setAttribute('title', label);
+  }
+
+  const playBtn = document.getElementById('play');
+  if (playBtn) {
+    playBtn.replaceChildren(iconFn(), el('span', { text: label }));
+    playBtn.classList.toggle('is-playing', isP);
+    playBtn.setAttribute('aria-label', label);
+  }
+}
+
+function togglePlay(): void {
+  if (state.mode === 'story') {
+    setMode('explore');
+  }
+  state.playing = !state.playing;
+  updatePlayButtons();
+}
+
 /* ------------------------------------------------------------------ explore column */
 function buildExplore(): void {
   if (!engine.campaign) return;
@@ -301,7 +337,11 @@ function buildExplore(): void {
   host.append(el('h2', { text: ui().explore }), el('p', { class: 'lede', text: ui().exploreLede }));
 
   const row = el('div', { class: 'row-ctl' });
-  const playBtn = el('button', { class: 'btn', id: 'play', onclick: () => { state.playing = !state.playing; playBtn.textContent = state.playing ? ui().pause : ui().play; } }, ui().play);
+  const playBtn = el('button', {
+    class: `btn${state.playing ? ' is-playing' : ''}`,
+    id: 'play',
+    onclick: togglePlay,
+  }, state.playing ? pauseIcon() : playIcon(), el('span', { text: state.playing ? ui().pause : ui().play }));
   const speed = el('select', { id: 'speed', onchange: (e: Event) => { state.rate = Number((e.target as HTMLSelectElement).value); } });
   for (const [label, secs] of [[ui().week, 7 * DAY], [ui().month, 30.44 * DAY], [ui().year, 365.25 * DAY], [ui().fiveyear, 5 * 365.25 * DAY]] as [string, number][]) {
     speed.append(el('option', { value: secs, selected: Math.abs(secs - state.rate) < 1 }, label));
@@ -314,8 +354,16 @@ function buildExplore(): void {
     },
   });
   jump.append(el('option', { value: '' }, ui().jump));
-  campaign().chapters.forEach((ch, i) => jump.append(el('option', { value: i }, `${i + 1}. ${tx(ch.raw.title)}`)));
-  const terrain = el('button', { class: 'btn', id: 'terrain', onclick: toggleTerrain }, ui().terrain);
+  campaign().chapters.forEach((ch, i) => jump.append(el('option', { value: i, selected: i === state.activeIndex }, `${i + 1}. ${tx(ch.raw.title)}`)));
+  const terrain = el('button', {
+    class: 'btn',
+    id: 'terrain',
+    'aria-pressed': String(Boolean(map.getTerrain())),
+    onclick: () => {
+      toggleTerrain();
+      terrain.setAttribute('aria-pressed', String(Boolean(map.getTerrain())));
+    },
+  }, ui().terrain);
   row.append(playBtn, speed, jump, terrain);
   host.append(row);
 
@@ -361,9 +409,13 @@ function updateExplorePanel(force: boolean): void {
   }));
   host.replaceChildren(list);
 }
-function toggleTerrain(): void {
-  const on = !!map.getTerrain();
-  if (on) {
+function setTerrainEnabled(enable: boolean): void {
+  state.terrain = enable;
+  if (!map.isStyleLoaded()) {
+    map.once('load', () => setTerrainEnabled(enable));
+    return;
+  }
+  if (!enable) {
     map.setTerrain(null);
     if (map.getLayer('hillshade')) map.setLayoutProperty('hillshade', 'visibility', 'none');
     return;
@@ -389,7 +441,11 @@ function toggleTerrain(): void {
   } else {
     map.setLayoutProperty('hillshade', 'visibility', 'visible');
   }
-  map.setTerrain({ source: 'terrain', exaggeration: campaign().meta.map.terrain?.exaggeration ?? 1.4 });
+  const exag = engine.campaign?.meta.map.terrain?.exaggeration ?? 1.4;
+  map.setTerrain({ source: 'terrain', exaggeration: exag });
+}
+function toggleTerrain(): void {
+  setTerrainEnabled(!map.getTerrain());
 }
 
 /* ------------------------------------------------------------------ legend */
@@ -416,6 +472,7 @@ function buildLegend(): void {
   host.append(el('div', { class: 'row' }, el('span', { class: 'halo' }), ui().uncertainty));
   host.append(el('div', { class: 'eyebrow', style: 'margin:8px 0 4px', text: ui().places }));
   host.append(el('div', { class: 'row' }, el('span', { class: 'pt peak' }, '▲'), ui().mountains));
+  host.append(el('div', { class: 'row' }, el('span', { class: 'pt forest' }, '♣'), ui().forests));
   host.append(el('div', { class: 'row' }, el('span', { class: 'pt city' }), ui().cities));
   host.append(el('div', { class: 'row' }, el('span', { class: 'ln river' }), ui().rivers));
   host.append(el('div', { class: 'foot', text: ui().basemap }));
@@ -588,12 +645,22 @@ function setMode(mode: 'story' | 'explore'): void {
   popup.remove();
   if (mode === 'explore') {
     state.savedScroll = scrollY;
+    const c = engine.campaign;
+    if (c && engine.time < c.focus.start) {
+      engine.setTime(c.focus.start);
+      const ch = c.chapters.find((x) => x.end >= c.focus.start);
+      if (ch) {
+        state.activeIndex = ch.index;
+        moveCameraForChapter(ch.index);
+      }
+    }
     buildExplore();
     scrollTo({ top: 0, behavior: 'auto' });
     updateExplorePanel(true);
     map.dragPan.enable(); map.scrollZoom.enable(); map.dragRotate.enable(); map.keyboard.enable(); map.touchZoomRotate.enable();
   } else {
     state.playing = false;
+    updatePlayButtons();
     state.activeIndex = null;
     map.dragPan.disable(); map.scrollZoom.disable(); map.dragRotate.disable(); map.keyboard.disable(); map.touchZoomRotate.disable();
     requestAnimationFrame(() => { scrollTo({ top: state.savedScroll || 0, behavior: 'auto' }); scrollDirty = true; });
@@ -638,12 +705,18 @@ function setLang(lang: string): void {
 }
 function refreshChrome(): void {
   buildThemeButtons();
-  $('tagline').textContent = ui().tagline;
   $('lbl-campaign').textContent = ui().campaign;
   $('load-btn').textContent = ui().load;
   $('mode-story').textContent = ui().story;
   $('mode-explore').textContent = ui().explore;
   $('dropzone').textContent = ui().dropHere;
+  const helpBtn = document.getElementById('help-btn');
+  if (helpBtn) {
+    helpBtn.setAttribute('aria-label', ui().helpGuide);
+    helpBtn.setAttribute('title', ui().helpGuide);
+  }
+  updatePlayButtons();
+  tour.updateText();
   const sel = $<HTMLSelectElement>('dataset');
   for (const o of sel.options) if (state.titles[o.value]) o.textContent = state.titles[o.value];
 }
@@ -689,6 +762,7 @@ async function useCampaign(source: CampaignFile | string, label?: string): Promi
   scrollDirty = true;
   lastCartouche = '';
   updateCartouche();
+  if (state.terrain) setTerrainEnabled(true);
   return true;
 }
 function readFile(file: File): void {
@@ -721,6 +795,8 @@ function setupChrome(): void {
   $('mode-story').addEventListener('click', () => setMode('story'));
   $('mode-explore').addEventListener('click', () => setMode('explore'));
   $('load-btn').addEventListener('click', () => $('file').click());
+  $('help-btn')?.addEventListener('click', () => tour.start(true));
+  $('tl-play')?.addEventListener('click', togglePlay);
   $<HTMLInputElement>('file').addEventListener('change', (e) => {
     const f = (e.target as HTMLInputElement).files?.[0];
     if (f) readFile(f);
@@ -729,8 +805,7 @@ function setupChrome(): void {
   $<HTMLInputElement>('scrub').addEventListener('input', (e) => {
     if (state.mode !== 'explore') return;
     state.playing = false;
-    const btn = document.getElementById('play');
-    if (btn) btn.textContent = ui().play;
+    updatePlayButtons();
     engine.setTime(Math.round(scale.toT(Number((e.target as HTMLInputElement).value) / 10000)));
   });
   window.addEventListener('scroll', () => { scrollDirty = true; }, { passive: true });
@@ -750,6 +825,7 @@ function setupChrome(): void {
   new ResizeObserver(() => map.resize()).observe($('stage'));
   matchMedia('(prefers-color-scheme: dark)').addEventListener('change', rebuildRenderer);
   new MutationObserver(rebuildRenderer).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+  updatePlayButtons();
 }
 
 /* ------------------------------------------------------------------ loop */
@@ -763,8 +839,7 @@ function loop(now: number): void {
     if (next >= engine.campaign.extent.end) {
       engine.setTime(engine.campaign.extent.end - 1);
       state.playing = false;
-      const b = document.getElementById('play');
-      if (b) b.textContent = ui().play;
+      updatePlayButtons();
     } else engine.setTime(next);
   }
   requestAnimationFrame(loop);
@@ -779,7 +854,11 @@ state.lang = savedLang(state.lang);
 engine.setLanguage(state.lang);
 setupChrome();
 window.chronomap = { map, engine, renderer };
-map.on('load', () => { attachMapInteractions(); });
+map.on('load', () => {
+  attachMapInteractions();
+  if (state.terrain) setTerrainEnabled(true);
+});
 await useCampaign(CAMPAIGNS[state.key], 'java');
 setMode('story');
 requestAnimationFrame(loop);
+setTimeout(() => { tour.start(false); }, 700);

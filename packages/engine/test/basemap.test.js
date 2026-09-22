@@ -5,13 +5,18 @@ import { readFileSync, existsSync } from 'node:fs';
 const readJson = (rel) => JSON.parse(readFileSync(new URL(`../../../data/basemap/${rel}`, import.meta.url), 'utf8'));
 
 test('basemap geojson assets are well-formed and contain detailed features', () => {
-  for (const file of ['land.geojson', 'lakes.geojson', 'rivers.geojson', 'peaks.geojson', 'places.geojson']) {
+  for (const file of ['land.geojson', 'lakes.geojson', 'rivers.geojson', 'peaks.geojson', 'places.geojson', 'forests.geojson', 'embellishments.geojson']) {
     assert.ok(existsSync(new URL(`../../../data/basemap/${file}`, import.meta.url)), `${file} exists`);
     const data = readJson(file);
     assert.equal(data.type, 'FeatureCollection', `${file} is a FeatureCollection`);
     assert.ok(Array.isArray(data.features), `${file} has features array`);
     assert.ok(data.features.length > 0, `${file} features is non-empty`);
   }
+
+  // Verify historical forests are present
+  const forests = readJson('forests.geojson');
+  const bagelen = forests.features.find((f) => f.properties?.id === 'hutan-bagelen');
+  assert.ok(bagelen, 'Hutan Bagelen exists');
 
   // Verify Java rivers are present
   const rivers = readJson('rivers.geojson');

@@ -5,12 +5,13 @@
  * Per frame only small things change: trail lines, event circles, unit and fort markers.
  * That is the rule from contract §7.2 — never stream the whole map on every frame.
  */
-import { Marker, type GeoJSONSource, type Map as MapLibreMap } from 'maplibre-gl';
+import { Marker, Popup, type GeoJSONSource, type Map as MapLibreMap } from 'maplibre-gl';
 import type { Feature, FeatureCollection, Position } from 'geojson';
 import type { FrameState, NormEntity, NormalizedCampaign, Ticks } from '@chronomap/engine';
 import { alongPath, pickText } from '@chronomap/engine';
 import { factionColor, parchmentLight, withAlpha, type ChronoTheme } from './theme.js';
 import { graticuleFor } from './style.js';
+import { renderMountainSvg, renderForestSvg, renderFortressSvg, renderEmbellishmentSvg } from './pictorial.js';
 
 const EMPTY: FeatureCollection = { type: 'FeatureCollection', features: [] };
 const DAY = 86400;
@@ -47,7 +48,10 @@ export class ChronoMapRenderer {
   private placeLabels = new Map<string, LabelMarker>();
   private eventLabels = new Map<string, LabelMarker>();
   private peakLabels = new Map<string, LabelMarker>();
+  private forestLabels = new Map<string, LabelMarker>();
+  private embellishmentMarkers = new Map<string, LabelMarker>();
   private basemapPlaceLabels = new Map<string, LabelMarker>();
+  private basemapPopup: Popup | null = null;
   private focus = new Set<string>();
   private lastTerritoryKey = '';
   private ready = false;
@@ -77,9 +81,11 @@ export class ChronoMapRenderer {
   private async loadBasemapLabels(): Promise<void> {
     if (typeof fetch === 'undefined') return;
     try {
-      const [peaksRes, placesRes] = await Promise.all([
+      const [peaksRes, placesRes, forestsRes, embellishmentsRes] = await Promise.all([
         fetch(`${this.basemapPath}/peaks.geojson`).catch(() => null),
         fetch(`${this.basemapPath}/places.geojson`).catch(() => null),
+        fetch(`${this.basemapPath}/forests.geojson`).catch(() => null),
+        fetch(`${this.basemapPath}/embellishments.geojson`).catch(() => null),
       ]);
       if (peaksRes && peaksRes.ok) {
         const fc = await peaksRes.json() as FeatureCollection;
@@ -88,6 +94,14 @@ export class ChronoMapRenderer {
       if (placesRes && placesRes.ok) {
         const fc = await placesRes.json() as FeatureCollection;
         this.initBasemapPlaceLabels(fc);
+      }
+      if (forestsRes && forestsRes.ok) {
+        const fc = await forestsRes.json() as FeatureCollection;
+        this.initForestLabels(fc);
+      }
+      if (embellishmentsRes && embellishmentsRes.ok) {
+        const fc = await embellishmentsRes.json() as FeatureCollection;
+        this.initEmbellishments(fc);
       }
     } catch {
       // Graceful offline fallback
@@ -100,10 +114,86 @@ export class ChronoMapRenderer {
       if (!p || !p.id || f.geometry.type !== 'Point') continue;
       const coord = f.geometry.coordinates as [number, number];
       const el = document.createElement('div');
-      el.className = `cm-peak-label rank-${p.rank ?? 2}`;
-      el.innerHTML = `<span class="cm-peak-icon">▲</span><span class="cm-peak-name">${p.name}</span><span class="cm-peak-elev">${p.elevation} m</span>`;
-      const marker = new Marker({ element: el, anchor: 'left', offset: [8, 0] }).setLngLat(coord).addTo(this.map);
+      el.className = `cm-peak-marker rank-${p.rank ?? 2}`;
+      el.innerHTML = `
+        <div class="cm-peak-art">${renderMountainSvg(p)}</div>
+        <div class="cm-peak-caption">
+          <span class="cm-peak-name">${p.name}</span>
+          ${p.elevation ? `<span class="cm-peak-elev">${p.elevation} m</span>` : ''}
+        </div>
+      `;
+      el.addEventListener('click', (ev) => {
+        ev.stopPropagation();
+        if (!this.basemapPopup) this.basemapPopup = new Popup({ closeButton: true, maxWidth: '280px', offset: 12 });
+        const box = document.createElement('div');
+        box.className = 'cm-pictorial-popup';
+        box.innerHTML = `
+          <div class="kind">${p.type === 'volcano' ? 'Gunung Api' : p.type === 'range' ? 'Pegunungan' : 'Gunung'}</div>
+          <h4>${p.name}</h4>
+          ${p.elevation ? `<div class="muted">${p.elevation} m</div>` : ''}
+          ${p.note ? `<div class="note">${p.note}</div>` : ''}
+        `;
+        this.basemapPopup.setLngLat(coord).setDOMContent(box).addTo(this.map);
+      });
+      const marker = new Marker({ element: el, anchor: 'bottom', offset: [0, 4] }).setLngLat(coord).addTo(this.map);
       this.peakLabels.set(p.id, { marker, el });
+    }
+    this.applyLabelVisibility();
+  }
+
+  private initForestLabels(fc: FeatureCollection): void {
+    for (const f of fc.features) {
+      const p = f.properties as Record<string, any>;
+      if (!p || !p.id || f.geometry.type !== 'Point') continue;
+      const coord = f.geometry.coordinates as [number, number];
+      const el = document.createElement('div');
+      el.className = `cm-forest-marker rank-${p.rank ?? 2}`;
+      el.innerHTML = `
+        <div class="cm-forest-art">${renderForestSvg(p)}</div>
+        <div class="cm-forest-caption">
+          <span class="cm-forest-name">${p.name}</span>
+        </div>
+      `;
+      el.addEventListener('click', (ev) => {
+        ev.stopPropagation();
+        if (!this.basemapPopup) this.basemapPopup = new Popup({ closeButton: true, maxWidth: '280px', offset: 12 });
+        const box = document.createElement('div');
+        box.className = 'cm-pictorial-popup';
+        box.innerHTML = `
+          <div class="kind">Hutan Sejarah</div>
+          <h4>${p.name}</h4>
+          ${p.note ? `<div class="note">${p.note}</div>` : ''}
+        `;
+        this.basemapPopup.setLngLat(coord).setDOMContent(box).addTo(this.map);
+      });
+      const marker = new Marker({ element: el, anchor: 'bottom', offset: [0, 2] }).setLngLat(coord).addTo(this.map);
+      this.forestLabels.set(p.id, { marker, el });
+    }
+    this.applyLabelVisibility();
+  }
+
+  private initEmbellishments(fc: FeatureCollection): void {
+    for (const f of fc.features) {
+      const p = f.properties as Record<string, any>;
+      if (!p || !p.id || f.geometry.type !== 'Point') continue;
+      const coord = f.geometry.coordinates as [number, number];
+      const el = document.createElement('div');
+      el.className = `cm-embellishment-marker kind-${p.kind ?? 'cartouche'}`;
+      el.innerHTML = renderEmbellishmentSvg(p.kind ?? 'compass-rose');
+      el.addEventListener('click', (ev) => {
+        ev.stopPropagation();
+        if (!this.basemapPopup) this.basemapPopup = new Popup({ closeButton: true, maxWidth: '280px', offset: 12 });
+        const box = document.createElement('div');
+        box.className = 'cm-pictorial-popup';
+        box.innerHTML = `
+          <div class="kind">Hiasan Samudra</div>
+          <h4>${p.name}</h4>
+          ${p.note ? `<div class="note">${p.note}</div>` : ''}
+        `;
+        this.basemapPopup.setLngLat(coord).setDOMContent(box).addTo(this.map);
+      });
+      const marker = new Marker({ element: el, anchor: 'center' }).setLngLat(coord).addTo(this.map);
+      this.embellishmentMarkers.set(p.id, { marker, el });
     }
     this.applyLabelVisibility();
   }
@@ -456,8 +546,8 @@ export class ChronoMapRenderer {
     if (!entry) {
       const el = document.createElement('div');
       el.className = 'cm-fort';
-      el.innerHTML = `<svg viewBox="-12 -12 24 24" width="22" height="22" aria-hidden="true"><polygon points="${starPoints(9)}"/></svg><span class="cm-fort-label"></span>`;
-      entry = { marker: new Marker({ element: el, anchor: 'left', offset: [-11, 0] }).setLngLat(ne.coord).addTo(this.map), el };
+      el.innerHTML = `<span class="cm-fort-art">${renderFortressSvg(color)}</span><span class="cm-fort-label"></span>`;
+      entry = { marker: new Marker({ element: el, anchor: 'center' }).setLngLat(ne.coord).addTo(this.map), el };
       this.fortMarkers.set(ne.id, entry);
     }
     entry.el.style.setProperty('--cm-colour', color);
@@ -519,6 +609,19 @@ export class ChronoMapRenderer {
       entry.el.classList.toggle('is-hidden', !show);
     }
 
+    // Historical forests: show based on rank
+    for (const [, entry] of this.forestLabels) {
+      const isRank1 = entry.el.className.includes('rank-1');
+      const show = isRank1 ? z >= 6.5 : z >= 8.0;
+      entry.el.classList.toggle('is-hidden', !show);
+    }
+
+    // Nautical ocean embellishments: overview and regional zoom
+    for (const [, entry] of this.embellishmentMarkers) {
+      const show = z >= 4.0 && z <= 10.5;
+      entry.el.classList.toggle('is-hidden', !show);
+    }
+
     this.scheduleDeclutter();
   }
 
@@ -565,8 +668,14 @@ export class ChronoMapRenderer {
       push(e.el, 50, false, e.el);
     }
     for (const [, e] of this.peakLabels) {
-      if (e.el.classList.contains('is-hidden')) { clear(e.el); continue; }
-      push(e.el, 60, false, e.el);
+      const cap = e.el.querySelector('.cm-peak-caption');
+      if (e.el.classList.contains('is-hidden')) { clear(cap); continue; }
+      push(cap ?? e.el, 60, false, e.el);
+    }
+    for (const [, e] of this.forestLabels) {
+      const cap = e.el.querySelector('.cm-forest-caption');
+      if (e.el.classList.contains('is-hidden')) { clear(cap); continue; }
+      push(cap ?? e.el, 65, false, e.el);
     }
     if (cands.length === 0) return;
     // One read pass after the one write pass above, so the browser lays out once.
@@ -576,7 +685,7 @@ export class ChronoMapRenderer {
     // the reverse. A marker's own symbol does not block its own label.
     const blockers: Blocker[] = [];
     for (const [, e] of this.unitMarkers) pushBox(blockers, e.el.querySelector('.cm-unit-icon'), e.el, true);
-    for (const [, e] of this.fortMarkers) pushBox(blockers, e.el.querySelector('svg'), e.el, true);
+    for (const [, e] of this.fortMarkers) pushBox(blockers, e.el.querySelector('.cm-fort-art') ?? e.el.querySelector('svg'), e.el, true);
     for (const el of Array.from(document.querySelectorAll(this.avoidSelector))) pushBox(blockers, el, null, false);
 
     const view = this.map.getContainer().getBoundingClientRect();
@@ -613,9 +722,13 @@ export class ChronoMapRenderer {
     if (src) src.setData(data);
   }
   private clearMarkers(): void {
-    for (const map of [this.unitMarkers, this.fortMarkers, this.placeLabels, this.eventLabels, this.peakLabels, this.basemapPlaceLabels]) {
+    for (const map of [this.unitMarkers, this.fortMarkers, this.placeLabels, this.eventLabels, this.peakLabels, this.basemapPlaceLabels, this.forestLabels, this.embellishmentMarkers]) {
       for (const entry of map.values()) entry.marker.remove();
       map.clear();
+    }
+    if (this.basemapPopup) {
+      this.basemapPopup.remove();
+      this.basemapPopup = null;
     }
     if (this.animFrameId) {
       cancelAnimationFrame(this.animFrameId);

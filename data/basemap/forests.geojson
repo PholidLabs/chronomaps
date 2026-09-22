@@ -1,0 +1,173 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "id": "hutan-bagelen",
+      "properties": {
+        "id": "hutan-bagelen",
+        "name": "Hutan Bagelen",
+        "type": "woods",
+        "trees": 5,
+        "note": "Dense teak and bamboo forests west of Bogowonto, classic insurgent sanctuary."
+      },
+      "geometry": { "type": "Point", "coordinates": [109.96, -7.74] }
+    },
+    {
+      "type": "Feature",
+      "id": "hutan-roban",
+      "properties": {
+        "id": "hutan-roban",
+        "name": "Alas Roban",
+        "type": "primeval",
+        "trees": 6,
+        "note": "Perilous forested coastal pass between Batang and Weleri on the Great Post Road."
+      },
+      "geometry": { "type": "Point", "coordinates": [109.83, -6.95] }
+    },
+    {
+      "type": "Feature",
+      "id": "hutan-menoreh",
+      "properties": {
+        "id": "hutan-menoreh",
+        "name": "Wana Menoreh",
+        "type": "woods",
+        "trees": 5,
+        "note": "Rugged karst ridge forests sheltering Prince Diponegoro's mountain headquarters."
+      },
+      "geometry": { "type": "Point", "coordinates": [110.14, -7.64] }
+    },
+    {
+      "type": "Feature",
+      "id": "hutan-merapi",
+      "properties": {
+        "id": "hutan-merapi",
+        "name": "Hutan Lereng Merapi",
+        "type": "highland",
+        "trees": 4,
+        "note": "Pine and montane forest on the southern and eastern volcanic flanks of Merapi."
+      },
+      "geometry": { "type": "Point", "coordinates": [110.42, -7.56] }
+    },
+    {
+      "type": "Feature",
+      "id": "hutan-lodoyo",
+      "properties": {
+        "id": "hutan-lodoyo",
+        "name": "Alas Lodoyo",
+        "type": "primeval",
+        "trees": 6,
+        "note": "Vast wilderness south of the Brantas river, legendary home of the white tiger."
+      },
+      "geometry": { "type": "Point", "coordinates": [112.20, -8.19] }
+    },
+    {
+      "type": "Feature",
+      "id": "hutan-grobogan",
+      "properties": {
+        "id": "hutan-grobogan",
+        "name": "Alas Jati Grobogan",
+        "type": "teak",
+        "trees": 5,
+        "note": "Ancient royal teak forests producing timber for Mataram and VOC shipbuilding."
+      },
+      "geometry": { "type": "Point", "coordinates": [111.02, -7.06] }
+    },
+    {
+      "type": "Feature",
+      "id": "hutan-blora",
+      "properties": {
+        "id": "hutan-blora",
+        "name": "Wana Jati Blora",
+        "type": "teak",
+        "trees": 5,
+        "note": "Dense teak plantations along the middle course of Bengawan Solo."
+      },
+      "geometry": { "type": "Point", "coordinates": [111.48, -7.15] }
+    },
+    {
+      "type": "Feature",
+      "id": "hutan-danalaya",
+      "properties": {
+        "id": "hutan-danalaya",
+        "name": "Alas Donoloyo",
+        "type": "sacred-teak",
+        "trees": 4,
+        "note": "Sacred teak forest in Slogohimo Wonogiri planted in the Majapahit era."
+      },
+      "geometry": { "type": "Point", "coordinates": [110.96, -7.86] }
+    },
+    {
+      "type": "Feature",
+      "id": "hutan-banyumas",
+      "properties": {
+        "id": "hutan-banyumas",
+        "name": "Hutan Serayu Banyumas",
+        "type": "woods",
+        "trees": 4,
+        "note": "Riverine and foothill forests flanking the lower Serayu valley."
+      },
+      "geometry": { "type": "Point", "coordinates": [109.28, -7.48] }
+    },
+    {
+      "type": "Feature",
+      "id": "hutan-kedu",
+      "properties": {
+        "id": "hutan-kedu",
+        "name": "Wana Kedu",
+        "type": "woods",
+        "trees": 4,
+        "note": "Orchard and teak groves of the fertile Kedu plain between Sumbing and Merapi."
+      },
+      "geometry": { "type": "Point", "coordinates": [110.12, -7.38] }
+    },
+    {
+      "type": "Feature",
+      "id": "hutan-kendeng",
+      "properties": {
+        "id": "hutan-kendeng",
+        "name": "Hutan Pegunungan Kendeng",
+        "type": "woods",
+        "trees": 5,
+        "note": "Dry deciduous limestone ridge forest forming a natural boundary in eastern Central Java."
+      },
+      "geometry": { "type": "Point", "coordinates": [111.32, -7.22] }
+    },
+    {
+      "type": "Feature",
+      "id": "hutan-purwo",
+      "properties": {
+        "id": "hutan-purwo",
+        "name": "Alas Purwo",
+        "type": "primeval",
+        "trees": 6,
+        "note": "Ancient mystical jungle covering the easternmost peninsula of Java."
+      },
+      "geometry": { "type": "Point", "coordinates": [114.38, -8.65] }
+    },
+    {
+      "type": "Feature",
+      "id": "hutan-wilis",
+      "properties": {
+        "id": "hutan-wilis",
+        "name": "Hutan Wilis",
+        "type": "highland",
+        "trees": 4,
+        "note": "Highland pine and moss forest on the massif dividing Madiun and Kediri."
+      },
+      "geometry": { "type": "Point", "coordinates": [111.78, -7.78] }
+    },
+    {
+      "type": "Feature",
+      "id": "hutan-malang",
+      "properties": {
+        "id": "hutan-malang",
+        "name": "Wana Gunung Semeru",
+        "type": "highland",
+        "trees": 5,
+        "note": "Cloud forest covering the upper slopes of Mount Semeru and the Tengger range."
+      },
+      "geometry": { "type": "Point", "coordinates": [112.85, -8.15] }
+    }
+  ]
+}

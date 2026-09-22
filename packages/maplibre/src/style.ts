@@ -15,23 +15,38 @@ export function createBasemapStyle(opts: BasemapOptions): StyleSpecification {
   const { theme, basemapPath = '/data/basemap' } = opts;
   const layers: StyleSpecification['layers'] = [
     { id: 'sea', type: 'background', paint: { 'background-color': theme.sea } },
-    // Antique coastal water-lining / bathymetric ribbons
+    // Antique coastal water-lining / multi-tier echo ribbons (Renaissance cartography)
     {
       id: 'coast-wash-outer', type: 'line', source: 'land',
       paint: {
         'line-color': theme.coastOuter,
-        'line-width': ['interpolate', ['linear'], ['zoom'], 3, 2.6, 10, 5.2],
-        'line-offset': ['interpolate', ['linear'], ['zoom'], 3, -1.8, 10, -3.6],
-        'line-opacity': 0.3,
+        'line-width': ['interpolate', ['linear'], ['zoom'], 3, 3.2, 10, 6.4],
+        'line-offset': ['interpolate', ['linear'], ['zoom'], 3, -2.2, 10, -4.5],
+        'line-opacity': 0.35,
       },
     },
     {
-      id: 'coast-wash-inner', type: 'line', source: 'land',
+      id: 'coast-ripple-3', type: 'line', source: 'land',
       paint: {
-        'line-color': theme.coastOuter,
-        'line-width': ['interpolate', ['linear'], ['zoom'], 3, 1.3, 10, 2.6],
-        'line-offset': ['interpolate', ['linear'], ['zoom'], 3, -0.8, 10, -1.6],
-        'line-opacity': 0.5,
+        'line-color': theme.coastRipple3,
+        'line-width': ['interpolate', ['linear'], ['zoom'], 3, 0.6, 10, 1.0],
+        'line-offset': ['interpolate', ['linear'], ['zoom'], 3, -7.5, 10, -15.0],
+      },
+    },
+    {
+      id: 'coast-ripple-2', type: 'line', source: 'land',
+      paint: {
+        'line-color': theme.coastRipple2,
+        'line-width': ['interpolate', ['linear'], ['zoom'], 3, 0.9, 10, 1.4],
+        'line-offset': ['interpolate', ['linear'], ['zoom'], 3, -4.2, 10, -8.5],
+      },
+    },
+    {
+      id: 'coast-ripple-1', type: 'line', source: 'land',
+      paint: {
+        'line-color': theme.coastRipple1,
+        'line-width': ['interpolate', ['linear'], ['zoom'], 3, 1.2, 10, 2.0],
+        'line-offset': ['interpolate', ['linear'], ['zoom'], 3, -1.8, 10, -3.6],
       },
     },
     { id: 'land', type: 'fill', source: 'land', paint: { 'fill-color': theme.land } },
@@ -56,8 +71,8 @@ export function createBasemapStyle(opts: BasemapOptions): StyleSpecification {
       id: 'lakes-outline', type: 'line', source: 'lakes',
       paint: {
         'line-color': theme.coast,
-        'line-width': ['interpolate', ['linear'], ['zoom'], 3, 0.4, 10, 0.9],
-        'line-opacity': 0.7,
+        'line-width': ['interpolate', ['linear'], ['zoom'], 3, 0.6, 10, 1.2],
+        'line-opacity': 0.8,
       },
     },
     {
@@ -67,31 +82,28 @@ export function createBasemapStyle(opts: BasemapOptions): StyleSpecification {
         'line-color': theme.river,
         'line-width': [
           'interpolate', ['linear'], ['zoom'],
-          3, ['case', ['<=', ['get', 'rank'], 2], 1.0, 0.5],
-          7, ['case', ['<=', ['get', 'rank'], 1], 2.4, ['<=', ['get', 'rank'], 2], 1.8, ['<=', ['get', 'rank'], 3], 1.2, 0.7],
-          11, ['case', ['<=', ['get', 'rank'], 1], 4.2, ['<=', ['get', 'rank'], 2], 3.2, ['<=', ['get', 'rank'], 3], 2.2, 1.4],
+          3, ['case', ['<=', ['get', 'rank'], 2], 1.2, 0.6],
+          7, ['case', ['<=', ['get', 'rank'], 1], 2.8, ['<=', ['get', 'rank'], 2], 2.0, ['<=', ['get', 'rank'], 3], 1.4, 0.8],
+          11, ['case', ['<=', ['get', 'rank'], 1], 4.8, ['<=', ['get', 'rank'], 2], 3.6, ['<=', ['get', 'rank'], 3], 2.6, 1.6],
         ],
-        'line-opacity': ['interpolate', ['linear'], ['zoom'], 3, 0.6, 7, 0.92],
+        'line-opacity': ['interpolate', ['linear'], ['zoom'], 3, 0.7, 7, 0.95],
       },
       filter: ['any', ['<=', ['get', 'rank'], 2], ['all', ['<=', ['get', 'rank'], 4], ['>=', ['zoom'], 6]], ['>=', ['zoom'], 8]],
     },
-    { id: 'coast', type: 'line', source: 'land', paint: { 'line-color': theme.coast, 'line-width': ['interpolate', ['linear'], ['zoom'], 3, 0.5, 10, 1.1], 'line-opacity': 0.85 } },
-    ...graticuleLayers(theme.grid),
     {
-      id: 'basemap-peaks-dot', type: 'circle', source: 'peaks',
-      filter: ['any', ['<=', ['get', 'rank'], 1], ['>=', ['zoom'], 7.5]],
+      id: 'coast', type: 'line', source: 'land',
       paint: {
-        'circle-radius': ['interpolate', ['linear'], ['zoom'], 6, 2.8, 10, 4.5],
-        'circle-color': theme.peak,
-        'circle-stroke-width': 1.2,
-        'circle-stroke-color': theme.land,
+        'line-color': theme.coast,
+        'line-width': ['interpolate', ['linear'], ['zoom'], 3, 1.0, 10, 2.2],
+        'line-opacity': 0.92,
       },
     },
+    ...graticuleLayers(theme.grid),
     {
       id: 'basemap-places-dot', type: 'circle', source: 'places',
       filter: ['any', ['<=', ['get', 'rank'], 1], ['all', ['<=', ['get', 'rank'], 2], ['>=', ['zoom'], 6.5]], ['>=', ['zoom'], 8.2]],
       paint: {
-        'circle-radius': ['case', ['<=', ['get', 'rank'], 1], 4.0, ['<=', ['get', 'rank'], 2], 3.0, 2.2],
+        'circle-radius': ['case', ['<=', ['get', 'rank'], 1], 4.2, ['<=', ['get', 'rank'], 2], 3.0, 2.2],
         'circle-color': ['case', ['<=', ['get', 'rank'], 1], theme.cityRing, theme.cityDot],
         'circle-stroke-width': ['case', ['<=', ['get', 'rank'], 1], 1.8, 1.2],
         'circle-stroke-color': theme.land,
@@ -109,6 +121,8 @@ export function createBasemapStyle(opts: BasemapOptions): StyleSpecification {
       rivers: { type: 'geojson', data: `${basemapPath}/rivers.geojson` },
       peaks: { type: 'geojson', data: `${basemapPath}/peaks.geojson` },
       places: { type: 'geojson', data: `${basemapPath}/places.geojson` },
+      forests: { type: 'geojson', data: `${basemapPath}/forests.geojson` },
+      embellishments: { type: 'geojson', data: `${basemapPath}/embellishments.geojson` },
       graticule: { type: 'geojson', data: { type: 'FeatureCollection', features: [] } },
     },
     layers,

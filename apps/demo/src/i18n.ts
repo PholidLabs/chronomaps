@@ -10,9 +10,13 @@ export interface UIStrings {
   nothing: string; moving: string; men: string; sides: string; lines: string; routeDoc: string; routeConj: string;
   routeSea: string; uncertainty: string; basemap: string; terrain: string;
   week: string; month: string; year: string; fiveyear: string;
-  exact: string; approximate: string; conjectural: string; legend: string; aboutPreview: string; aboutText: string; tagline: string;
+  exact: string; approximate: string; conjectural: string; legend: string; aboutPreview: string; aboutText: string;
   theme: string; themeAuto: string; themeLight: string; themeDark: string; dropHere: string;
-  mountains: string; rivers: string; cities: string; marchActive: string;
+  mountains: string; rivers: string; cities: string; forests: string; marchActive: string;
+  helpGuide: string; tourNext: string; tourPrev: string; tourSkip: string; tourDone: string;
+  tourStepModeTitle: string; tourStepModeDesc: string;
+  tourStepCampaignTitle: string; tourStepCampaignDesc: string;
+  tourStepPrefsTitle: string; tourStepPrefsDesc: string;
 }
 
 export const UI: Record<string, UIStrings> = {
@@ -34,10 +38,16 @@ export const UI: Record<string, UIStrings> = {
     exact: 'exact site', approximate: 'approximate', conjectural: 'conjectural', legend: 'Legend',
     aboutPreview: 'About this demo',
     aboutText: 'MapLibre GL renders the map; @chronomap/engine parses, validates and resolves every frame. Same code the Rust core must match, and the same JSON any other campaign would use.',
-    tagline: 'engine demo · contract 1.0',
     theme: 'Theme', themeAuto: 'Auto', themeLight: 'Light', themeDark: 'Dark',
     dropHere: 'Drop to load campaign',
-    mountains: 'Mountains & Volcanoes', rivers: 'Rivers & Waterways', cities: 'Historic Settlements', marchActive: 'Troops on the march',
+    mountains: 'Mountains & Volcanoes', forests: 'Historic Teak Groves & Forests', rivers: 'Rivers & Waterways', cities: 'Historic Settlements', marchActive: 'Troops on the march',
+    helpGuide: 'Help & Tour', tourNext: 'Next →', tourPrev: '← Back', tourSkip: 'Skip', tourDone: 'Got it!',
+    tourStepModeTitle: 'Mode: Story vs. Explore',
+    tourStepModeDesc: 'ChronoMap starts in Story mode (scrollytelling) where scrolling drives the map. Switch to Explore to unlock the Play/Pause button, speed controls, timeline scrubbing, and 3D navigation!',
+    tourStepCampaignTitle: 'Campaign & Custom Data',
+    tourStepCampaignDesc: 'Switch between campaigns (such as Java War 1825 or Napoleon 1812) or click "Load JSON" to drop in your own campaign file.',
+    tourStepPrefsTitle: 'Language, Theme & Tour',
+    tourStepPrefsDesc: 'Switch between English and Indonesian, toggle parchment themes (Auto, Light, Dark), or click this "?" button anytime to view this guide again.',
   },
   id: {
     campaign: 'Kampanye', story: 'Cerita', explore: 'Jelajah', load: 'Muat JSON…', chapter: 'Bab', of: 'dari',
@@ -57,10 +67,16 @@ export const UI: Record<string, UIStrings> = {
     exact: 'lokasi pasti', approximate: 'perkiraan', conjectural: 'dugaan', legend: 'Legenda',
     aboutPreview: 'Tentang demo ini',
     aboutText: 'MapLibre GL menggambar peta; @chronomap/engine mengurai, memvalidasi, dan menghitung setiap frame. Kode yang sama yang harus disamai inti Rust, dan JSON yang sama untuk kampanye mana pun.',
-    tagline: 'demo mesin · kontrak 1.0',
     theme: 'Tema', themeAuto: 'Otomatis', themeLight: 'Terang', themeDark: 'Gelap',
     dropHere: 'Jatuhkan berkas untuk memuat kampanye',
-    mountains: 'Gunung & Gunung Api', rivers: 'Sungai & Saluran Air', cities: 'Permukiman Sejarah', marchActive: 'Pergerakan pasukan',
+    mountains: 'Gunung & Gunung Api', forests: 'Alas Jati & Hutan Sejarah', rivers: 'Sungai & Saluran Air', cities: 'Permukiman Sejarah', marchActive: 'Pergerakan pasukan',
+    helpGuide: 'Panduan & Bantuan', tourNext: 'Lanjut →', tourPrev: '← Kembali', tourSkip: 'Lewati', tourDone: 'Mengerti!',
+    tourStepModeTitle: 'Mode: Cerita vs Jelajah',
+    tourStepModeDesc: 'ChronoMap dimulai dalam mode Cerita (scrollytelling) di mana guliran teks menggerakkan peta. Beralih ke Jelajah untuk membuka tombol Putar/Jeda, atur kecepatan, geser linimasa, dan navigasi 3D!',
+    tourStepCampaignTitle: 'Pilihan Kampanye & Data',
+    tourStepCampaignDesc: 'Beralih antara kampanye (Perang Jawa 1825 atau Napoleon 1812) atau klik "Muat JSON" untuk memuat berkas kampanye Anda sendiri.',
+    tourStepPrefsTitle: 'Bahasa, Tema & Panduan',
+    tourStepPrefsDesc: 'Ganti bahasa (ID/EN), pilih tema perkamen (Otomatis, Terang, Gelap), atau klik tombol "?" kapan saja untuk membuka kembali panduan ini.',
   },
 };
 

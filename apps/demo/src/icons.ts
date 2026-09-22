@@ -35,3 +35,19 @@ export function themeIcon(mode: ThemeMode): SVGElement {
   }
   return root;
 }
+
+export function playIcon(): SVGElement {
+  const root = svgEl('svg', { viewBox: '0 0 16 16', 'aria-hidden': 'true', focusable: 'false' });
+  root.append(svgEl('path', { d: 'M4.5 3.2 L13 8 L4.5 12.8 Z', fill: 'currentColor' }));
+  return root;
+}
+
+export function pauseIcon(): SVGElement {
+  const root = svgEl('svg', { viewBox: '0 0 16 16', 'aria-hidden': 'true', focusable: 'false' });
+  root.append(
+    svgEl('rect', { x: '4', y: '3.2', width: '2.8', height: '9.6', rx: '0.8', fill: 'currentColor' }),
+    svgEl('rect', { x: '9.2', y: '3.2', width: '2.8', height: '9.6', rx: '0.8', fill: 'currentColor' }),
+  );
+  return root;
+}
+

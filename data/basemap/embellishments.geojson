@@ -1,0 +1,49 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "id": "emb-naga-laut",
+      "properties": {
+        "id": "emb-naga-laut",
+        "name": "Naga Laut (Sea Dragon)",
+        "kind": "sea-monster",
+        "scale": 1.2
+      },
+      "geometry": { "type": "Point", "coordinates": [110.20, -8.65] }
+    },
+    {
+      "type": "Feature",
+      "id": "emb-pinisi-galleon",
+      "properties": {
+        "id": "emb-pinisi-galleon",
+        "name": "Kapal Layar VOC & Pinisi",
+        "kind": "ship",
+        "scale": 1.0
+      },
+      "geometry": { "type": "Point", "coordinates": [110.75, -6.28] }
+    },
+    {
+      "type": "Feature",
+      "id": "emb-compass-rose",
+      "properties": {
+        "id": "emb-compass-rose",
+        "name": "Rosa Ventorum",
+        "kind": "compass-rose",
+        "scale": 1.4
+      },
+      "geometry": { "type": "Point", "coordinates": [108.60, -8.35] }
+    },
+    {
+      "type": "Feature",
+      "id": "emb-makara-east",
+      "properties": {
+        "id": "emb-makara-east",
+        "name": "Makara Laut Jawa",
+        "kind": "sea-monster",
+        "scale": 0.95
+      },
+      "geometry": { "type": "Point", "coordinates": [113.60, -6.65] }
+    }
+  ]
+}
