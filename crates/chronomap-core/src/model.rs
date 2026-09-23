@@ -68,8 +68,8 @@ impl Coord {
         self.0.is_array()
     }
 
-    /// `c[i]` with JS semantics: a missing or non-numeric slot reads as `NaN`, which
-    /// is what the reference implementation propagates into leg geometry.
+    /// `c[i]` with JS semantics: a missing or non-numeric slot reads as `NaN`.
+    /// `check_coord` rejects such coordinates, so no NaN reaches loaded geometry.
     pub fn nth(&self, i: usize) -> f64 {
         self.0
             .as_array()

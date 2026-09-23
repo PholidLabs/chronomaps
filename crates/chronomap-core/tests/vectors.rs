@@ -337,6 +337,23 @@ fn load_never_panics_on_junk() {
 }
 
 #[test]
+fn non_numeric_coordinates_are_rejected() {
+    let base = read_json("data/campaigns/fixtures/null-island.json");
+    for bad in [
+        serde_json::json!(["0.5", "0.5"]),
+        serde_json::json!([null, null]),
+    ] {
+        let mut raw = base.clone();
+        raw["places"][0]["coordinates"] = bad.clone();
+        let result = load_campaign(&raw);
+        assert!(
+            result.campaign.is_none() && result.errors().any(|d| d.code == "E011"),
+            "{bad} was accepted as a coordinate"
+        );
+    }
+}
+
+#[test]
 fn chapter_progress_stays_inside_the_window() {
     let raw = read_json("data/campaigns/fixtures/null-island.json");
     let campaign = load_campaign(&raw).campaign.expect("fixture loads");

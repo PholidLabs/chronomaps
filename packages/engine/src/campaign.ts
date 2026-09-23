@@ -130,7 +130,8 @@ export function loadCampaign(raw: CampaignFile): LoadResult {
   /* coordinates */
   const bounds = meta.map?.bounds;
   const checkCoord = (c: Coord | undefined, path: string): [number, number] | null => {
-    if (!Array.isArray(c) || c.length < 2) { err('E011', path, 'Coordinate must be [lng, lat]'); return null; }
+    // Number.isFinite does not coerce: "0.5", null and {} are rejected, not read as numbers.
+    if (!Array.isArray(c) || c.length < 2 || !Number.isFinite(c[0]) || !Number.isFinite(c[1])) { err('E011', path, 'Coordinate must be [lng, lat]'); return null; }
     const [lng, lat] = c;
     if (Math.abs(lng) > 180 || Math.abs(lat) > 90) { err('E011', path, `Coordinate [${lng}, ${lat}] out of range`); return null; }
     if (bounds) {

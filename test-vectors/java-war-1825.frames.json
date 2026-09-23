@@ -1,4 +1,4 @@
-{"description":"resolveFrame() at scroll progress p through each chapter of examples/java-war-1825.json",
+{"description":"resolveFrame() at scroll progress p through each chapter of data/campaigns/java-war-1825.json",
 "diagnostics":[{"level":"info","code":"I201","path":"/events/3"},{"level":"info","code":"I201","path":"/events/9"},{"level":"info","code":"I201","path":"/events/19"},{"level":"info","code":"I201","path":"/events/25"},{"level":"info","code":"I201","path":"/events/27"},{"level":"info","code":"I201","path":"/events/28"},{"level":"info","code":"I201","path":"/events/30"},{"level":"info","code":"I201","path":"/events/36"},{"level":"info","code":"I201","path":"/events/37"}],
 "frames":[
 {"chapter":"ch-01-birth","p":0,"t":-5810832000,"frame":{"t":-5810832000,"iso":"1785-11-11T00:00:00","entities":[],"events":[{"id":"diponegoro-birth","kind":"birth","phase":"active","progress":0,"sinceEnd":0,"position":[110.36406,-7.80569],"importance":2}]}},

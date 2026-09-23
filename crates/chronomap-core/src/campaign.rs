@@ -380,14 +380,18 @@ impl Ctx {
 
     fn check_coord(&mut self, c: Option<&Coord>, path: &str) -> Option<[f64; 2]> {
         let c = match c {
-            Some(c) if c.is_array() && c.len() >= 2 => c,
+            // `nth` reads a non-numeric slot as NaN, so this is `Number.isFinite` in the reference.
+            Some(c)
+                if c.is_array() && c.len() >= 2 && c.nth(0).is_finite() && c.nth(1).is_finite() =>
+            {
+                c
+            }
             _ => {
                 self.err("E011", path, "Coordinate must be [lng, lat]".to_string());
                 return None;
             }
         };
         let (lng, lat) = (c.nth(0), c.nth(1));
-        // NaN comparisons are false, matching `Math.abs(<non-number>) > 180`.
         if lng.abs() > 180.0 || lat.abs() > 90.0 {
             let raw = c.0.as_array();
             let (ls, as_) = match raw {

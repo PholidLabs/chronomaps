@@ -18,7 +18,7 @@
     "dev": "vite apps/demo",
     "test": "tsc -p packages/engine/tsconfig.json && node --test packages/engine/test/*.test.js",
     "check": "node packages/engine/dist/cli.js data/campaigns/*.json data/campaigns/fixtures/*.json",
-    "vectors": "node packages/engine/dist/cli.js --vectors test-vectors data/campaigns/java-war-1825.json"
+    "vectors": "tsc -p packages/engine/tsconfig.json && node packages/engine/dist/cli.js --vectors test-vectors data/campaigns/*.json data/campaigns/fixtures/*.json"
   },
   "devDependencies": {
     "typescript": "^5.9.2"

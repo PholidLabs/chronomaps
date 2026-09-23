@@ -1,4 +1,4 @@
-{"description":"resolveFrame() at scroll progress p through each chapter of examples/napoleon-russia-1812.json",
+{"description":"resolveFrame() at scroll progress p through each chapter of data/campaigns/napoleon-russia-1812.json",
 "diagnostics":[{"level":"info","code":"I201","path":"/events/4"}],
 "frames":[
 {"chapter":"ch-1-niemen","p":0,"t":-4970937600,"frame":{"t":-4970937600,"iso":"1812-06-24T00:00:00","entities":[{"id":"grande-armee-main","kind":"unit","faction":"grande-armee","status":"active","position":[24,54.9],"bearing":70.5945,"moving":true,"waypoint":null,"leg":1,"legProgress":0,"strength":340000,"certainty":"approximate","trailLength":1},{"id":"grande-armee-north","kind":"unit","faction":"grande-armee","status":"active","position":[24,55.1],"bearing":70.504949,"moving":true,"waypoint":null,"leg":1,"legProgress":0,"strength":60000,"certainty":"approximate","trailLength":1}],"events":[{"id":"niemen-crossing","kind":"other","phase":"active","progress":0,"sinceEnd":0,"position":[23.8861,54.8972],"importance":1}]}},

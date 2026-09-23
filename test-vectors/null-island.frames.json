@@ -1,5 +1,5 @@
 {
- "description": "resolveFrame() at scroll progress p through each chapter of examples/fixtures/null-island.json",
+ "description": "resolveFrame() at scroll progress p through each chapter of data/campaigns/fixtures/null-island.json",
  "diagnostics": [
   {
    "level": "info",
