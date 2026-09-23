@@ -3,8 +3,12 @@ import type { StyleSpecification } from 'maplibre-gl';
 import type { Feature, FeatureCollection } from 'geojson';
 import type { ChronoTheme } from './theme.js';
 
+/** Where the basemap GeoJSON is served from unless a host says otherwise. The style and the
+    renderer's label layer read the same folder, so they share this default. */
+export const DEFAULT_BASEMAP_PATH = '/basemap';
+
 export interface BasemapOptions {
-  /** Where land.geojson / rivers.geojson / lakes.geojson are served from. */
+  /** Folder serving land, lakes, rivers, peaks, places, forests and embellishments `.geojson`. */
   basemapPath?: string;
   theme: ChronoTheme;
   /** Optional open DEM for 3D terrain, e.g. AWS terrain tiles. Off by default: no network needed. */
@@ -12,7 +16,7 @@ export interface BasemapOptions {
 }
 
 export function createBasemapStyle(opts: BasemapOptions): StyleSpecification {
-  const { theme, basemapPath = '/data/basemap' } = opts;
+  const { theme, basemapPath = DEFAULT_BASEMAP_PATH } = opts;
   const layers: StyleSpecification['layers'] = [
     { id: 'sea', type: 'background', paint: { 'background-color': theme.sea } },
     // Antique coastal water-lining / multi-tier echo ribbons (Renaissance cartography)

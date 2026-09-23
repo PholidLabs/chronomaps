@@ -10,12 +10,19 @@ import type { Feature, FeatureCollection, Position } from 'geojson';
 import type { FrameState, NormEntity, NormalizedCampaign, Ticks } from '@chronomap/engine';
 import { alongPath, pickText } from '@chronomap/engine';
 import { factionColor, parchmentLight, withAlpha, type ChronoTheme } from './theme.js';
-import { graticuleFor } from './style.js';
+import { DEFAULT_BASEMAP_PATH, graticuleFor } from './style.js';
 import { renderMountainSvg, renderForestSvg, renderFortressSvg, renderEmbellishmentSvg } from './pictorial.js';
 
 const EMPTY: FeatureCollection = { type: 'FeatureCollection', features: [] };
 const DAY = 86400;
 const BATTLE_KINDS = new Set(['battle', 'siege', 'skirmish', 'raid', 'massacre']);
+
+type PictorialKind = 'volcano' | 'range' | 'peak' | 'forest' | 'ornament';
+/** Kind line of a pictorial basemap popup; languages without an entry read English. */
+const PICTORIAL_KIND: Record<string, Record<PictorialKind, string>> = {
+  en: { volcano: 'Volcano', range: 'Mountain range', peak: 'Mountain', forest: 'Historic forest', ornament: 'Sea ornament' },
+  id: { volcano: 'Gunung Api', range: 'Pegunungan', peak: 'Gunung', forest: 'Hutan Sejarah', ornament: 'Hiasan Samudra' },
+};
 
 export interface RendererOptions {
   theme?: ChronoTheme; language?: string; maxStrengthBandMeters?: number;
@@ -34,8 +41,18 @@ function pushBox(into: Blocker[], el: Element | null, owner: Element | null, sym
   if (r.width > 0 && r.height > 0) into.push({ box: r, owner, symbol });
 }
 
+/** Basemap feature properties are data: they only ever reach the DOM as text. */
+function textEl(tag: string, className: string, text: unknown): HTMLElement {
+  const node = document.createElement(tag);
+  if (className) node.className = className;
+  node.textContent = String(text ?? '');
+  return node;
+}
+
 export class ChronoMapRenderer {
   private campaign: NormalizedCampaign | null = null;
+  /** Entities by id, built once per campaign: setFrame looks every frame entity up. */
+  private entities = new Map<string, NormEntity>();
   private theme: ChronoTheme;
   private language: string;
   private bandMeters: number;
@@ -69,14 +86,17 @@ export class ChronoMapRenderer {
     this.language = opts.language ?? 'en';
     this.bandMeters = opts.maxStrengthBandMeters ?? 18000;
     this.avoidSelector = opts.avoidSelector ?? '[data-cm-avoid]';
-    this.basemapPath = opts.basemapPath ?? '/basemap';
+    this.basemapPath = opts.basemapPath ?? DEFAULT_BASEMAP_PATH;
     this.reduceMotion = opts.reduceMotion ?? false;
 
+    /* setStyle() can fire 'style.load' before it returns, while isStyleLoaded() is still false
+       because sources are loading. A renderer built right after setStyle() would then wait on
+       an event that has already fired; 'idle' always follows, so it is the backstop. */
     if (this.map.isStyleLoaded()) {
       this.install();
     } else {
       this.map.once('style.load', this.installHandler);
-      this.map.once('load', this.installHandler);
+      this.map.once('idle', this.installHandler);
     }
     this.map.on('zoom', this.onZoom);
     this.map.on('move', this.onMove);
@@ -99,28 +119,13 @@ export class ChronoMapRenderer {
   private async loadBasemapLabels(): Promise<void> {
     if (typeof fetch === 'undefined') return;
     try {
-      const [peaksRes, placesRes, forestsRes, embellishmentsRes] = await Promise.all([
-        fetch(`${this.basemapPath}/peaks.geojson`).catch(() => null),
-        fetch(`${this.basemapPath}/places.geojson`).catch(() => null),
-        fetch(`${this.basemapPath}/forests.geojson`).catch(() => null),
-        fetch(`${this.basemapPath}/embellishments.geojson`).catch(() => null),
-      ]);
-      if (peaksRes && peaksRes.ok) {
-        const fc = await peaksRes.json() as FeatureCollection;
-        this.initPeakLabels(fc);
-      }
-      if (placesRes && placesRes.ok) {
-        const fc = await placesRes.json() as FeatureCollection;
-        this.initBasemapPlaceLabels(fc);
-      }
-      if (forestsRes && forestsRes.ok) {
-        const fc = await forestsRes.json() as FeatureCollection;
-        this.initForestLabels(fc);
-      }
-      if (embellishmentsRes && embellishmentsRes.ok) {
-        const fc = await embellishmentsRes.json() as FeatureCollection;
-        this.initEmbellishments(fc);
-      }
+      const [peaks, places, forests, embellishments] = await Promise.all(['peaks', 'places', 'forests', 'embellishments'].map((name) =>
+        fetch(`${this.basemapPath}/${name}.geojson`).then((res) => (res.ok ? res.json() as Promise<FeatureCollection> : null)).catch(() => null)));
+      if (!this.ready) return; // destroyed while the files were in flight: their markers would never be removed
+      if (peaks) this.initPeakLabels(peaks);
+      if (places) this.initBasemapPlaceLabels(places);
+      if (forests) this.initForestLabels(forests);
+      if (embellishments) this.initEmbellishments(embellishments);
     } catch {
       // Graceful offline fallback
     }
@@ -133,26 +138,13 @@ export class ChronoMapRenderer {
       const coord = f.geometry.coordinates as [number, number];
       const el = document.createElement('div');
       el.className = `cm-peak-marker rank-${p.rank ?? 2}`;
-      el.innerHTML = `
-        <div class="cm-peak-art">${renderMountainSvg(p)}</div>
-        <div class="cm-peak-caption">
-          <span class="cm-peak-name">${p.name}</span>
-          ${p.elevation ? `<span class="cm-peak-elev">${p.elevation} m</span>` : ''}
-        </div>
-      `;
-      el.addEventListener('click', (ev) => {
-        ev.stopPropagation();
-        if (!this.basemapPopup) this.basemapPopup = new Popup({ closeButton: true, maxWidth: '280px', offset: 12 });
-        const box = document.createElement('div');
-        box.className = 'cm-pictorial-popup';
-        box.innerHTML = `
-          <div class="kind">${p.type === 'volcano' ? 'Gunung Api' : p.type === 'range' ? 'Pegunungan' : 'Gunung'}</div>
-          <h4>${p.name}</h4>
-          ${p.elevation ? `<div class="muted">${p.elevation} m</div>` : ''}
-          ${p.note ? `<div class="note">${p.note}</div>` : ''}
-        `;
-        this.basemapPopup.setLngLat(coord).setDOMContent(box).addTo(this.map);
-      });
+      // The art is generated SVG with no feature text in it; the caption is built as text.
+      el.innerHTML = `<div class="cm-peak-art">${renderMountainSvg(p)}</div>`;
+      const caption = textEl('div', 'cm-peak-caption', '');
+      caption.append(textEl('span', 'cm-peak-name', p.name));
+      if (p.elevation) caption.append(textEl('span', 'cm-peak-elev', `${p.elevation} m`));
+      el.append(caption);
+      this.bindPictorialPopup(el, coord, p.type === 'volcano' ? 'volcano' : p.type === 'range' ? 'range' : 'peak', p);
       const marker = new Marker({ element: el, anchor: 'bottom', offset: [0, 4] }).setLngLat(coord).addTo(this.map);
       this.peakLabels.set(p.id, { marker, el });
     }
@@ -166,24 +158,11 @@ export class ChronoMapRenderer {
       const coord = f.geometry.coordinates as [number, number];
       const el = document.createElement('div');
       el.className = `cm-forest-marker rank-${p.rank ?? 2}`;
-      el.innerHTML = `
-        <div class="cm-forest-art">${renderForestSvg(p)}</div>
-        <div class="cm-forest-caption">
-          <span class="cm-forest-name">${p.name}</span>
-        </div>
-      `;
-      el.addEventListener('click', (ev) => {
-        ev.stopPropagation();
-        if (!this.basemapPopup) this.basemapPopup = new Popup({ closeButton: true, maxWidth: '280px', offset: 12 });
-        const box = document.createElement('div');
-        box.className = 'cm-pictorial-popup';
-        box.innerHTML = `
-          <div class="kind">Hutan Sejarah</div>
-          <h4>${p.name}</h4>
-          ${p.note ? `<div class="note">${p.note}</div>` : ''}
-        `;
-        this.basemapPopup.setLngLat(coord).setDOMContent(box).addTo(this.map);
-      });
+      el.innerHTML = `<div class="cm-forest-art">${renderForestSvg(p)}</div>`;
+      const caption = textEl('div', 'cm-forest-caption', '');
+      caption.append(textEl('span', 'cm-forest-name', p.name));
+      el.append(caption);
+      this.bindPictorialPopup(el, coord, 'forest', p);
       const marker = new Marker({ element: el, anchor: 'bottom', offset: [0, 2] }).setLngLat(coord).addTo(this.map);
       this.forestLabels.set(p.id, { marker, el });
     }
@@ -198,22 +177,25 @@ export class ChronoMapRenderer {
       const el = document.createElement('div');
       el.className = `cm-embellishment-marker kind-${p.kind ?? 'cartouche'}`;
       el.innerHTML = renderEmbellishmentSvg(p.kind ?? 'compass-rose');
-      el.addEventListener('click', (ev) => {
-        ev.stopPropagation();
-        if (!this.basemapPopup) this.basemapPopup = new Popup({ closeButton: true, maxWidth: '280px', offset: 12 });
-        const box = document.createElement('div');
-        box.className = 'cm-pictorial-popup';
-        box.innerHTML = `
-          <div class="kind">Hiasan Samudra</div>
-          <h4>${p.name}</h4>
-          ${p.note ? `<div class="note">${p.note}</div>` : ''}
-        `;
-        this.basemapPopup.setLngLat(coord).setDOMContent(box).addTo(this.map);
-      });
+      this.bindPictorialPopup(el, coord, 'ornament', p);
       const marker = new Marker({ element: el, anchor: 'center' }).setLngLat(coord).addTo(this.map);
       this.embellishmentMarkers.set(p.id, { marker, el });
     }
     this.applyLabelVisibility();
+  }
+
+  /** Pictorial art is DOM, not a map layer, so it opens its own popup rather than the host's. */
+  private bindPictorialPopup(el: HTMLElement, coord: [number, number], kind: PictorialKind, p: Record<string, any>): void {
+    el.addEventListener('click', (ev) => {
+      ev.stopPropagation(); // the map's click would close the popup as it opens
+      const box = document.createElement('div');
+      box.className = 'cm-pictorial-popup';
+      box.append(textEl('div', 'kind', (PICTORIAL_KIND[this.language] ?? PICTORIAL_KIND.en)[kind]), textEl('h4', '', p.name));
+      if (p.elevation) box.append(textEl('div', 'muted', `${p.elevation} m`));
+      if (p.note) box.append(textEl('div', 'note', p.note));
+      this.basemapPopup ??= new Popup({ closeButton: true, maxWidth: '280px', offset: 12 });
+      this.basemapPopup.setLngLat(coord).setDOMContent(box).addTo(this.map);
+    });
   }
 
   private initBasemapPlaceLabels(fc: FeatureCollection): void {
@@ -361,23 +343,15 @@ export class ChronoMapRenderer {
   /* ---------------------------------------------------------------- campaign (static) */
   setCampaign(campaign: NormalizedCampaign): void {
     this.campaign = campaign;
+    this.entities = new Map(campaign.entities.map((e) => [e.id, e]));
     this.maxStrength = 0;
     for (const e of campaign.entities) for (const w of e.track ?? []) if (w.strength) this.maxStrength = Math.max(this.maxStrength, w.strength);
-    this.clearMarkers();
+    this.clearCampaignMarkers();
     this.lastTerritoryKey = '';
-    const run = () => {
-      if (!this.ready) return;
+    // Not ready yet: install() builds from this.campaign once the style can take layers.
+    if (this.ready) {
       this.buildStatic();
       this.refreshGraticule();
-    };
-    if (this.ready) {
-      run();
-    } else {
-      const onReady = () => {
-        if (this.ready) run();
-      };
-      this.map.once('style.load', onReady);
-      this.map.once('load', onReady);
     }
   }
 
@@ -419,7 +393,6 @@ export class ChronoMapRenderer {
     if (!c || !this.ready) return;
     this.focus = new Set(focus);
     const t = frame.t;
-    const byId = new Map(c.entities.map((e) => [e.id, e]));
 
     const trails: Feature[] = [];
     const activeMarches: Feature[] = [];
@@ -427,7 +400,7 @@ export class ChronoMapRenderer {
     const liveUnits = new Set<string>(), liveForts = new Set<string>();
 
     for (const fe of frame.entities) {
-      const ne = byId.get(fe.id);
+      const ne = this.entities.get(fe.id);
       if (!ne) continue;
       const color = factionColor(c.factions.get(fe.faction)?.color ?? '#7a6a58', this.theme);
       if (ne.polygons) {
@@ -743,11 +716,6 @@ export class ChronoMapRenderer {
   private declutterQueued = false;
 
   /* ---------------------------------------------------------------- misc */
-  setTheme(theme: ChronoTheme): void {
-    this.theme = theme;
-    if (!this.ready) return;
-    // The basemap style is rebuilt by the app (setStyle); campaign layers are re-added after 'styledata'.
-  }
   setLanguage(lang: string): void {
     this.language = lang;
     if (this.campaign) this.buildStatic();
@@ -756,14 +724,11 @@ export class ChronoMapRenderer {
     const src = this.map.getSource(id) as GeoJSONSource | undefined;
     if (src) src.setData(data);
   }
-  private clearMarkers(): void {
-    for (const map of [this.unitMarkers, this.fortMarkers, this.placeLabels, this.eventLabels, this.peakLabels, this.basemapPlaceLabels, this.forestLabels, this.embellishmentMarkers]) {
+  /** The campaign's own markers. The basemap's pictorial ones don't depend on it and stay. */
+  private clearCampaignMarkers(): void {
+    for (const map of [this.unitMarkers, this.fortMarkers, this.placeLabels, this.eventLabels]) {
       for (const entry of map.values()) entry.marker.remove();
       map.clear();
-    }
-    if (this.basemapPopup) {
-      this.basemapPopup.remove();
-      this.basemapPopup = null;
     }
     if (this.animFrameId) {
       cancelAnimationFrame(this.animFrameId);
@@ -771,11 +736,18 @@ export class ChronoMapRenderer {
     }
   }
   destroy(): void {
-    this.clearMarkers();
+    this.ready = false;
+    this.clearCampaignMarkers();
+    for (const map of [this.peakLabels, this.basemapPlaceLabels, this.forestLabels, this.embellishmentMarkers]) {
+      for (const entry of map.values()) entry.marker.remove();
+      map.clear();
+    }
+    this.basemapPopup?.remove();
+    this.basemapPopup = null;
     this.map.off('zoom', this.onZoom);
     this.map.off('move', this.onMove);
     this.map.off('style.load', this.installHandler);
-    this.map.off('load', this.installHandler);
+    this.map.off('idle', this.installHandler);
   }
 }
 

@@ -72,35 +72,21 @@ let renderer = new ChronoMapRenderer(map, { theme: theme(), language: state.lang
 const popup = new Popup({ closeButton: false, closeOnClick: true, maxWidth: '300px', offset: 12 });
 
 let appliedTheme = theme().name;
-let pendingStyleCallback: (() => void) | null = null;
 function rebuildRenderer(): void {
   /* Auto -> Light on a light machine changes the attribute but not the palette;
      rebuilding there would flash the basemap for no visible gain. */
   if (theme().name === appliedTheme) return;
   appliedTheme = theme().name;
-  if (pendingStyleCallback) {
-    map.off('style.load', pendingStyleCallback);
-    pendingStyleCallback = null;
-  }
   renderer.destroy();
   map.setStyle(createBasemapStyle({ theme: theme(), basemapPath: '/basemap' }));
-  const onStyleReady = () => {
-    pendingStyleCallback = null;
-    renderer = new ChronoMapRenderer(map, { theme: theme(), language: state.lang, basemapPath: '/basemap', reduceMotion });
-    if ((window as any).chronomap) (window as any).chronomap.renderer = renderer;
-    if (engine.campaign) {
-      renderer.setCampaign(engine.campaign);
-      if (state.frame) renderer.setFrame(state.frame, focusIds());
-    }
-    attachMapInteractions();
-    if (state.terrain) setTerrainEnabled(true);
-  };
-  if (map.isStyleLoaded()) {
-    onStyleReady();
-  } else {
-    pendingStyleCallback = onStyleReady;
-    map.once('style.load', onStyleReady);
+  // Built straight away: the renderer installs itself once the new style can take layers.
+  renderer = new ChronoMapRenderer(map, { theme: theme(), language: state.lang, basemapPath: '/basemap', reduceMotion });
+  if (window.chronomap) window.chronomap.renderer = renderer;
+  if (engine.campaign) {
+    renderer.setCampaign(engine.campaign);
+    if (state.frame) renderer.setFrame(state.frame, focusIds());
   }
+  if (state.terrain) setTerrainEnabled(true);
 }
 const focusIds = (): string[] => (state.activeIndex != null && state.activeIndex >= 0 ? campaign().chapters[state.activeIndex]?.focus ?? [] : []);
 
@@ -118,7 +104,8 @@ let mapInteractionsAttached = false;
 function attachMapInteractions(): void {
   if (mapInteractionsAttached) return;
   mapInteractionsAttached = true;
-  const layers = ['cm-place-dot', 'cm-event-active', 'cm-event-past', 'basemap-peaks-dot', 'basemap-places-dot', 'rivers'];
+  // Peaks, forests and sea ornaments are DOM markers; the renderer opens their popups.
+  const layers = ['cm-place-dot', 'cm-event-active', 'cm-event-past', 'basemap-places-dot', 'rivers'];
   for (const layer of layers) {
     map.on('mouseenter', layer, () => { map.getCanvas().style.cursor = 'pointer'; });
     map.on('mouseleave', layer, () => { map.getCanvas().style.cursor = ''; });
@@ -129,20 +116,11 @@ function attachMapInteractions(): void {
       let html: HTMLElement | null = null;
       if (layer === 'cm-place-dot') html = placePopup(id);
       else if (layer === 'cm-event-active' || layer === 'cm-event-past') html = eventPopup(id);
-      else if (layer === 'basemap-peaks-dot') html = peakPopup(f.properties ?? {});
       else if (layer === 'basemap-places-dot') html = basemapPlacePopup(f.properties ?? {});
       else if (layer === 'rivers') html = riverPopup(f.properties ?? {});
       if (html) popup.setLngLat(e.lngLat).setDOMContent(html).addTo(map);
     });
   }
-}
-function peakPopup(p: Record<string, any>): HTMLElement {
-  const box = el('div');
-  box.append(el('span', { class: 'kind', text: ui().mountains }));
-  box.append(el('h4', { text: p.name ?? 'Puncak' }));
-  if (p.elevation) box.append(el('div', { class: 'muted', text: `${p.elevation} m` }));
-  if (p.note) box.append(el('div', { class: 'note', text: p.note }));
-  return box;
 }
 function basemapPlacePopup(p: Record<string, any>): HTMLElement {
   const box = el('div');
@@ -427,7 +405,8 @@ function updateExplorePanel(force: boolean): void {
 function setTerrainEnabled(enable: boolean): void {
   state.terrain = enable;
   if (!map.isStyleLoaded()) {
-    map.once('style.load', () => setTerrainEnabled(enable));
+    // Not 'style.load': setStyle() may already have fired it. Re-read state: it may have been toggled meanwhile.
+    map.once('idle', () => setTerrainEnabled(state.terrain));
     return;
   }
   if (!enable) {

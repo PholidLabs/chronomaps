@@ -43,12 +43,14 @@
 .cm-place-label.is-hidden { display: none; }
 .cm-event-label { font: 14px/1.2 var(--cm-font-sc, "IM Fell English SC", Georgia, serif); color: var(--cm-ink, #28211A); pointer-events: none; text-shadow: 0 0 4px var(--cm-land, #ECE3CD), 0 0 9px var(--cm-land, #ECE3CD); white-space: nowrap; }
 
-/* Mountain Peaks (Hand-drawn Tolkien/Renaissance style) */
+/* Mountain Peaks (Hand-drawn Tolkien/Renaissance style).
+   Pictorial markers open a popup on click, so unlike labels they set no pointer-events:
+   they inherit it, and are clickable exactly when the map container is. */
 .cm-peak-marker {
   display: flex;
   flex-direction: column;
   align-items: center;
-  pointer-events: none;
+  cursor: pointer;
   user-select: none;
 }
 .cm-peak-marker.is-hidden { display: none; }
@@ -85,7 +87,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  pointer-events: none;
+  cursor: pointer;
   user-select: none;
 }
 .cm-forest-marker.is-hidden { display: none; }
@@ -107,7 +109,7 @@
 
 /* Nautical Ocean Embellishments (Sea Monster, Ship, Compass Rose) */
 .cm-embellishment-marker {
-  pointer-events: none;
+  cursor: pointer;
   user-select: none;
   opacity: 0.88;
   transition: opacity 0.3s ease;
