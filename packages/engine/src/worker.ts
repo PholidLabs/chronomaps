@@ -11,11 +11,13 @@ export type WorkerRequest =
   | { type: 'query'; id: number; t: Ticks; bbox?: [number, number, number, number] | null; includeTrail?: boolean };
 export type WorkerResponse =
   | { type: 'loaded'; id: number; ok: boolean; diagnostics: Diagnostic[]; summary?: { chapters: number; entities: number; events: number; places: number } }
-  | { type: 'frame'; id: number; frame: FrameState };
+  | { type: 'frame'; id: number; frame: FrameState }
+  | { type: 'error'; id: number; message: string };
 
 let campaign: NormalizedCampaign | null = null;
 
-export function handleRequest(msg: WorkerRequest): WorkerResponse {
+/** Throws on a bad request, as the Rust core does; the message listener below turns that into an `error` reply. */
+export function handleRequest(msg: WorkerRequest): Exclude<WorkerResponse, { type: 'error' }> {
   if (msg.type === 'load') {
     const { campaign: c, diagnostics } = loadCampaign(msg.campaign);
     campaign = c;
@@ -31,10 +33,12 @@ export function handleRequest(msg: WorkerRequest): WorkerResponse {
 // Runs only inside a real worker; importing this module elsewhere is harmless.
 if (typeof self !== 'undefined' && typeof (self as unknown as { postMessage?: unknown }).postMessage === 'function' && typeof document === 'undefined') {
   self.addEventListener('message', (ev: MessageEvent<WorkerRequest>) => {
+    let reply: WorkerResponse;
     try {
-      (self as unknown as Worker).postMessage(handleRequest(ev.data));
+      reply = handleRequest(ev.data);
     } catch (e) {
-      (self as unknown as Worker).postMessage({ type: 'error', id: (ev.data as { id: number }).id, message: String((e as Error).message) });
+      reply = { type: 'error', id: ev.data.id, message: String((e as Error).message) };
     }
+    (self as unknown as Worker).postMessage(reply);
   });
 }
