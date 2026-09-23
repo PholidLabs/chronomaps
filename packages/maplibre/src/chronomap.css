@@ -1,4 +1,21 @@
 /* Markers and labels for @chronomap/maplibre. Colours come from the host page's tokens. */
+:root {
+  --cm-mountain-stroke: #221C16;
+  --cm-mountain-hatch: rgba(34, 28, 22, 0.65);
+  --cm-mountain-fill: #EADBBE;
+  --cm-tree-stroke: #2D3A2C;
+  --cm-tree-canopy: rgba(102, 128, 102, 0.35);
+  --cm-watermark: rgba(40, 55, 50, 0.22);
+}
+:root[data-theme="dark"], html.dark {
+  --cm-mountain-stroke: #C9A25A;
+  --cm-mountain-hatch: rgba(201, 162, 90, 0.55);
+  --cm-mountain-fill: #2E2822;
+  --cm-tree-stroke: #7A9A78;
+  --cm-tree-canopy: rgba(122, 154, 120, 0.28);
+  --cm-watermark: rgba(201, 162, 90, 0.18);
+}
+
 .cm-unit { display: flex; align-items: center; gap: 6px; pointer-events: none; }
 .cm-unit-icon { width: 13px; height: 13px; border-radius: 50%; background: var(--cm-colour, #8B1E1E); box-shadow: 0 0 0 1.6px var(--cm-land, #ECE3CD); }
 .cm-unit-icon.is-hollow { background: var(--cm-land, #ECE3CD); box-shadow: 0 0 0 2.4px var(--cm-colour, #8B1E1E); }

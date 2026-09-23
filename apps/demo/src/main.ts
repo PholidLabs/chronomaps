@@ -72,22 +72,35 @@ let renderer = new ChronoMapRenderer(map, { theme: theme(), language: state.lang
 const popup = new Popup({ closeButton: false, closeOnClick: true, maxWidth: '300px', offset: 12 });
 
 let appliedTheme = theme().name;
+let pendingStyleCallback: (() => void) | null = null;
 function rebuildRenderer(): void {
   /* Auto -> Light on a light machine changes the attribute but not the palette;
      rebuilding there would flash the basemap for no visible gain. */
   if (theme().name === appliedTheme) return;
   appliedTheme = theme().name;
+  if (pendingStyleCallback) {
+    map.off('style.load', pendingStyleCallback);
+    pendingStyleCallback = null;
+  }
   renderer.destroy();
   map.setStyle(createBasemapStyle({ theme: theme(), basemapPath: '/basemap' }));
-  map.once('styledata', () => {
+  const onStyleReady = () => {
+    pendingStyleCallback = null;
     renderer = new ChronoMapRenderer(map, { theme: theme(), language: state.lang, basemapPath: '/basemap', reduceMotion });
+    if ((window as any).chronomap) (window as any).chronomap.renderer = renderer;
     if (engine.campaign) {
       renderer.setCampaign(engine.campaign);
       if (state.frame) renderer.setFrame(state.frame, focusIds());
     }
     attachMapInteractions();
     if (state.terrain) setTerrainEnabled(true);
-  });
+  };
+  if (map.isStyleLoaded()) {
+    onStyleReady();
+  } else {
+    pendingStyleCallback = onStyleReady;
+    map.once('style.load', onStyleReady);
+  }
 }
 const focusIds = (): string[] => (state.activeIndex != null && state.activeIndex >= 0 ? campaign().chapters[state.activeIndex]?.focus ?? [] : []);
 
@@ -101,10 +114,12 @@ engine.on('frame', (frame) => {
 });
 
 /* ------------------------------------------------------------------ popups */
+let mapInteractionsAttached = false;
 function attachMapInteractions(): void {
+  if (mapInteractionsAttached) return;
+  mapInteractionsAttached = true;
   const layers = ['cm-place-dot', 'cm-event-active', 'cm-event-past', 'basemap-peaks-dot', 'basemap-places-dot', 'rivers'];
   for (const layer of layers) {
-    if (!map.getLayer(layer)) continue;
     map.on('mouseenter', layer, () => { map.getCanvas().style.cursor = 'pointer'; });
     map.on('mouseleave', layer, () => { map.getCanvas().style.cursor = ''; });
     map.on('click', layer, (e) => {
@@ -412,7 +427,7 @@ function updateExplorePanel(force: boolean): void {
 function setTerrainEnabled(enable: boolean): void {
   state.terrain = enable;
   if (!map.isStyleLoaded()) {
-    map.once('load', () => setTerrainEnabled(enable));
+    map.once('style.load', () => setTerrainEnabled(enable));
     return;
   }
   if (!enable) {
@@ -427,6 +442,7 @@ function setTerrainEnabled(enable: boolean): void {
       attribution: 'Terrain: AWS Terrain Tiles (Mapzen/Tilezen)',
     });
   }
+  const beforeLayer = map.getLayer('lakes') ? 'lakes' : undefined;
   if (!map.getLayer('hillshade')) {
     map.addLayer({
       id: 'hillshade', type: 'hillshade', source: 'terrain',
@@ -437,9 +453,12 @@ function setTerrainEnabled(enable: boolean): void {
         'hillshade-highlight-color': theme().hillshadeHighlight,
         'hillshade-accent-color': theme().inkFaint,
       },
-    }, 'lakes');
+    }, beforeLayer);
   } else {
     map.setLayoutProperty('hillshade', 'visibility', 'visible');
+    map.setPaintProperty('hillshade', 'hillshade-shadow-color', theme().hillshadeShadow);
+    map.setPaintProperty('hillshade', 'hillshade-highlight-color', theme().hillshadeHighlight);
+    map.setPaintProperty('hillshade', 'hillshade-accent-color', theme().inkFaint);
   }
   const exag = engine.campaign?.meta.map.terrain?.exaggeration ?? 1.4;
   map.setTerrain({ source: 'terrain', exaggeration: exag });

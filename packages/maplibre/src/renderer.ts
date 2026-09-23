@@ -59,6 +59,10 @@ export class ChronoMapRenderer {
   private animFrameId: number | null = null;
   private dashPhase = 0;
   private lastAnimTime = 0;
+  private onZoom = () => this.applyLabelVisibility();
+  private onMove = () => this.scheduleDeclutter();
+  private installHandler = () => this.install();
+  private lastFrame: { frame: FrameState; focus: string[] } | null = null;
 
   constructor(private map: MapLibreMap, opts: RendererOptions = {}) {
     this.theme = opts.theme ?? parchmentLight;
@@ -67,15 +71,29 @@ export class ChronoMapRenderer {
     this.avoidSelector = opts.avoidSelector ?? '[data-cm-avoid]';
     this.basemapPath = opts.basemapPath ?? '/basemap';
     this.reduceMotion = opts.reduceMotion ?? false;
-    const install = () => {
-      this.installLayers();
-      this.ready = true;
-      this.refreshGraticule();
-      this.loadBasemapLabels();
-    };
-    if (this.map.isStyleLoaded()) install(); else this.map.once('load', install);
-    this.map.on('zoom', () => this.applyLabelVisibility());
-    this.map.on('move', () => this.scheduleDeclutter());
+
+    if (this.map.isStyleLoaded()) {
+      this.install();
+    } else {
+      this.map.once('style.load', this.installHandler);
+      this.map.once('load', this.installHandler);
+    }
+    this.map.on('zoom', this.onZoom);
+    this.map.on('move', this.onMove);
+  }
+
+  private install(): void {
+    if (this.ready) return;
+    this.installLayers();
+    this.ready = true;
+    this.refreshGraticule();
+    this.loadBasemapLabels();
+    if (this.campaign) {
+      this.buildStatic();
+    }
+    if (this.lastFrame) {
+      this.setFrame(this.lastFrame.frame, this.lastFrame.focus);
+    }
   }
 
   private async loadBasemapLabels(): Promise<void> {
@@ -220,11 +238,15 @@ export class ChronoMapRenderer {
     };
     for (const id of ['cm-halos', 'cm-territories', 'cm-routes', 'cm-trails', 'cm-active-march', 'cm-places', 'cm-events']) add(id);
 
-    m.addLayer({ id: 'cm-territory-fill', type: 'fill', source: 'cm-territories', paint: { 'fill-color': ['get', 'color'], 'fill-opacity': 0.14 } });
-    m.addLayer({ id: 'cm-territory-line', type: 'line', source: 'cm-territories', paint: { 'line-color': ['get', 'color'], 'line-opacity': 0.5, 'line-width': 1.2, 'line-dasharray': [4, 3] } });
-    m.addLayer({ id: 'cm-route', type: 'line', source: 'cm-routes', paint: { 'line-color': ['get', 'color'], 'line-opacity': 0.5, 'line-width': 1.6, 'line-dasharray': [3, 3] } });
-    m.addLayer({ id: 'cm-halo-fill', type: 'fill', source: 'cm-halos', paint: { 'fill-color': t.ink, 'fill-opacity': ['case', ['get', 'focus'], 0.09, 0.04] } });
-    m.addLayer({
+    const addLayerSafe = (layer: Parameters<typeof m.addLayer>[0], before?: string) => {
+      if (!m.getLayer(layer.id)) m.addLayer(layer, before);
+    };
+
+    addLayerSafe({ id: 'cm-territory-fill', type: 'fill', source: 'cm-territories', paint: { 'fill-color': ['get', 'color'], 'fill-opacity': 0.14 } });
+    addLayerSafe({ id: 'cm-territory-line', type: 'line', source: 'cm-territories', paint: { 'line-color': ['get', 'color'], 'line-opacity': 0.5, 'line-width': 1.2, 'line-dasharray': [4, 3] } });
+    addLayerSafe({ id: 'cm-route', type: 'line', source: 'cm-routes', paint: { 'line-color': ['get', 'color'], 'line-opacity': 0.5, 'line-width': 1.6, 'line-dasharray': [3, 3] } });
+    addLayerSafe({ id: 'cm-halo-fill', type: 'fill', source: 'cm-halos', paint: { 'fill-color': t.ink, 'fill-opacity': ['case', ['get', 'focus'], 0.09, 0.04] } });
+    addLayerSafe({
       id: 'cm-halo-line', type: 'line', source: 'cm-halos',
       filter: ['==', ['get', 'certainty'], 'conjectural'],
       paint: { 'line-color': t.ink, 'line-opacity': ['case', ['get', 'focus'], 0.45, 0.18], 'line-width': 1, 'line-dasharray': [2, 3] },
@@ -241,15 +263,15 @@ export class ChronoMapRenderer {
       strengthStops.push(z, ['max', 1.2, ['min', 64, ['*', ['get', 'w0'], 2 ** z]]]);
     }
     const strengthWidth: unknown = strengthStops;
-    m.addLayer({ id: 'cm-trail-band', type: 'line', source: 'cm-trails', filter: ['all', ['==', ['get', 'dash'], 'none'], ['has', 'w0']],
+    addLayerSafe({ id: 'cm-trail-band', type: 'line', source: 'cm-trails', filter: ['all', ['==', ['get', 'dash'], 'none'], ['has', 'w0']],
       layout: { 'line-cap': 'round', 'line-join': 'round' }, paint: { 'line-color': ['get', 'color'], 'line-width': strengthWidth as never } });
-    m.addLayer({ id: 'cm-trail-solid', type: 'line', source: 'cm-trails', filter: ['all', ['==', ['get', 'dash'], 'none'], ['!', ['has', 'w0']]],
+    addLayerSafe({ id: 'cm-trail-solid', type: 'line', source: 'cm-trails', filter: ['all', ['==', ['get', 'dash'], 'none'], ['!', ['has', 'w0']]],
       layout: { 'line-cap': 'round', 'line-join': 'round' }, paint: { 'line-color': ['get', 'color'], 'line-width': 2.6 } });
-    m.addLayer({ id: 'cm-trail-conjectural', type: 'line', source: 'cm-trails', filter: ['==', ['get', 'dash'], 'conjectural'],
+    addLayerSafe({ id: 'cm-trail-conjectural', type: 'line', source: 'cm-trails', filter: ['==', ['get', 'dash'], 'conjectural'],
       layout: { 'line-cap': 'butt', 'line-join': 'round' }, paint: { 'line-color': ['get', 'color'], 'line-width': 2.4, 'line-dasharray': [3, 2] } });
-    m.addLayer({ id: 'cm-trail-sea', type: 'line', source: 'cm-trails', filter: ['==', ['get', 'dash'], 'sea'],
+    addLayerSafe({ id: 'cm-trail-sea', type: 'line', source: 'cm-trails', filter: ['==', ['get', 'dash'], 'sea'],
       layout: { 'line-cap': 'round', 'line-join': 'round' }, paint: { 'line-color': ['get', 'color'], 'line-width': 2.2, 'line-dasharray': [0.6, 2.4] } });
-    m.addLayer({
+    addLayerSafe({
       id: 'cm-march-flow', type: 'line', source: 'cm-active-march',
       layout: { 'line-cap': 'round', 'line-join': 'round' },
       paint: {
@@ -260,7 +282,7 @@ export class ChronoMapRenderer {
       },
     });
 
-    m.addLayer({
+    addLayerSafe({
       id: 'cm-place-dot', type: 'circle', source: 'cm-places',
       paint: {
         'circle-radius': ['case', ['get', 'focus'], 4, 2.6],
@@ -268,7 +290,7 @@ export class ChronoMapRenderer {
         'circle-stroke-width': 1.2, 'circle-stroke-color': t.land,
       },
     });
-    m.addLayer({
+    addLayerSafe({
       id: 'cm-event-past', type: 'circle', source: 'cm-events', filter: ['==', ['get', 'phase'], 'past'],
       paint: {
         'circle-radius': ['interpolate', ['linear'], ['get', 'importance'], 1, 5, 5, 2.5],
@@ -276,7 +298,7 @@ export class ChronoMapRenderer {
         'circle-stroke-width': 1.4, 'circle-opacity': 0, 'circle-stroke-opacity': ['get', 'fade'],
       },
     });
-    m.addLayer({
+    addLayerSafe({
       id: 'cm-event-active', type: 'circle', source: 'cm-events', filter: ['==', ['get', 'phase'], 'active'],
       paint: {
         'circle-radius': ['interpolate', ['linear'], ['get', 'importance'], 1, 8, 5, 4],
@@ -284,7 +306,7 @@ export class ChronoMapRenderer {
         'circle-stroke-color': t.event, 'circle-stroke-width': 2,
       },
     });
-    m.addLayer({
+    addLayerSafe({
       id: 'cm-event-pulse', type: 'circle', source: 'cm-events', filter: ['==', ['get', 'phase'], 'active'],
       paint: { 'circle-radius': 10, 'circle-color': 'rgba(0,0,0,0)', 'circle-stroke-color': t.event, 'circle-stroke-width': 1.5, 'circle-stroke-opacity': 0.5 },
     });
@@ -343,8 +365,20 @@ export class ChronoMapRenderer {
     for (const e of campaign.entities) for (const w of e.track ?? []) if (w.strength) this.maxStrength = Math.max(this.maxStrength, w.strength);
     this.clearMarkers();
     this.lastTerritoryKey = '';
-    const run = () => { this.buildStatic(); this.refreshGraticule(); };
-    if (this.ready) run(); else this.map.once('load', run);
+    const run = () => {
+      if (!this.ready) return;
+      this.buildStatic();
+      this.refreshGraticule();
+    };
+    if (this.ready) {
+      run();
+    } else {
+      const onReady = () => {
+        if (this.ready) run();
+      };
+      this.map.once('style.load', onReady);
+      this.map.once('load', onReady);
+    }
   }
 
   private buildStatic(): void {
@@ -380,6 +414,7 @@ export class ChronoMapRenderer {
 
   /* ---------------------------------------------------------------- frame (dynamic) */
   setFrame(frame: FrameState, focus: string[] = []): void {
+    this.lastFrame = { frame, focus };
     const c = this.campaign;
     if (!c || !this.ready) return;
     this.focus = new Set(focus);
@@ -735,7 +770,13 @@ export class ChronoMapRenderer {
       this.animFrameId = null;
     }
   }
-  destroy(): void { this.clearMarkers(); }
+  destroy(): void {
+    this.clearMarkers();
+    this.map.off('zoom', this.onZoom);
+    this.map.off('move', this.onMove);
+    this.map.off('style.load', this.installHandler);
+    this.map.off('load', this.installHandler);
+  }
 }
 
 /** Uncertainty halo as a real circle on the ground, so it scales with the map. */

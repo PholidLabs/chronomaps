@@ -90,11 +90,11 @@ function updateLanguage(): void {
   const btnId = document.getElementById('lang-id');
   if (btnEn && btnId) {
     if (state.lang === 'en') {
-      btnEn.className = 'px-2 py-0.5 font-label-sm text-label-sm bg-secondary text-on-secondary rounded-DEFAULT font-semibold';
-      btnId.className = 'px-2 py-0.5 font-label-sm text-label-sm text-on-surface-variant hover:text-on-surface';
+      btnEn.className = 'px-2.5 py-0.5 font-label-sm text-label-sm bg-secondary text-on-secondary rounded-full font-semibold';
+      btnId.className = 'px-2.5 py-0.5 font-label-sm text-label-sm text-on-surface-variant hover:text-on-surface rounded-full';
     } else {
-      btnEn.className = 'px-2 py-0.5 font-label-sm text-label-sm text-on-surface-variant hover:text-on-surface';
-      btnId.className = 'px-2 py-0.5 font-label-sm text-label-sm bg-secondary text-on-secondary rounded-DEFAULT font-semibold';
+      btnEn.className = 'px-2.5 py-0.5 font-label-sm text-label-sm text-on-surface-variant hover:text-on-surface rounded-full';
+      btnId.className = 'px-2.5 py-0.5 font-label-sm text-label-sm bg-secondary text-on-secondary rounded-full font-semibold';
     }
   }
 }
@@ -334,6 +334,29 @@ function initMapPlayground(): void {
       const tick = 1842000 + Math.floor(val * 14.5);
       tickCounter.textContent = `#${tick.toLocaleString()}`;
     }
+
+    // Update active chapter button highlight based on slider progress
+    const ch1 = document.getElementById('btn-ch-1');
+    const ch2 = document.getElementById('btn-ch-2');
+    const ch3 = document.getElementById('btn-ch-3');
+    const activeClass = 'chapter-btn px-3 py-1 rounded-full bg-secondary text-on-secondary font-label-sm text-[11px] font-semibold border border-outline-variant/50 transition-colors cursor-pointer';
+    const inactiveClass = 'chapter-btn px-3 py-1 rounded-full bg-surface-container hover:bg-secondary-container hover:text-on-secondary-container font-label-sm text-[11px] text-on-surface border border-outline-variant/50 transition-colors cursor-pointer';
+
+    if (ch1 && ch2 && ch3) {
+      if (val < 30) {
+        ch1.className = activeClass;
+        ch2.className = inactiveClass;
+        ch3.className = inactiveClass;
+      } else if (val < 65) {
+        ch1.className = inactiveClass;
+        ch2.className = activeClass;
+        ch3.className = inactiveClass;
+      } else {
+        ch1.className = inactiveClass;
+        ch2.className = inactiveClass;
+        ch3.className = activeClass;
+      }
+    }
   }
 
   function startAnimation(): void {
@@ -370,12 +393,28 @@ function initMapPlayground(): void {
     document.querySelectorAll<HTMLButtonElement>('[data-speed]').forEach((btn) => {
       btn.addEventListener('click', () => {
         document.querySelectorAll('[data-speed]').forEach((b) => {
-          b.className = 'px-2 py-0.5 rounded font-label-sm text-[11px] text-on-surface-variant hover:text-on-surface';
+          b.className = 'px-2.5 py-0.5 rounded-full font-label-sm text-[11px] text-on-surface-variant hover:text-on-surface';
         });
-        btn.className = 'px-2 py-0.5 rounded font-label-sm text-[11px] bg-secondary text-on-secondary font-semibold';
+        btn.className = 'px-2.5 py-0.5 rounded-full font-label-sm text-[11px] bg-secondary text-on-secondary font-semibold';
         speedMultiplier = parseFloat(btn.dataset.speed || '1.0');
         if (isPlaying) {
           startAnimation();
+        }
+      });
+    });
+
+    // Chapter Quick Jumps
+    const chapterJumps: Record<string, number> = {
+      'btn-ch-1': 15,
+      'btn-ch-2': 44,
+      'btn-ch-3': 85,
+    };
+
+    Object.entries(chapterJumps).forEach(([btnId, targetVal]) => {
+      document.getElementById(btnId)?.addEventListener('click', () => {
+        if (timeSlider) {
+          timeSlider.value = String(targetVal);
+          updateMapState(targetVal);
         }
       });
     });
@@ -383,7 +422,172 @@ function initMapPlayground(): void {
 }
 
 /** ----------------------------------------------------------------
- *  5. App Launch & Navigation Wiring
+ *  5. Hero Living Chronicle & Radar Route Motion
+ *  ---------------------------------------------------------------- */
+function initHeroRadar(): void {
+  const drawnPath = document.getElementById('hero-drawn-path') as SVGGeometryElement | null;
+  const troopMarker = document.getElementById('hero-troop-marker');
+  const odometerKm = document.getElementById('odometer-km');
+  if (!drawnPath || !troopMarker) return;
+
+  let pathLength = 0;
+  try {
+    pathLength = drawnPath.getTotalLength();
+  } catch {
+    pathLength = 520;
+  }
+
+  drawnPath.style.strokeDasharray = `${pathLength}`;
+  drawnPath.style.strokeDashoffset = `${pathLength}`;
+
+  const LOOP_DURATION = 9000; // 9-second continuous loop
+  let startTimestamp: number | null = null;
+
+  function step(ts: number): void {
+    if (!drawnPath || !troopMarker) return;
+    if (startTimestamp === null) startTimestamp = ts;
+    const elapsed = (ts - startTimestamp) % LOOP_DURATION;
+    const progress = elapsed / LOOP_DURATION; // 0..1
+
+    // Draw active stroke smoothly along the trail
+    drawnPath.style.strokeDashoffset = `${pathLength * (1 - progress)}`;
+
+    // Convert SVG geometry coordinate to percentage (viewBox: 400 x 200)
+    try {
+      const pt = drawnPath.getPointAtLength(progress * pathLength);
+      const pctX = (pt.x / 400) * 100;
+      const pctY = (pt.y / 200) * 100;
+      troopMarker.style.left = `${pctX}%`;
+      troopMarker.style.top = `${pctY}%`;
+    } catch {
+      // SVG not yet rendered fallback
+    }
+
+    // Dynamic Odometer increment
+    if (odometerKm) {
+      const currentKm = Math.round(progress * 14820);
+      odometerKm.textContent = `${currentKm.toLocaleString()} km`;
+    }
+
+    requestAnimationFrame(step);
+  }
+
+  requestAnimationFrame(step);
+}
+
+/** ----------------------------------------------------------------
+ *  6. 4-Stage Pipeline Conduit Pulse & Interactive Sequence
+ *  ---------------------------------------------------------------- */
+function initPipelineConduit(): void {
+  const runBtn = document.getElementById('btn-run-pipeline');
+  const btnLabel = document.getElementById('pipeline-btn-label');
+  const stageNodes = document.querySelectorAll<HTMLElement>('.pipeline-node');
+  const conduitLine = document.getElementById('pipeline-conduit-line');
+
+  let isRunning = false;
+
+  function runCircuit(): void {
+    if (isRunning) return;
+    isRunning = true;
+    if (btnLabel) btnLabel.textContent = copy().pipelineSimRunning;
+    if (conduitLine) {
+      conduitLine.classList.add('anim-conduit-active');
+      conduitLine.setAttribute('stroke', 'var(--color-primary)');
+    }
+
+    stageNodes.forEach((node, idx) => {
+      setTimeout(() => {
+        stageNodes.forEach((n) => n.classList.remove('is-active'));
+        node.classList.add('is-active');
+      }, idx * 420);
+    });
+
+    setTimeout(() => {
+      stageNodes.forEach((n) => n.classList.remove('is-active'));
+      if (conduitLine) {
+        conduitLine.setAttribute('stroke', 'var(--color-outline-variant)');
+      }
+      if (btnLabel) btnLabel.textContent = copy().pipelineSimBtn;
+      isRunning = false;
+    }, stageNodes.length * 420 + 600);
+  }
+
+  runBtn?.addEventListener('click', runCircuit);
+
+  // Periodic ambient pulse every 9 seconds if user is idle
+  setInterval(() => {
+    if (!isRunning && document.visibilityState === 'visible') {
+      runCircuit();
+    }
+  }, 9500);
+}
+
+/** ----------------------------------------------------------------
+ *  7. Diagnostics Scanner & Schema Spec Interactions
+ *  ---------------------------------------------------------------- */
+function initDiagnosticsAndSchema(): void {
+  const runDiagBtn = document.getElementById('btn-run-diag');
+  const diagBtnText = document.getElementById('diag-btn-text');
+  const scanIndicator = document.getElementById('diag-scan-indicator');
+  const diagLogContainer = document.getElementById('diag-log-container');
+
+  let isScanning = false;
+  runDiagBtn?.addEventListener('click', () => {
+    if (isScanning) return;
+    isScanning = true;
+    if (diagBtnText) diagBtnText.textContent = copy().diagScanning;
+
+    // Trigger visual scan bar
+    if (scanIndicator) {
+      scanIndicator.style.width = '100%';
+      scanIndicator.style.opacity = '1';
+    }
+    if (diagLogContainer) {
+      diagLogContainer.style.opacity = '0.5';
+    }
+
+    setTimeout(() => {
+      if (diagLogContainer) diagLogContainer.style.opacity = '1';
+      if (scanIndicator) {
+        scanIndicator.style.width = '0%';
+        scanIndicator.style.opacity = '0';
+      }
+      if (diagBtnText) diagBtnText.textContent = copy().diagPassed;
+
+      setTimeout(() => {
+        if (diagBtnText) diagBtnText.textContent = copy().diagRunBtn;
+        isScanning = false;
+      }, 2500);
+    }, 600);
+  });
+
+  const copySpecBtn = document.getElementById('btn-copy-spec');
+  const specCopyText = document.getElementById('spec-copy-text');
+  copySpecBtn?.addEventListener('click', () => {
+    const code = `interface HistoricalTroopTrack {
+  entityId: string;            // eg. "diponegoro_squadron"
+  path: [number, number][];     // [[lon, lat], ...]
+  timestamps: number[];       // Epoch seconds strictly monotonic
+  uncertaintyRadiusKm?: number;
+  primaryChronicleRef: string;  // eg. "Babad Diponegoro §IV"
+}`;
+    if (navigator?.clipboard?.writeText) {
+      navigator.clipboard.writeText(code).then(() => {
+        if (specCopyText) specCopyText.textContent = copy().specCopied;
+        setTimeout(() => {
+          if (specCopyText) specCopyText.textContent = copy().specCopyBtn;
+        }, 2000);
+      }).catch(() => {
+        if (specCopyText) specCopyText.textContent = copy().specCopied;
+      });
+    } else {
+      if (specCopyText) specCopyText.textContent = copy().specCopied;
+    }
+  });
+}
+
+/** ----------------------------------------------------------------
+ *  8. App Launch & Navigation Wiring
  *  ---------------------------------------------------------------- */
 function initActions(): void {
   // Direct launch buttons to /app/
@@ -417,5 +621,8 @@ window.addEventListener('DOMContentLoaded', () => {
   initThemeToggle();
   initParchmentShader();
   initMapPlayground();
+  initHeroRadar();
+  initPipelineConduit();
+  initDiagnosticsAndSchema();
   initActions();
 });

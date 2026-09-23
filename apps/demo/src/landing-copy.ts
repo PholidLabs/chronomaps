@@ -31,6 +31,14 @@ export interface LandingStrings {
   deterministicClock: string;
   heroTitle: string;
   heroLede: string;
+  heroPill1: string;
+  heroPill2: string;
+  heroPill3: string;
+  heroLiveLabel: string;
+  heroLiveRoute: string;
+  heroLiveTroop: string;
+  heroLiveToastTitle: string;
+  heroLiveToastBody: string;
   ctaOpenMap: string;
   ctaLoadDemo: string;
   ctaLoadDemoFile: string;
@@ -56,6 +64,8 @@ export interface LandingStrings {
   pipelineStages: PipelineStageCopy[];
   pipelineQuote: string;
   pipelineFlow: string;
+  pipelineSimBtn: string;
+  pipelineSimRunning: string;
 
   sectionSteps: SectionStepCopy[];
 
@@ -73,11 +83,19 @@ export interface LandingStrings {
   simM1: string;
   simM2: string;
   simM3: string;
+  chapter1: string;
+  chapter2: string;
+  chapter3: string;
 
   diagTitle: string;
   diagDesc: string;
+  diagRunBtn: string;
+  diagScanning: string;
+  diagPassed: string;
   specTitle: string;
   specDesc: string;
+  specCopyBtn: string;
+  specCopied: string;
 
   ctaBannerTitle: string;
   ctaBannerDesc: string;
@@ -105,7 +123,15 @@ export const LANDING: Record<string, LandingStrings> = {
     codexOverline: 'Codex Cartographicus / Archivum Historico-Mechanicum',
     deterministicClock: 'Jam Deterministik: Sinkron',
     heroTitle: 'Satu berkas JSON.<br /><span class="italic text-on-surface">Peta yang menceritakan</span> kisahnya.',
-    heroLede: 'ChronoMap adalah mesin lokal-dulu untuk peta sejarah bergulir. Jelaskan sebuah kampanye — tempat, pasukan, peristiwa, bab — dan mesin ini memainkannya: pasukan bergerak di sepanjang rutenya, benteng berpindah tangan, kamera mengikuti cerita saat Anda menggulir, dan setiap klaim dapat membawa sumber serta ketidakpastiannya.',
+    heroLede: 'Mesin lokal-dulu untuk peta sejarah bergulir. Pasukan bergerak di rutenya, benteng berpindah tangan, dan kamera mengikuti alur cerita saat Anda menggulir.',
+    heroPill1: '⚡ WASM Lokal-Dulu',
+    heroPill2: '📜 1 Berkas JSON Deklaratif',
+    heroPill3: '🗺️ Animasi Scrollytelling Peta',
+    heroLiveLabel: 'Simulasi Lintasan Langsung',
+    heroLiveRoute: 'Rute Marching Perang Jawa (1825–1830)',
+    heroLiveTroop: 'Divisi Berkuda Diponegoro',
+    heroLiveToastTitle: 'Pos Selarong Ditegakkan',
+    heroLiveToastBody: 'Pangeran Diponegoro memusatkan kekuatan di Gua Selarong; garis pertahanan gerilya berkoordinasi secara dinamis.',
     ctaOpenMap: 'Buka Peta Interaktif',
     ctaLoadDemo: 'Muat Berkas Contoh',
     ctaLoadDemoFile: '1825_perang_jawa.json',
@@ -136,30 +162,32 @@ export const LANDING: Record<string, LandingStrings> = {
     ],
     pipelineQuote: '"Hanya tahap terakhir yang tahu apa itu peta."',
     pipelineFlow: 'Alur: JSON → Buffer Vektor → Resolusi Tick → Tile WebGL GeoJSON',
+    pipelineSimBtn: 'Jalankan Alur Data',
+    pipelineSimRunning: 'Mentransfer Paket Data...',
 
     sectionSteps: [
       {
         num: 'I',
         title: 'Berkas kampanye',
-        body: 'Satu dokumen JSON memuat semuanya: faksi, tempat, entitas beserta jejaknya, peristiwa, bab, dan sumber. Tidak ada properti gambar, tidak ada koordinat yang harus ditebak kamera — berkas ini menjelaskan sejarah, bukan gambar.',
+        body: 'Satu dokumen JSON memuat semuanya: faksi, tempat, entitas beserta jejaknya, peristiwa, bab, dan sumber.',
         note: 'Skema: campaign.schema.json',
       },
       {
         num: 'II',
         title: 'Pemuat dan diagnostik',
-        body: 'Pemuat memvalidasi dan menormalkan, lalu mengeluarkan diagnostik bernomor. Galat berarti berkas tidak akan dimainkan. Peringatan menangkap hal yang tetap tergambar tetapi menyesatkan: jejak pasukan yang melompat 400 km dalam sehari, bab yang jendela waktunya mundur, peristiwa di luar rentang waktu.',
+        body: 'Pemuat memvalidasi dan menormalkan, lalu mengeluarkan diagnostik bernomor untuk mencegah galat visual.',
         note: 'Diagnostic code analyzer: 0 Kritis / 2 Peringatan Arsip',
       },
       {
         num: 'III',
         title: 'Penghitungan frame',
-        body: 'Diberi satu tick — detik bertanda sejak 1970 — resolveFrame menginterpolasi posisi tiap pasukan di sepanjang jejaknya, menetapkan status tiap benteng, dan memilih peristiwa yang sedang tampak. Murni aritmetika: masukan sama, keluaran sama, di platform mana pun.',
+        body: 'Diberi satu tick, resolveFrame menginterpolasi posisi tiap pasukan di sepanjang jejaknya dengan deterministik.',
         note: 'Fungsi Murni: resolveFrame(campaign, t_epoch) => MapSnapshot',
       },
       {
         num: 'IV',
         title: 'Penggambar',
-        body: 'MapLibre GL menggambar frame itu. Geometri statis dipasang sekali per kampanye; tiap frame hanya menyentuh sumber dinamis yang kecil. Label berupa DOM yang ditata menurut prioritas, sehingga tidak pernah bertabrakan dengan kartus atau garis waktu.',
+        body: 'MapLibre GL menggambar frame dengan geometri statis yang dipasang sekali per kampanye.',
         note: 'Resolusi oklusi spasial & tipografi non-tabrakan',
       },
     ],
@@ -178,11 +206,19 @@ export const LANDING: Record<string, LandingStrings> = {
     simM1: '1241-03-12 (Celah Verecke ditembus)',
     simM2: '1241-04-09 (Pertempuran Mohi)',
     simM3: '1241-04-28 (Pengepungan Klis)',
+    chapter1: '01. Celah Verecke',
+    chapter2: '02. Sungai Sajó (Mohi)',
+    chapter3: '03. Pengepungan Klis',
 
     diagTitle: 'Diagnostika & Uji Integritas Berkas',
-    diagDesc: 'Pemuat menolak perkiraan visual sembrono. Semua diskontinuitas spasial ditangkap saat inisialisasi awal tanpa membebani GPU runtime.',
+    diagDesc: 'Semua diskontinuitas spasial ditangkap saat inisialisasi awal tanpa membebani GPU runtime.',
+    diagRunBtn: 'Jalankan Uji Integritas',
+    diagScanning: 'Memindai aturan GeoJSON...',
+    diagPassed: 'Semua 32 Aturan Lolos!',
     specTitle: 'Spesifikasi Naskah (Schema Excerpt)',
-    specDesc: 'Struktur data memisahkan fakta historis dari bagaimana peta menampilkan animasi, mempertahankan integritas akademis sitasi primer.',
+    specDesc: 'Struktur data deklaratif memisahkan fakta historis dari animasi rendering.',
+    specCopyBtn: 'Salin Skema',
+    specCopied: 'Tersalin!',
 
     ctaBannerTitle: 'Mulai Menulis Peta Kronologis Anda Sendiri',
     ctaBannerDesc: 'Gunakan editor JSON berkas atau hubungkan pipeline ke arsip institusi universitas Anda. Tanpa pendaftaran, luring-pertama.',
@@ -209,7 +245,15 @@ export const LANDING: Record<string, LandingStrings> = {
     codexOverline: 'Codex Cartographicus / Archivum Historico-Mechanicum',
     deterministicClock: 'Deterministic Clock: Synced',
     heroTitle: 'One JSON file.<br /><span class="italic text-on-surface">A map that tells</span> its story.',
-    heroLede: 'ChronoMap is a local-first engine for scrollytelling historical maps. Describe a campaign — places, forces, events, chapters — and the engine plays it: units move along their routes, forts change hands, the camera follows the story as you scroll, and every claim can carry its source and its uncertainty.',
+    heroLede: 'A local-first engine for scrollytelling historical maps. Troops march along their routes, forts change hands, and the camera follows the narrative as you scroll.',
+    heroPill1: '⚡ Local-First WASM',
+    heroPill2: '📜 1 Declarative JSON File',
+    heroPill3: '🗺️ Scrollytelling Map Animation',
+    heroLiveLabel: 'Live Route Simulation',
+    heroLiveRoute: 'Java War March Route (1825–1830)',
+    heroLiveTroop: 'Diponegoro Mounted Squadron',
+    heroLiveToastTitle: 'Selarong Strongpoint Established',
+    heroLiveToastBody: 'Prince Diponegoro gathers forces at Selarong Cave; guerrilla defense lines coordinate dynamically.',
     ctaOpenMap: 'Open Interactive Map',
     ctaLoadDemo: 'Load Example File',
     ctaLoadDemoFile: '1825_java_war.json',
@@ -240,30 +284,32 @@ export const LANDING: Record<string, LandingStrings> = {
     ],
     pipelineQuote: '"Only the final stage knows what a map is."',
     pipelineFlow: 'Flow: JSON → Vector Buffer → Tick Resolution → WebGL GeoJSON Tile',
+    pipelineSimBtn: 'Run Data Flow',
+    pipelineSimRunning: 'Streaming Data Packets...',
 
     sectionSteps: [
       {
         num: 'I',
         title: 'The campaign file',
-        body: 'One JSON document holds everything: factions, places, entities and their tracks, events, chapters and sources. No paint properties, no camera coordinates to guess at — the file describes history, not a drawing.',
+        body: 'One JSON document holds everything: factions, places, entities and their tracks, events, chapters and sources.',
         note: 'Schema: campaign.schema.json',
       },
       {
         num: 'II',
         title: 'Loader and diagnostics',
-        body: 'The loader validates and normalises, emitting numbered diagnostics. Errors mean it will not play. Warnings catch things that render but mislead: a unit whose track jumps 400 km in a day, a chapter whose window runs backwards, an event outside the timeline.',
+        body: 'The loader validates and normalises, emitting numbered diagnostics to prevent misleading visuals.',
         note: 'Diagnostic code analyzer: 0 Critical / 2 Archival Warnings',
       },
       {
         num: 'III',
         title: 'Frame resolution',
-        body: 'Given a tick — signed seconds since 1970 — resolveFrame interpolates every unit along its track, settles each fort’s status, and selects the events in view. Pure arithmetic: same input, same output, on any platform.',
+        body: 'Given a tick, resolveFrame interpolates every unit along its track deterministically.',
         note: 'Pure Function: resolveFrame(campaign, t_epoch) => MapSnapshot',
       },
       {
         num: 'IV',
         title: 'The renderer',
-        body: 'MapLibre GL draws the frame. Static geometry is installed once per campaign; each frame touches only the small dynamic sources. Labels are DOM, decluttered by priority, so they never collide with the cartouche or the timeline.',
+        body: 'MapLibre GL draws the frame with static geometry installed once per campaign.',
         note: 'Spatial occlusion resolution & non-colliding typography',
       },
     ],
@@ -282,11 +328,19 @@ export const LANDING: Record<string, LandingStrings> = {
     simM1: '1241-03-12 (Verecke Pass breached)',
     simM2: '1241-04-09 (Battle of Mohi)',
     simM3: '1241-04-28 (Siege of Klis)',
+    chapter1: '01. Verecke Pass',
+    chapter2: '02. Sajó River (Mohi)',
+    chapter3: '03. Siege of Klis',
 
     diagTitle: 'Diagnostics & File Integrity Suite',
-    diagDesc: 'The loader rejects careless visual guesses. All spatial discontinuities are caught during initialization without burdening the GPU runtime.',
+    diagDesc: 'All spatial discontinuities are caught during initialization without burdening the GPU runtime.',
+    diagRunBtn: 'Run Integrity Scan',
+    diagScanning: 'Scanning GeoJSON rules...',
+    diagPassed: 'All 32 Rules Passed!',
     specTitle: 'Script Specification (Schema Excerpt)',
-    specDesc: 'The data structure separates historical facts from how the map animates, preserving the academic integrity of primary citations.',
+    specDesc: 'Declarative data structures separate historical facts from rendering animation.',
+    specCopyBtn: 'Copy Schema',
+    specCopied: 'Copied!',
 
     ctaBannerTitle: 'Start Authoring Your Own Chronological Map',
     ctaBannerDesc: 'Use any JSON editor or connect the pipeline to your university archives. Zero signup, local-first.',
