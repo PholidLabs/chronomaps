@@ -1,7 +1,7 @@
 # ChronoMap Engine
 
 <p align="center">
-  <img src="logo.jpeg" alt="ChronoMap Engine Logo" width="160" />
+  <img src="apps/demo/icons/logo.jpeg" alt="ChronoMap Engine Logo" width="160" />
 </p>
 
 <p align="center">
@@ -90,7 +90,12 @@ npm test
 
 # Validate all shipped campaign JSON files against the schema and contract
 npm run check
+
+# After changing engine semantics: regenerate the golden vectors the Rust port is tested against
+npm run vectors
 ```
+
+CI (`.github/workflows/ci.yml`) runs all of the above plus the Rust suite on every push and pull request, and fails if `test-vectors/` no longer matches what the TypeScript engine produces.
 
 ---
 
@@ -153,9 +158,11 @@ A campaign file is a single JSON document. Every object shares a single flat keb
   "meta": {
     "id": "java-war-1825",
     "title": { "en": "The Java War", "id": "Perang Diponegoro" },
+    "description": { "en": "…", "id": "…" },
+    "languages": ["en", "id"],
     "defaultLanguage": "en",
-    "timeline": { "extent": "1825-07-20/1830-03-28" },
-    "map": { "bounds": [[108.5, -8.5], [111.5, -6.5]], "initial": { "center": [110.35, -7.78], "zoom": 8.5 } }
+    "timeline": { "extent": "1785-11-11/1855-01-08", "focus": "1825-05/1830-10" },
+    "map": { "center": [110.3, -7.65], "zoom": 8.5, "bounds": [104, -9.5, 126.5, 3] }
   },
   "factions": [
     { "id": "diponegoro", "name": { "en": "Diponegoro Forces" }, "color": "#8B1E1E" }
@@ -213,9 +220,11 @@ Create `my-campaign.json` and reference the JSON Schema for instant autocomplete
   "meta": {
     "id": "my-campaign",
     "title": "My Historical Campaign",
+    "description": "A short summary shown on the title card.",
+    "languages": ["en"],
     "defaultLanguage": "en",
     "timeline": { "extent": "1860-01/1865-12" },
-    "map": { "initial": { "center": [0, 20], "zoom": 4 } }
+    "map": { "center": [0.12, 51.5], "zoom": 4 }
   },
   "factions": [
     { "id": "allies", "name": "Allied Forces", "color": "#1F4E79" }
@@ -231,6 +240,7 @@ Create `my-campaign.json` and reference the JSON Schema for instant autocomplete
       "when": "1860-05-01",
       "title": "The Outbreak",
       "body": "Hostilities began in the early summer of 1860...",
+      "focus": ["capital"],
       "camera": { "center": [0.12, 51.5], "zoom": 6 }
     }
   ]
@@ -287,15 +297,16 @@ const frame = resolveFrame(campaign, tick);
 console.log('Active units:', frame.entities);
 console.log('Active events:', frame.events);
 
-// Option B: State machine playback controller
+// Option B: stateful playback controller
 const engine = new ChronoMapEngine({ language: 'en' });
-engine.setCampaign(rawData);
 engine.on('frame', (f) => {
   console.log(`Current date: ${f.iso}, visible units: ${f.entities.length}`);
 });
+await engine.load(rawData); // or a URL; a file with errors is rejected and the previous one kept
 
-// Jump to chapter or step time
-engine.setChapter('ch-01', 0.5); // 50% scroll progress through chapter 1
+// Drive the clock by scroll progress through a chapter, or set a tick directly
+engine.setStoryProgress('ch-01', 0.5); // 50% of the way through chapter ch-01
+engine.setTime(tick);
 ```
 
 ### 2. MapLibre Renderer (`@chronomap/maplibre`)
@@ -342,6 +353,9 @@ cd crates/chronomap-core
 # Run native test suite against golden vectors
 cargo test
 
+# Also compile and test the optional `spatial` and `wasm` modules (what CI runs)
+cargo test --all-features
+
 # Build for WebAssembly
 cargo build --features wasm
 wasm-pack build --features wasm --target web
@@ -366,7 +380,7 @@ node packages/engine/dist/cli.js <campaign.json>... [options]
 | `--strict` | Treats validation warnings as errors (exits with code 1). |
 | `--quiet` | Suppresses non-error output. |
 | `--json` | Outputs machine-readable JSON diagnostic reports. |
-| `--vectors <dir>` | Exports golden test vectors to the specified directory. |
+| `--vectors <dir>` | Writes golden vectors to `<dir>`: `time.json`, plus `<name>.frames.json` for each campaign given. Campaigns under a `fixtures/` directory get quarter-step sampling and full trails. |
 
 ### NPM Scripts
 
@@ -375,9 +389,9 @@ node packages/engine/dist/cli.js <campaign.json>... [options]
 | `npm run build` | Builds `packages/engine` and `packages/maplibre` and copies CSS assets. |
 | `npm run build:demo` | Runs full package build and builds the production web app in `apps/demo/dist`. |
 | `npm run dev` | Launches the local Vite dev server with hot module reloading. |
-| `npm test` | Runs the automated test suite across packages. |
+| `npm test` | Builds the engine and runs its tests, including the golden-vector checks. |
 | `npm run check` | Validates all campaigns in `data/campaigns/` using the CLI. |
-| `npm run vectors` | Regenerates golden vectors from the Java War campaign. |
+| `npm run vectors` | Rebuilds the engine and regenerates `test-vectors/` from every campaign and fixture. |
 
 ---
 

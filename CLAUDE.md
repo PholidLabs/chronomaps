@@ -6,7 +6,8 @@
   data, time or engine interaction, the contract wins (see its §11–12).
 - `packages/engine/src` is the executable spec. `crates/chronomap-core` is a port of it,
   not a second opinion. If you change semantics, change the TypeScript first, regenerate
-  the vectors (`npm run vectors`), then make Rust match.
+  the vectors (`npm run vectors` — it rebuilds the engine and rewrites every file in
+  `test-vectors/`), then make Rust match. CI fails if the committed vectors are stale.
 - Time is `i64` seconds since 1970-01-01 in proleptic Gregorian, and is negative for every
   campaign in the repo. Never `u64`. Never pass a raw `When` string to `Date`.
 - Chapter bodies are untrusted Markdown. Render with the allow-list renderer in
@@ -15,10 +16,14 @@
 ## Before you commit
 
 ```
-npm run build && npm test          # 7 engine tests must pass
+npm run build && npm test          # engine tests, golden vectors included
 npm run check                      # every campaign: 0 errors
-cd crates/chronomap-core && cargo test   # 12 tests, golden vectors included
+npx tsc --noEmit -p apps/demo/tsconfig.json   # Vite strips types; nothing else checks the demo
+cd crates/chronomap-core && cargo test --all-features   # without the flag, wasm.rs and spatial.rs never compile
 ```
+
+`.github/workflows/ci.yml` runs this list plus `cargo fmt --check`, `cargo clippy -D warnings`,
+`npm run build:demo` and a stale-vectors check on every push and pull request.
 
 The only expected warning is `W115` on `data/campaigns/fixtures/null-island.json` — that
 fixture deliberately overlaps two chapters to exercise the check.
@@ -27,7 +32,9 @@ fixture deliberately overlaps two chapters to exercise the check.
 
 ```
 packages/engine      time.ts · campaign.ts (loader + diagnostics) · resolve.ts · engine.ts (façade)
-                     worker.ts + worker-client.ts — the seam the Rust/WASM core slots into
+                     cli.ts (chronomap-check) · vectors.ts (writes test-vectors/ for --vectors)
+                     worker.ts + worker-client.ts — the seam the Rust/WASM core slots into;
+                     the client coalesces queries (a replaced one resolves null, never sent)
 packages/maplibre    style.ts (basemap) · camera.ts · renderer.ts · theme.ts · chronomap.css
 apps/demo            index.html (landing) + app/index.html (the map app, served at /app/)
                      icons/ — favicon.svg, apple-touch, PWA icons, og.png, manifest
@@ -63,16 +70,32 @@ the demo picks up edits without a package rebuild. `npm run check` uses the buil
   put at the site root by the `siteIcons()` plugin — a dev middleware plus `emitFile` on
   build, the same trick as the MapLibre worker assets. Drop a file in that folder and it
   is served at `/<name>`; no other wiring needed.
-- **The favicon is hand-drawn, not the logo.** `logo.jpeg` scaled to 16px is a smudge —
-  its 5x5 graticule and terminal dot vanish. `icons/favicon.svg` redraws the same idea at
-  tab-legible weights (2x2 grid, heavier route). The raster icons *are* the real logo,
-  cropped to drop its dead margin. Change one and change the other to match.
+- **The favicon is hand-drawn, not the logo.** `icons/logo.jpeg` (the only copy; the
+  README shows it too) scaled to 16px is a smudge — its 5x5 graticule and terminal dot
+  vanish. `icons/favicon.svg` redraws the same idea at tab-legible weights (2x2 grid,
+  heavier route). The raster icons *are* the real logo, cropped to drop its dead margin.
+  Change one and change the other to match.
 - **Two pages, two Vite inputs.** `apps/demo` is a multi-page build: the landing at `/`
   and the map app at `/app/`. Both are declared in `build.rollupOptions.input` in
   `apps/demo/vite.config.ts`. Add a page without adding it there and it will work in
   `dev` but silently vanish from `dist`.
 - **Per-frame updates only.** Static geometry is installed once in `setCampaign`;
   `setFrame` touches only the small dynamic sources. Never stream GeoJSON every frame.
+- **Style readiness after `setStyle`.** `map.setStyle()` can fire `style.load` *before it
+  returns*, while `isStyleLoaded()` is still false because sources are loading. So
+  `if (!map.isStyleLoaded()) map.once('style.load', …)` after a `setStyle` waits forever —
+  that left the map empty after every theme toggle. Use `idle` as the backstop, as
+  `ChronoMapRenderer`'s constructor and `setTerrainEnabled` do. The renderer installs
+  itself; the host just constructs it right after `setStyle`.
+- **Pictorial markers are clickable; labels are not.** Peaks, forests and sea ornaments
+  are DOM markers that open their own popup (`bindPictorialPopup` in `renderer.ts`), so
+  their CSS sets no `pointer-events` and inherits the canvas container's: clickable in
+  explore mode, inert in story mode. Add `pointer-events: none` to them and the popups
+  silently die. Their feature properties reach the DOM through `textContent` only. They
+  belong to the basemap, so `setCampaign` keeps them; only `destroy` removes them.
+- **A loaded campaign is immutable.** `resolve.ts` caches leg lengths and strength knots
+  in `WeakMap`s keyed by the leg/track arrays, so mutating a `NormalizedCampaign` after
+  `loadCampaign` returns stale positions. Build a new campaign instead.
 
 ## Data work
 
