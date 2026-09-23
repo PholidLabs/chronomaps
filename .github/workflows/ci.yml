@@ -1,0 +1,45 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  engine:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - run: npm test
+      - run: npm run check
+      - name: Typecheck demo
+        run: npx tsc --noEmit -p apps/demo/tsconfig.json
+      - run: npm run build:demo
+      # The Rust port is judged against these files; they must be what the TypeScript
+      # reference produces today, not what it produced when someone last remembered.
+      - name: Golden vectors are current
+        run: npm run vectors && git diff --exit-code -- test-vectors
+
+  core:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: crates/chronomap-core
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: clippy, rustfmt
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: crates/chronomap-core
+      - run: cargo fmt --check
+      # --all-features: `spatial` and `wasm` are off by default and would otherwise never compile here.
+      - run: cargo clippy --all-features --all-targets -- -D warnings
+      - run: cargo test --all-features
