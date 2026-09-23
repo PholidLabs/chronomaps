@@ -14,11 +14,23 @@ export function initialBearing(a: [number, number], b: [number, number]): number
   return (Math.atan2(y, x) / toRad + 360) % 360;
 }
 
+/* Legs and tracks are fixed once a campaign is loaded and are sampled every frame, so what can
+   be derived from them alone is derived once, keyed by identity. Never mutate them after load. */
+const measured = new WeakMap<[number, number][], { lengths: number[]; total: number }>();
+function measure(path: [number, number][]): { lengths: number[]; total: number } {
+  let m = measured.get(path);
+  if (!m) {
+    const lengths = path.slice(1).map((c, i) => haversine(path[i], c));
+    m = { lengths, total: lengths.reduce((a, b) => a + b, 0) };
+    measured.set(path, m);
+  }
+  return m;
+}
+
 /** Point at fraction f of a polyline's haversine length; linear lng/lat within a segment. */
 export function alongPath(path: [number, number][], f: number): { position: [number, number]; segment: number; travelled: [number, number][] } {
   if (path.length === 1 || f <= 0) return { position: path[0], segment: 0, travelled: [path[0]] };
-  const lengths = path.slice(1).map((c, i) => haversine(path[i], c));
-  const total = lengths.reduce((a, b) => a + b, 0);
+  const { lengths, total } = measure(path);
   if (total === 0 || f >= 1) return { position: path[path.length - 1], segment: path.length - 2, travelled: path.slice() };
   let target = f * total;
   for (let i = 0; i < lengths.length; i++) {
@@ -44,9 +56,14 @@ export function stateAt(states: NormState[], t: Ticks): NormState | null {
   return best;
 }
 
+const knotsOf = new WeakMap<NonNullable<NormEntity['track']>, [number, number][]>();
 function strengthAt(track: NonNullable<NormEntity['track']>, t: Ticks): number | null {
-  const knots: [number, number][] = [];
-  for (const w of track) if (w.strength !== null && w.strength !== undefined) knots.push([w.arrive, w.strength], [w.depart, w.strength]);
+  let knots = knotsOf.get(track);
+  if (!knots) {
+    knots = [];
+    for (const w of track) if (w.strength !== null && w.strength !== undefined) knots.push([w.arrive, w.strength], [w.depart, w.strength]);
+    knotsOf.set(track, knots);
+  }
   if (!knots.length) return null;
   if (t <= knots[0][0]) return knots[0][1];
   for (let i = 1; i < knots.length; i++) {
@@ -62,38 +79,44 @@ function strengthAt(track: NonNullable<NormEntity['track']>, t: Ticks): number |
 interface UnitPose {
   position: [number, number]; bearing: number | null; moving: boolean;
   waypoint: number | null; leg: number | null; legProgress: number | null;
-  mode?: string; certainty: NormEntity['certainty']; trail: [number, number][];
+  mode?: string; certainty: NormEntity['certainty'];
+  /** The polyline walked so far; null unless asked for. Its length is always counted. */
+  trail: [number, number][] | null; trailLength: number;
 }
-function unitAt(ne: NormEntity, t: Ticks): UnitPose {
+function unitAt(ne: NormEntity, t: Ticks, wantTrail: boolean): UnitPose {
   const tr = ne.track!;
-  const trail: [number, number][] = [tr[0].coord];
-  if (t < tr[0].arrive) return { position: tr[0].coord, bearing: null, moving: false, waypoint: tr[0].index, leg: null, legProgress: null, certainty: tr[0].certainty, trail };
+  const trail: [number, number][] | null = wantTrail ? [tr[0].coord] : null;
+  let trailLength = 1;
+  if (t < tr[0].arrive) return { position: tr[0].coord, bearing: null, moving: false, waypoint: tr[0].index, leg: null, legProgress: null, certainty: tr[0].certainty, trail, trailLength };
   for (let i = 0; i < tr.length; i++) {
     const w = tr[i];
     if (t >= w.arrive && t < w.depart) {
       const lastLeg = w.leg;
       return {
         position: w.coord, bearing: lastLeg ? initialBearing(lastLeg[lastLeg.length - 2], lastLeg[lastLeg.length - 1]) : null,
-        moving: false, waypoint: w.index, leg: null, legProgress: null, certainty: w.certainty, trail: [...trail],
+        moving: false, waypoint: w.index, leg: null, legProgress: null, certainty: w.certainty, trail, trailLength,
       };
     }
     const next = tr[i + 1];
     if (!next) break;
+    const leg = next.leg!;
     if (t >= w.depart && t < next.arrive) {
       const f = (t - w.depart) / (next.arrive - w.depart);
-      const { position, segment, travelled } = alongPath(next.leg!, f);
+      const { position, segment, travelled } = alongPath(leg, f);
+      if (trail) for (let k = 1; k < travelled.length; k++) trail.push(travelled[k]);
       return {
-        position, bearing: initialBearing(next.leg![segment], next.leg![segment + 1]), moving: true,
+        position, bearing: initialBearing(leg[segment], leg[segment + 1]), moving: true,
         waypoint: null, leg: next.index, legProgress: f, mode: next.mode, certainty: next.certainty,
-        trail: [...trail, ...travelled.slice(1)],
+        trail, trailLength: trailLength + travelled.length - 1,
       };
     }
-    trail.push(...next.leg!.slice(1));
+    if (trail) for (let k = 1; k < leg.length; k++) trail.push(leg[k]);
+    trailLength += leg.length - 1;
   }
   const last = tr[tr.length - 1], lastLeg = last.leg;
   return {
     position: last.coord, bearing: lastLeg ? initialBearing(lastLeg[lastLeg.length - 2], lastLeg[lastLeg.length - 1]) : null,
-    moving: false, waypoint: last.index, leg: null, legProgress: null, certainty: last.certainty, trail,
+    moving: false, waypoint: last.index, leg: null, legProgress: null, certainty: last.certainty, trail, trailLength,
   };
 }
 
@@ -114,13 +137,14 @@ export function resolveFrame(campaign: NormalizedCampaign, t: Ticks, opts: Resol
     const st = stateAt(ne.states, t);
     const base: FrameEntity = { id: ne.id, kind: ne.kind, faction: st?.faction ?? ne.faction, status: st?.status ?? 'active' };
     if (ne.track) {
-      const u = unitAt(ne, t);
-      if (!inBbox(u.position, bbox) && !u.trail.some((c) => inBbox(c, bbox))) continue;
+      // The trail polyline is only built when it is returned or the bbox test needs it.
+      const u = unitAt(ne, t, includeTrail || bbox !== null);
+      if (bbox && !inBbox(u.position, bbox) && !u.trail!.some((c) => inBbox(c, bbox))) continue;
       const strength = st?.strength ?? strengthAt(ne.track, t);
       frame.entities.push({
         ...base, position: u.position, bearing: u.bearing, moving: u.moving, waypoint: u.waypoint,
         leg: u.leg, legProgress: u.legProgress, strength, certainty: u.certainty ?? ne.certainty,
-        ...(includeTrail ? { trail: u.trail } : { trailLength: u.trail.length }),
+        ...(includeTrail ? { trail: u.trail! } : { trailLength: u.trailLength }),
       });
     } else if (ne.coord) {
       if (!inBbox(ne.coord, bbox)) continue;
